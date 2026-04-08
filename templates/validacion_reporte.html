@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeZone - Validación de Reporte</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/validacion_de_reporte.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/menu.css') }}">
+</head>
+
+<body>
+    <div class="animated-bg"></div>
+
+    <!-- Botón hamburger -->
+    <button class="menu-toggle" id="menuToggle">
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </button>
+
+    <!-- Overlay para móviles -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <nav class="sidebar" id="sidebar">
+        <div class="logo">
+            <h1>SafeZone</h1>
+            <p>Sistema de Gestión Vial</p>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-title">Principal</div>
+            <div class="nav-item">
+                <a href="{{ url_for('admin.panel_admin') }}" class="nav-link active">
+                    Validación de Reportes
+                </a>
+            </div>
+            {% if session.get('user_role') in ['admin_principal', 'moderador'] %}
+            <div class="nav-item">
+                <a href="{{ url_for('admin.gestion_usuarios') }}" class="nav-link">
+                    Gestión de Usuarios
+                </a>
+            </div>
+            {% endif %}
+            <div class="nav-item">
+                <a href="{{ url_for('reports.panel_info_html') }}" class="nav-link">
+                    Panel de Información
+                </a>
+            </div>
+        </div>
+
+
+
+        <div class="nav-section">
+            <div class="nav-title">Mi Cuenta</div>
+            <div class="nav-item">
+                <a href="{{ url_for('auth.logout') }}" class="nav-link logout-link">
+                    Cerrar Sesión
+                </a>
+            </div>
+        </div>
+
+
+    </nav>
+    <main class="main-content" id="mainContent">
+        <header class="header">
+            <div class="header-content">
+                <div class="page-breadcrumb">
+                    <span>Validación de Reportes</span>
+                </div>
+                <div class="user-info">
+                    <span>{{ session.get('username', 'Admin') }}</span>
+                    <div class="user-avatar">
+                        {% if session.get('foto_perfil') %}
+                            <img src="{{ url_for('static', filename='uploads/' + session.get('foto_perfil')) }}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-area">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                <p class="flash-message flash-{{ category }}">
+                    {% if category == 'error' %}❌{% elif category == 'success' %}✅{% elif category == 'warning' %}⚠️{% else %}ℹ️{% endif %}
+                    {{ message }}
+                </p>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+            <div class="page-header">
+                <h1 class="page-title">Panel de Validación</h1>
+                <p class="page-subtitle">
+                    Aquí puedes revisar y cambiar el estado de los reportes enviados por los usuarios.
+                </p>
+            </div>
+            <div class="report-box">
+                <div class="form-container">
+                    <h2 class="page-title">Lista de Reportes</h2>
+
+                    <div class="table-responsive">
+                        <table class="form-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Ubicación</th>
+                                    <th>Zona</th>
+                                    <th>Gravedad</th>
+                                    <th>Descripción</th>
+                                    <th>Info. Adicional</th>
+                                    <th>Imagen</th>
+                                    <th>Estado</th>
+                                    <th>Observaciones</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for r in reportes %}
+                                <tr class="table-row"
+                                    onclick="showDetails('{{ r.id }}', '{{ r.ubicacion }}', '{{ r.zona }}', '{{ r.gravedad }}', '{{ r.descripcion }}', '{{ r.info_adicional }}', '{{ r.imagen }}', '{{ r.estado }}', '{{ r.observaciones }}')">
+                                    <td>{{ r.id }}</td>
+                                    <td>{{ r.ubicacion }}</td>
+                                    <td>{{ r.zona }}</td>
+                                    <td>{{ r.gravedad }}</td>
+                                    <td>{{ r.descripcion }}</td>
+                                    <td>{{ r.info_adicional or "" }}</td>
+                                    <td>
+                                        {% if r.imagen %}
+                                        <a href="{{ url_for('static', filename='uploads/' + r.imagen) }}"
+                                            target="_blank" onclick="event.stopPropagation();">
+                                            <img src="{{ url_for('static', filename='uploads/' + r.imagen) }}"
+                                                alt="Imagen de reporte" style="max-width: 100px;">
+                                        </a>
+                                        {% else %}
+                                        No hay imagen
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ r.estado }}</td>
+                                    <td>{{ r.observaciones or "" }}</td>
+                                    <td>
+                                        <div class="action-buttons" onclick="event.stopPropagation();">
+                                            {% if session.get('user_role') == 'admin_principal' %}
+                                                <!-- Admin Principal: Solo Aprobar/Rechazar -->
+                                                {% if r.estado in ['nuevo', 'pendiente'] %}
+                                                <div class="approval-actions">
+                                                    <button type="button" class="btn-accept" onclick="cambiarEstado('{{ r.id }}', 'pendiente')" title="Aprobar y enviar al flujo técnico">
+                                                        Aprobar
+                                                    </button>
+                                                    <button type="button" class="btn-cancel" onclick="cambiarEstado('{{ r.id }}', 'rechazado')" title="Rechazar reporte">
+                                                        Rechazar
+                                                    </button>
+                                                </div>
+                                                {% else %}
+                                                <span class="status-info">
+                                                    {% if r.estado == 'pendiente' %}Aprobado - En flujo técnico
+                                                    {% elif r.estado == 'rechazado' %}Rechazado
+                                                    {% else %}En proceso técnico
+                                                    {% endif %}
+                                                </span>
+                                                {% endif %}
+                                            {% else %}
+                                                <!-- Admin Técnico o Admin Legacy: Controles completos -->
+                                                <select name="nuevo_estado_{{ r.id }}" class="estado-select" onchange="cambiarEstado('{{ r.id }}', this.value)">
+                                                    <option value="">Cambiar Estado</option>
+                                                    <option value="pendiente" {{ 'selected' if r.estado == 'pendiente' else '' }}>Pendiente</option>
+                                                    <option value="asignado" {{ 'selected' if r.estado == 'asignado' else '' }}>Asignado</option>
+                                                    <option value="en_progreso" {{ 'selected' if r.estado == 'en_progreso' else '' }}>En Progreso</option>
+                                                    <option value="resuelto" {{ 'selected' if r.estado == 'resuelto' else '' }}>Resuelto</option>
+                                                    <option value="cerrado" {{ 'selected' if r.estado == 'cerrado' else '' }}>Cerrado</option>
+                                                    <option value="rechazado" {{ 'selected' if r.estado == 'rechazado' else '' }}>Rechazado</option>
+                                                </select>
+                                                <div class="quick-actions">
+                                                    <button type="button" class="btn-quick btn-assign" onclick="cambiarEstado('{{ r.id }}', 'asignado')" title="Asignar">Asignar</button>
+                                                    <button type="button" class="btn-quick btn-progress" onclick="cambiarEstado('{{ r.id }}', 'en_progreso')" title="En Progreso">Progreso</button>
+                                                    <button type="button" class="btn-quick btn-resolve" onclick="cambiarEstado('{{ r.id }}', 'resuelto')" title="Resolver">Resolver</button>
+                                                    <button type="button" class="btn-quick btn-reject" onclick="cambiarEstado('{{ r.id }}', 'rechazado')" title="Rechazar">Rechazar</button>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="modal-container" class="modal-container" onclick="hideModal()">
+        <div id="modal-content" class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="hideModal()">&times;</span>
+            <div id="modal-details"></div>
+        </div>
+    </div>
+
+    <script>
+        // Función para cambiar estado de reporte
+        function cambiarEstado(reporteId, nuevoEstado) {
+            if (!nuevoEstado) return;
+            
+            // Crear formulario dinámico
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = `/validar/${reporteId}`;
+            form.style.display = 'none';
+            
+            // Campo estado
+            const estadoInput = document.createElement('input');
+            estadoInput.type = 'hidden';
+            estadoInput.name = 'estado';
+            estadoInput.value = nuevoEstado;
+            form.appendChild(estadoInput);
+            
+            // Campo observaciones (vacío)
+            const obsInput = document.createElement('input');
+            obsInput.type = 'hidden';
+            obsInput.name = 'observaciones';
+            obsInput.value = '';
+            form.appendChild(obsInput);
+            
+            // Enviar formulario
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+        function showDetails(id, ubicacion, zona, gravedad, descripcion, info_adicional, imagen, estado, observaciones) {
+            const modalDetails = document.getElementById('modal-details');
+            const modalImageHtml = imagen !== 'None' && imagen !== ''
+                ? `<tr><th>Imagen:</th><td><img src="` + "{{ url_for('static', filename='uploads/') }}" + `${imagen}" alt="Imagen del reporte" style="max-width: 100%; display: block; margin-top: 10px;"></td></tr>`
+                : `<tr><th>Imagen:</th><td>No hay imagen</td></tr>`;
+
+            modalDetails.innerHTML = `
+                <h2>Detalles del Reporte ${id}</h2>
+                <table class="modal-table">
+                    <tr><th>Ubicación:</th><td>${ubicacion}</td></tr>
+                    <tr><th>Zona:</th><td>${zona}</td></tr>
+                    <tr><th>Gravedad:</th><td>${gravedad}</td></tr>
+                    <tr><th>Descripción:</th><td>${descripcion}</td></tr>
+                    <tr><th>Información Adicional:</th><td>${info_adicional}</td></tr>
+                    ${modalImageHtml}
+                    <tr><th>Estado:</th><td>${estado}</td></tr>
+                    <tr><th>Observaciones:</th><td>${observaciones}</td></tr>
+                </table>
+            `;
+            document.getElementById('modal-container').style.display = 'flex';
+        }
+
+        function hideModal() {
+            document.getElementById('modal-container').style.display = 'none';
+        }
+    </script>
+    
+    <!-- Script del menú hamburger -->
+    <script src="{{ url_for('static', filename='js/menu.js') }}"></script>
+</body>
+
+</html>

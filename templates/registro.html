@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeZone - Registro de Usuario</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/inicio_sesion.css') }}">
+</head>
+
+<body>
+    <div class="animated-bg"></div>
+
+    <div class="auth-screen" id="authScreen">
+        <div class="auth-container">
+
+            <div id="registerContainer">
+                <div class="auth-header">
+                    <img src="{{ url_for('static', filename='img/create_a_purple_urba-removebg-preview (2).png') }}" class="auth-logo" alt="SafeZone logo">
+                    <h1 class="auth-title">SafeZone</h1>
+                    <p class="auth-subtitle">Crea tu cuenta para empezar a reportar</p>
+                </div>
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                    <p class="flash-message flash-{{ category }}">
+                        {% if category == 'error' %}❌{% elif category == 'success' %}✅{% elif category == 'warning' %}⚠️{% else %}ℹ️{% endif %}
+                        {{ message }}
+                    </p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% endwith %}
+
+                <form class="auth-form" id="registerForm" method="POST" action="{{ url_for('auth.register') }}">
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="registerNombres">Nombres</label>
+                            <div class="form-input-wrapper">
+                                <span class="form-icon">👤</span>
+                                <input class="form-input" type="text" id="registerNombres" name="registerNombres" placeholder="Tus nombres" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="registerApellidos">Apellidos</label>
+                            <div class="form-input-wrapper">
+                                <span class="form-icon">👤</span>
+                                <input class="form-input" type="text" id="registerApellidos" name="registerApellidos" placeholder="Tus apellidos" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="registerPhone">Número de Teléfono</label>
+                        <div class="form-input-wrapper">
+                            <span class="form-icon">📱</span>
+                            <input class="form-input" type="tel" id="registerPhone" name="registerPhone" placeholder="Ej: 3001234567" pattern="[0-9]{7,15}" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="registerEmail">Correo Electrónico</label>
+                        <div class="form-input-wrapper">
+                            <span class="form-icon">✉️</span>
+                            <input class="form-input" type="email" id="registerEmail" name="registerEmail" placeholder="ejemplo@correo.com" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="registerPassword">Contraseña</label>
+                        <div class="form-input-wrapper">
+                            <span class="form-icon">🔒</span>
+                            <input class="form-input" type="password" id="registerPassword" name="registerPassword" placeholder="••••••••" required>
+                            <span class="toggle-password" onclick="togglePassword()">👁️</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <span>Registrarse</span>
+                    </button>
+                </form>
+
+                <div class="auth-toggle">
+                    <p>¿Ya tienes una cuenta?</p>
+                    <a href="{{ url_for('auth.login_html') }}" class="btn-text" style="color: var(--primary); font-weight: 600; text-decoration: none;">Iniciar Sesión</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const input = document.getElementById('registerPassword');
+            input.type = input.type === 'password' ? 'text' : 'password';
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeZone - Registro de Reporte</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/registro_de_usuarios.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/menu.css') }}">
+    <script src="https://maps.googleapis.com/maps/api/js?key=TU_CLAVE_API_DE_GOOGLE_MAPS&libraries=places"></script> 
+</head>
+<body>
+    <div class="animated-bg"></div>
+    
+    <!-- Botón hamburger -->
+    <button class="menu-toggle" id="menuToggle">
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </button>
+
+    <!-- Overlay para móviles -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    
+    <nav class="sidebar" id="sidebar">
+        <div class="logo">
+            <h1>SafeZone</h1>
+            <p>Sistema de Gestión Vial</p>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-title">Navegación</div>
+            <div class="nav-item">
+                <a href="{{ url_for('reports.inicio_html') }}" class="nav-link">
+                    Inicio
+                </a>
+            </div>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-title">Reportes</div>
+            <div class="nav-item">
+                <a href="{{ url_for('reports.registro_html') }}" class="nav-link active">
+                    Crear Nuevo Reporte
+                </a>
+            </div>
+            {% if session.get('user_role') == 'admin' %}
+            <div class="nav-item">
+                <a href="{{ url_for('admin.panel_admin') }}" class="nav-link">
+                    Validación de Reportes
+                </a>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-title">Visualizaciones</div>
+            <div class="nav-item">
+                <a href="{{ url_for('visualizations.mapa_html') }}" class="nav-link">
+                    Mapa Interactivo
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="{{ url_for('visualizations.estadisticas_html') }}" class="nav-link">
+                    Estadísticas
+                </a>
+            </div>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-title">Mi Cuenta</div>
+            {% if session.get('user_role') != 'guest' %}
+            <div class="nav-item">
+                <a href="{{ url_for('auth.perfil') }}" class="nav-link">
+                    Mi Perfil
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="{{ url_for('reports.mis_reportes_html') }}" class="nav-link">
+                    Mis Reportes
+                </a>
+            </div>
+            {% endif %}
+            <div class="nav-item">
+                <a href="{{ url_for('auth.logout') }}" class="nav-link logout-link">
+                    Cerrar Sesión
+                </a>
+            </div>
+        </div>
+    </nav>
+    <main class="main-content" id="mainContent">
+        <header class="header">
+            <div class="header-content">
+                <div class="page-breadcrumb">
+                    <span>Registro de Reportes</span>
+                </div>
+                <div class="user-info">
+                    <span>Bienvenido, {{ session.get('username', 'Invitado') }}</span>
+                    <div class="user-avatar">
+                        {% if session.get('foto_perfil') %}
+                            <img src="{{ url_for('static', filename='uploads/' + session.get('foto_perfil')) }}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-area">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                <p class="flash-message flash-{{ category }}">{{ message }}</p> 
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+            
+            <div class="page-header">
+                <h1 class="page-title">Registro de Reportes</h1>
+                <p class="page-subtitle">
+                    Envía un reporte de una anomalía en la vía y ayuda a mejorar tu comunidad.
+                </p>
+            </div>
+            <div class="form-container">
+                <h2 class="form-title">Envía tu Reporte</h2>
+                
+                <form class="report-form" id="reportForm" method="POST" action="{{ url_for('reports.registro') }}" enctype="multipart/form-data">
+                    
+                    <div class="form-group">
+                        <label for="location" class="form-label">Ubicación</label>
+                        <input type="text" id="location" name="location" class="form-input" placeholder="Escribe la dirección, barrio o cruce" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="zone" class="form-label">Zona/Barrio</label>
+                        <select id="zone" name="zone_id" class="form-select" required>
+                            <option value="">Selecciona el Barrio</option>
+                            
+                            <!-- ZONA NORTE -->
+                            <optgroup label="ZONA NORTE">
+                                {% for zona in zonas %}
+                                    {% if zona.zona_geografica == 'norte' %}
+                                        <option value="{{ zona.nombre_zona }}">{{ zona.nombre_zona.title() }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </optgroup>
+                            
+                            <!-- ZONA NORORIENTAL -->
+                            <optgroup label="ZONA NORORIENTAL">
+                                {% for zona in zonas %}
+                                    {% if zona.zona_geografica == 'nororiente' %}
+                                        <option value="{{ zona.nombre_zona }}">{{ zona.nombre_zona.title() }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </optgroup>
+                            
+                            <!-- ZONA CENTRO-NORTE -->
+                            <optgroup label="ZONA CENTRO-NORTE">
+                                {% for zona in zonas %}
+                                    {% if zona.zona_geografica == 'centro-norte' %}
+                                        <option value="{{ zona.nombre_zona }}">{{ zona.nombre_zona.title() }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </optgroup>
+                            
+                            <!-- ZONA CENTRO -->
+                            <optgroup label="ZONA CENTRO">
+                                {% for zona in zonas %}
+                                    {% if zona.zona_geografica == 'centro' %}
+                                        <option value="{{ zona.nombre_zona }}">{{ zona.nombre_zona.title() }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </optgroup>
+                            
+                            <!-- ZONA CENTRO-SUR -->
+                            <optgroup label="ZONA CENTRO-SUR">
+                                {% for zona in zonas %}
+                                    {% if zona.zona_geografica == 'centro-sur' %}
+                                        <option value="{{ zona.nombre_zona }}">{{ zona.nombre_zona.title() }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </optgroup>
+                            
+                            <!-- ZONA SUR -->
+                            <optgroup label="ZONA SUR">
+                                {% for zona in zonas %}
+                                    {% if zona.zona_geografica == 'sur' %}
+                                        <option value="{{ zona.nombre_zona }}">{{ zona.nombre_zona.title() }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </optgroup>
+                            
+                            <!-- ZONA OCCIDENTAL -->
+                            <optgroup label="ZONA OCCIDENTAL">
+                                {% for zona in zonas %}
+                                    {% if zona.zona_geografica == 'occidente' %}
+                                        <option value="{{ zona.nombre_zona }}">{{ zona.nombre_zona.title() }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </optgroup>
+                            
+                            <!-- URBANIZACIONES -->
+                            <optgroup label="URBANIZACIONES">
+                                {% for zona in zonas %}
+                                    {% if zona.zona_geografica == 'urbanizacion' %}
+                                        <option value="{{ zona.nombre_zona }}">{{ zona.nombre_zona.title() }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </optgroup>
+                            
+                            <!-- BARRIOS POPULARES -->
+                            <optgroup label="BARRIOS POPULARES">
+                                {% for zona in zonas %}
+                                    {% if zona.zona_geografica == 'popular' %}
+                                        <option value="{{ zona.nombre_zona }}">{{ zona.nombre_zona.title() }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </optgroup>
+                            
+                            <!-- ZONAS INDUSTRIALES -->
+                            <optgroup label="ZONAS INDUSTRIALES">
+                                {% for zona in zonas %}
+                                    {% if zona.zona_geografica == 'industrial' %}
+                                        <option value="{{ zona.nombre_zona }}">{{ zona.nombre_zona.title() }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </optgroup>
+                            
+                            <!-- CORREGIMIENTOS -->
+                            <optgroup label="CORREGIMIENTOS">
+                                {% for zona in zonas %}
+                                    {% if zona.zona_geografica == 'corregimiento' %}
+                                        <option value="{{ zona.nombre_zona }}">{{ zona.nombre_zona.title() }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </optgroup>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="anomalia_type" class="form-label">Tipo de Anomalía</label>
+                        <select id="anomalia_type" name="tipo_anomalia_id" class="form-select" required>
+                            <option value="">Selecciona el Tipo</option>
+                            {% for tipo in tipos_anomalia %}
+                            <option value="{{ tipo.id }}">{{ tipo.nombre_anomalia }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="severity" class="form-label">Niveles de Gravedad</label>
+                        <div class="severity-options">
+                            <div class="severity-option" data-value="critico">
+                                <div class="severity-indicator severity-critical"></div>
+                                <div class="severity-text">
+                                    <div class="severity-label">Crítico</div>
+                                    <div class="severity-desc">Requiere atención inmediata</div>
+                                </div>
+                            </div>
+                            <div class="severity-option" data-value="severo">
+                                <div class="severity-indicator severity-severe"></div>
+                                <div class="severity-text">
+                                    <div class="severity-label">Severo</div>
+                                    <div class="severity-desc">Atención prioritaria</div>
+                                </div>
+                            </div>
+                            <div class="severity-option" data-value="moderado">
+                                <div class="severity-indicator severity-moderate"></div>
+                                <div class="severity-text">
+                                    <div class="severity-label">Moderado</div>
+                                    <div class="severity-desc">Atención necesaria</div>
+                                </div>
+                            </div>
+                            <div class="severity-option" data-value="leve">
+                                <div class="severity-indicator severity-light"></div>
+                                <div class="severity-text">
+                                    <div class="severity-label">Leve</div>
+                                    <div class="severity-desc">Baja prioridad</div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="severity" name="severity" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description" class="form-label">Descripción</label>
+                        <textarea id="description" name="description" class="form-textarea" rows="4" placeholder="Describe brevemente la anomalía..." required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="additionalInfo" class="form-label">Información Adicional (Opcional)</label>
+                        <textarea id="additionalInfo" name="additionalInfo" class="form-textarea" rows="2" placeholder="Cualquier otro detalle relevante..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="imageUpload" class="form-label">Adjuntar Imágenes (Máximo 3)</label>
+                        <div class="image-upload-container" style="border: 2px dashed rgba(255, 255, 255, 0.3); border-radius: 15px; padding: 30px; text-align: center; transition: all 0.3s ease; background: rgba(255, 255, 255, 0.05); position: relative;" id="uploadContainer">
+                            <div class="upload-icon" style="font-size: 48px; margin-bottom: 15px;">📷</div>
+                            
+                            <input type="file" 
+                                   id="imageUpload" 
+                                   name="imageUpload" 
+                                   accept="image/*" 
+                                   multiple 
+                                   class="form-input" 
+                                   style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;">
+                            
+                            <div class="upload-text" style="margin-bottom: 10px;">
+                                <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px; color: white;">
+                                    Selecciona hasta 3 imágenes
+                                </div>
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7);">
+                                    Haz clic aquí o arrastra las imágenes
+                                </div>
+                            </div>
+                            
+                            <div style="font-size: 12px; color: rgba(255, 255, 255, 0.5); margin-top: 10px;">
+                                Formatos: JPG, PNG, GIF • Máximo 5MB por imagen
+                            </div>
+                        </div>
+                        
+                        <!-- Vista previa de imágenes seleccionadas -->
+                        <div id="imagePreviewContainer" style="margin-top: 20px; display: none;">
+                            <div style="margin-bottom: 15px; font-weight: 600; color: rgba(255, 255, 255, 0.9);">
+                                📸 Imágenes seleccionadas:
+                            </div>
+                            <div id="imagePreviewGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px;"></div>
+                        </div>
+                        
+                        <div style="margin-top: 15px; font-size: 13px; color: rgba(255, 255, 255, 0.6); text-align: center;">
+                            💡 Selecciona múltiples imágenes para documentar mejor el problema
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="latitude" name="latitude">
+                    <input type="hidden" id="longitude" name="longitude">
+                    
+                    <button type="submit" class="submit-btn" id="submitBtn">Enviar Reporte</button>
+                    
+                </form>
+            </div>
+        </div>
+    </main>
+    <script>
+        // Coordenadas por defecto para Bello, Antioquia
+        const DEFAULT_LAT = 6.3372;
+        const DEFAULT_LNG = -75.5625;
+        
+        // Base de datos de coordenadas por barrio
+        const basesBarrios = {
+            // === ZONA NORTE ===
+            'niquía bifamiliares': { lat: 6.3430, lng: -75.5450, zona: 'norte' },
+            'altos de niquía': { lat: 6.3450, lng: -75.5430, zona: 'norte' },
+            'ciudad niquía': { lat: 6.3410, lng: -75.5470, zona: 'norte' },
+            'panamericano': { lat: 6.3390, lng: -75.5490, zona: 'norte' },
+            'ciudadela del norte': { lat: 6.3430, lng: -75.5440, zona: 'norte' },
+            'alpes del norte': { lat: 6.3460, lng: -75.5420, zona: 'norte' },
+            'norteamérica': { lat: 6.3440, lng: -75.5460, zona: 'norte' },
+            'roterdam': { lat: 6.3420, lng: -75.5480, zona: 'norte' },
+            'altos de quitasol': { lat: 6.3465, lng: -75.5425, zona: 'norte' },
+            'la navarra': { lat: 6.3455, lng: -75.5435, zona: 'norte' },
+            'el trébol': { lat: 6.3445, lng: -75.5445, zona: 'norte' },
+            'guasimalito': { lat: 6.3435, lng: -75.5455, zona: 'norte' },
+            
+            // === ZONA NORORIENTAL ===
+            'los sauces': { lat: 6.3435, lng: -75.5510, zona: 'nororiente' },
+            'campo alegre': { lat: 6.3421, lng: -75.5512, zona: 'nororiente' },
+            'las granjas': { lat: 6.3360, lng: -75.5530, zona: 'nororiente' },
+            'la florida': { lat: 6.3370, lng: -75.5520, zona: 'nororiente' },
+            'gran avenida': { lat: 6.3380, lng: -75.5500, zona: 'nororiente' },
+            'aralias': { lat: 6.3390, lng: -75.5495, zona: 'nororiente' },
+            'urapanes': { lat: 6.3400, lng: -75.5485, zona: 'nororiente' },
+            'la primavera': { lat: 6.3405, lng: -75.5475, zona: 'nororiente' },
+            'villa maría': { lat: 6.3395, lng: -75.5485, zona: 'nororiente' },
+            'fontidueño': { lat: 6.3375, lng: -75.5495, zona: 'nororiente' },
+            'la mina': { lat: 6.3365, lng: -75.5505, zona: 'nororiente' },
+            'alcalá': { lat: 6.3355, lng: -75.5515, zona: 'nororiente' },
+            'los ciruelos': { lat: 6.3345, lng: -75.5525, zona: 'nororiente' },
+            
+            // === ZONA CENTRO-NORTE ===
+            'parís': { lat: 6.3318, lng: -75.5523, zona: 'centro-norte' },
+            'la cumbre': { lat: 6.3330, lng: -75.5540, zona: 'centro-norte' },
+            'altavista': { lat: 6.3340, lng: -75.5530, zona: 'centro-norte' },
+            'el carmelo': { lat: 6.3320, lng: -75.5550, zona: 'centro-norte' },
+            'pérez': { lat: 6.3350, lng: -75.5510, zona: 'centro-norte' },
+            'serramonte': { lat: 6.3300, lng: -75.5540, zona: 'centro-norte' },
+            'salento': { lat: 6.3315, lng: -75.5530, zona: 'centro-norte' },
+            'rincón santos': { lat: 6.3325, lng: -75.5520, zona: 'centro-norte' },
+            'estación primera': { lat: 6.3335, lng: -75.5535, zona: 'centro-norte' },
+            'las vegas': { lat: 6.3325, lng: -75.5545, zona: 'centro-norte' },
+            'la camila': { lat: 6.3315, lng: -75.5555, zona: 'centro-norte' },
+            
+            // === ZONA CENTRO ===
+            'el rosario': { lat: 6.3298, lng: -75.5573, zona: 'centro' },
+            'centro': { lat: 6.3372, lng: -75.5625, zona: 'centro' },
+            'prado': { lat: 6.3340, lng: -75.5600, zona: 'centro' },
+            'nazareth': { lat: 6.3350, lng: -75.5580, zona: 'centro' },
+            'la meseta': { lat: 6.3330, lng: -75.5590, zona: 'centro' },
+            'central': { lat: 6.3360, lng: -75.5610, zona: 'centro' },
+            'espíritu santo': { lat: 6.3320, lng: -75.5630, zona: 'centro' },
+            'manchester': { lat: 6.3355, lng: -75.5615, zona: 'centro' },
+            'la estación': { lat: 6.3345, lng: -75.5625, zona: 'centro' },
+            'cinco estrellas': { lat: 6.3305, lng: -75.5565, zona: 'centro' },
+            'marco fidel suárez': { lat: 6.3295, lng: -75.5575, zona: 'centro' },
+            'la gabriela': { lat: 6.3285, lng: -75.5585, zona: 'centro' },
+            'belvedere': { lat: 6.3275, lng: -75.5595, zona: 'centro' },
+            'acevedo': { lat: 6.3265, lng: -75.5605, zona: 'centro' },
+            'zamora': { lat: 6.3255, lng: -75.5615, zona: 'centro' },
+            
+            // === ZONA CENTRO-SUR ===
+            'bellavista': { lat: 6.3333, lng: -75.5627, zona: 'centro-sur' },
+            'suárez': { lat: 6.3367, lng: -75.5578, zona: 'centro-sur' },
+            'andaluz': { lat: 6.3285, lng: -75.5589, zona: 'centro-sur' },
+            'el cafetal': { lat: 6.3260, lng: -75.5590, zona: 'centro-sur' },
+            'la pradera': { lat: 6.3320, lng: -75.5560, zona: 'centro-sur' },
+            'la esmeralda': { lat: 6.3290, lng: -75.5570, zona: 'centro-sur' },
+            'la maruchenga': { lat: 6.3310, lng: -75.5550, zona: 'centro-sur' },
+            'santa ana': { lat: 6.3295, lng: -75.5560, zona: 'centro-sur' },
+            'los búcaros': { lat: 6.3280, lng: -75.5550, zona: 'centro-sur' },
+            'lópez de mesa': { lat: 6.3275, lng: -75.5575, zona: 'centro-sur' },
+            'el cairo': { lat: 6.3265, lng: -75.5565, zona: 'centro-sur' },
+            
+            // === ZONA SUR ===
+            'fatima': { lat: 6.3276, lng: -75.5673, zona: 'sur' },
+            'san martín': { lat: 6.3324, lng: -75.5721, zona: 'sur' },
+            'playa rica': { lat: 6.3280, lng: -75.5690, zona: 'sur' },
+            'tierradentro': { lat: 6.3250, lng: -75.5710, zona: 'sur' },
+            'villa linda': { lat: 6.3260, lng: -75.5700, zona: 'sur' },
+            'girasoles': { lat: 6.3270, lng: -75.5680, zona: 'sur' },
+            'la milagrosa': { lat: 6.3255, lng: -75.5555, zona: 'sur' },
+            'el congolo': { lat: 6.3245, lng: -75.5545, zona: 'sur' },
+            'el porvenir': { lat: 6.3290, lng: -75.5630, zona: 'sur' },
+            'el rosalpi': { lat: 6.3280, lng: -75.5640, zona: 'sur' },
+            'briceño': { lat: 6.3270, lng: -75.5650, zona: 'sur' },
+            'buenos aires': { lat: 6.3260, lng: -75.5660, zona: 'sur' },
+            'el paraíso': { lat: 6.3250, lng: -75.5670, zona: 'sur' },
+            'riachuelos': { lat: 6.3240, lng: -75.5680, zona: 'sur' },
+            'valadares': { lat: 6.3230, lng: -75.5690, zona: 'sur' },
+            'el trapiche': { lat: 6.3220, lng: -75.5700, zona: 'sur' },
+            'san gabriel': { lat: 6.3295, lng: -75.5665, zona: 'sur' },
+            'pachelly': { lat: 6.3285, lng: -75.5675, zona: 'sur' },
+            'los alpes': { lat: 6.3275, lng: -75.5685, zona: 'sur' },
+            'el ducado': { lat: 6.3265, lng: -75.5695, zona: 'sur' },
+            'la aldea': { lat: 6.3255, lng: -75.5705, zona: 'sur' },
+            'la selva': { lat: 6.3245, lng: -75.5715, zona: 'sur' },
+            'el mirador': { lat: 6.3235, lng: -75.5725, zona: 'sur' },
+            'santa rita': { lat: 6.3245, lng: -75.5625, zona: 'sur' },
+            
+            // === ZONA OCCIDENTAL ===
+            'villas de occidente': { lat: 6.3260, lng: -75.5700, zona: 'occidente' },
+            'villas del sol': { lat: 6.3300, lng: -75.5680, zona: 'occidente' },
+            'molinares': { lat: 6.3240, lng: -75.5720, zona: 'occidente' },
+            'san simón': { lat: 6.3250, lng: -75.5715, zona: 'occidente' },
+            'amazonía': { lat: 6.3230, lng: -75.5730, zona: 'occidente' },
+            
+            // === URBANIZACIONES ===
+            'villas de comfenalco': { lat: 6.3320, lng: -75.5640, zona: 'urbanizacion' },
+            'puerto bello': { lat: 6.3340, lng: -75.5540, zona: 'urbanizacion' },
+            'terranova': { lat: 6.3380, lng: -75.5480, zona: 'urbanizacion' },
+            'hermosa provincia': { lat: 6.3370, lng: -75.5470, zona: 'urbanizacion' },
+            'valle verde': { lat: 6.3390, lng: -75.5460, zona: 'urbanizacion' },
+            'la virginia': { lat: 6.3360, lng: -75.5500, zona: 'urbanizacion' },
+            
+            // === BARRIOS POPULARES ===
+            'josé antonio galán': { lat: 6.3270, lng: -75.5640, zona: 'popular' },
+            'salvador allende': { lat: 6.3300, lng: -75.5600, zona: 'popular' },
+            'barrio nuevo': { lat: 6.3330, lng: -75.5570, zona: 'popular' },
+            'la cabañita': { lat: 6.3250, lng: -75.5650, zona: 'popular' },
+            'la cabaña': { lat: 6.3240, lng: -75.5660, zona: 'popular' },
+            'san josé obrero': { lat: 6.3310, lng: -75.5590, zona: 'popular' },
+            
+            // === ZONAS INDUSTRIALES ===
+            'zona industrial #1': { lat: 6.3420, lng: -75.5530, zona: 'industrial' },
+            'zona industrial #3': { lat: 6.3400, lng: -75.5550, zona: 'industrial' },
+            'zona industrial #4': { lat: 6.3440, lng: -75.5510, zona: 'industrial' },
+            'zona industrial #5': { lat: 6.3460, lng: -75.5490, zona: 'industrial' },
+            'zona industrial #6': { lat: 6.3480, lng: -75.5470, zona: 'industrial' },
+            'zona industrial #7': { lat: 6.3500, lng: -75.5450, zona: 'industrial' },
+            
+            // === CORREGIMIENTOS ===
+            'san félix': { lat: 6.3800, lng: -75.5900, zona: 'corregimiento' },
+            'potrerito': { lat: 6.3600, lng: -75.5800, zona: 'corregimiento' },
+            'granizal': { lat: 6.3550, lng: -75.5750, zona: 'corregimiento' },
+            'el tambo': { lat: 6.3500, lng: -75.5700, zona: 'corregimiento' },
+            'hato viejo': { lat: 6.3450, lng: -75.5650, zona: 'corregimiento' }
+        };
+        
+        // Script mejorado para obtener la ubicación
+        function getLocation() {
+            // Establecer coordenadas por defecto inmediatamente
+            setDefaultLocation();
+            
+            if (navigator.geolocation) {
+                console.log("🌍 Solicitando ubicación del usuario...");
+                
+                // Opciones para geolocalización
+                const options = {
+                    enableHighAccuracy: true,
+                    timeout: 10000, // 10 segundos
+                    maximumAge: 300000 // 5 minutos
+                };
+                
+                navigator.geolocation.getCurrentPosition(showPosition, showError, options);
+            } else {
+                console.log("⚠️ Geolocalización no soportada por este navegador.");
+                showLocationStatus("Geolocalización no disponible. Usando ubicación por defecto de Bello.");
+            }
+        }
+
+        function setDefaultLocation() {
+            document.getElementById("latitude").value = DEFAULT_LAT;
+            document.getElementById("longitude").value = DEFAULT_LNG;
+            console.log("📍 Coordenadas por defecto establecidas:", DEFAULT_LAT, DEFAULT_LNG);
+        }
+
+        function showPosition(position) {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            const accuracy = position.coords.accuracy;
+            
+            document.getElementById("latitude").value = lat;
+            document.getElementById("longitude").value = lng;
+            
+            console.log("✅ Ubicación capturada:", lat, lng, "Precisión:", accuracy + "m");
+            showLocationStatus(`Ubicación detectada con precisión de ${Math.round(accuracy)}m`);
+        }
+
+        function showError(error) {
+            let message = "";
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    message = "Permiso de ubicación denegado. Usando ubicación por defecto.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    message = "Información de ubicación no disponible. Usando ubicación por defecto.";
+                    break;
+                case error.TIMEOUT:
+                    message = "Tiempo de espera agotado. Usando ubicación por defecto.";
+                    break;
+                default:
+                    message = "Error desconocido obteniendo ubicación. Usando ubicación por defecto.";
+                    break;
+            }
+            
+            console.warn(`⚠️ ERROR GEOLOCALIZACIÓN (${error.code}): ${error.message}`);
+            showLocationStatus(message);
+            
+            // Asegurar que tenemos coordenadas por defecto
+            setDefaultLocation();
+        }
+
+        function showLocationStatus(message) {
+            // Crear o actualizar indicador de estado
+            let statusDiv = document.getElementById('location-status');
+            if (!statusDiv) {
+                statusDiv = document.createElement('div');
+                statusDiv.id = 'location-status';
+                statusDiv.style.cssText = `
+                    margin-top: 10px;
+                    padding: 10px;
+                    border-radius: 8px;
+                    font-size: 14px;
+                    text-align: center;
+                    background: rgba(59, 130, 246, 0.1);
+                    border: 1px solid rgba(59, 130, 246, 0.3);
+                    color: #3b82f6;
+                `;
+                
+                // Insertar después del campo de ubicación
+                const locationField = document.getElementById('location');
+                if (locationField && locationField.parentNode) {
+                    locationField.parentNode.insertBefore(statusDiv, locationField.nextSibling);
+                }
+            }
+            
+            statusDiv.textContent = message;
+            
+            // Ocultar después de 5 segundos
+            setTimeout(() => {
+                if (statusDiv) {
+                    statusDiv.style.opacity = '0';
+                    setTimeout(() => {
+                        if (statusDiv && statusDiv.parentNode) {
+                            statusDiv.parentNode.removeChild(statusDiv);
+                        }
+                    }, 300);
+                }
+            }, 5000);
+        }
+
+        // Llamar a getLocation cuando la página se cargue
+        window.onload = getLocation;
+
+        // Función para actualizar coordenadas según el barrio seleccionado
+        function updateCoordinatesByBarrio(barrioName) {
+            const barrio = basesBarrios[barrioName.toLowerCase()];
+            if (barrio) {
+                document.getElementById("latitude").value = barrio.lat;
+                document.getElementById("longitude").value = barrio.lng;
+                console.log(`📍 Coordenadas actualizadas para ${barrioName}:`, barrio.lat, barrio.lng);
+                showLocationStatus(`Coordenadas establecidas para ${barrioName}`);
+            } else {
+                console.warn(`⚠️ Barrio no encontrado en base de datos: ${barrioName}`);
+                setDefaultLocation();
+            }
+        }
+
+        // Manejo de selección de gravedad y barrio
+        document.addEventListener('DOMContentLoaded', function() {
+            // Manejo de gravedad
+            const severityOptions = document.querySelectorAll('.severity-option');
+            const severityInput = document.getElementById('severity');
+            
+            severityOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remover selección anterior
+                    severityOptions.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Agregar selección actual
+                    this.classList.add('selected');
+                    
+                    // Actualizar valor del input hidden
+                    severityInput.value = this.dataset.value;
+                    console.log(`⚠️ Gravedad seleccionada: ${this.dataset.value}`);
+                });
+            });
+            
+            // Manejo de selección de barrio
+            const zoneSelect = document.getElementById('zone');
+            if (zoneSelect) {
+                zoneSelect.addEventListener('change', function() {
+                    const selectedBarrio = this.value;
+                    if (selectedBarrio) {
+                        console.log(`🏘️ Barrio seleccionado: ${selectedBarrio}`);
+                        updateCoordinatesByBarrio(selectedBarrio);
+                    }
+                });
+            }
+            
+            // Validación del formulario antes del envío
+            const form = document.getElementById('reportForm');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            if (form && submitBtn) {
+                form.addEventListener('submit', function(e) {
+                    console.log('📤 Intentando enviar formulario...');
+                    
+                    // Validar campos requeridos
+                    const ubicacion = document.getElementById('location').value.trim();
+                    const barrio = document.getElementById('zone').value;
+                    const tipoAnomalia = document.getElementById('anomalia_type').value;
+                    const gravedad = document.getElementById('severity').value;
+                    const descripcion = document.getElementById('description').value.trim();
+                    const latitud = document.getElementById('latitude').value;
+                    const longitud = document.getElementById('longitude').value;
+                    const imageInput = document.getElementById('imageUpload');
+                    
+                    console.log('🔍 Validando campos:');
+                    console.log(`  📍 Ubicación: "${ubicacion}"`);
+                    console.log(`  🏘️ Barrio: "${barrio}"`);
+                    console.log(`  🚧 Tipo anomalía: "${tipoAnomalia}"`);
+                    console.log(`  ⚠️ Gravedad: "${gravedad}"`);
+                    console.log(`  📝 Descripción: "${descripcion}"`);
+                    console.log(`  📐 Coordenadas: ${latitud}, ${longitud}`);
+                    console.log(`  📷 Imágenes: ${imageInput.files.length} archivos`);
+                    
+                    // Verificar campos requeridos
+                    if (!ubicacion) {
+                        alert('❌ Por favor ingresa la ubicación');
+                        e.preventDefault();
+                        return false;
+                    }
+                    
+                    if (!barrio) {
+                        alert('❌ Por favor selecciona un barrio');
+                        e.preventDefault();
+                        return false;
+                    }
+                    
+                    if (!tipoAnomalia) {
+                        alert('❌ Por favor selecciona el tipo de anomalía');
+                        e.preventDefault();
+                        return false;
+                    }
+                    
+                    if (!gravedad) {
+                        alert('❌ Por favor selecciona la gravedad');
+                        e.preventDefault();
+                        return false;
+                    }
+                    
+                    if (!descripcion) {
+                        alert('❌ Por favor ingresa una descripción');
+                        e.preventDefault();
+                        return false;
+                    }
+                    
+                    // Asegurar que tenemos coordenadas
+                    if (!latitud || !longitud) {
+                        console.warn('⚠️ Sin coordenadas, usando por defecto');
+                        document.getElementById('latitude').value = DEFAULT_LAT;
+                        document.getElementById('longitude').value = DEFAULT_LNG;
+                    }
+                    
+                    // Validar imágenes si hay alguna seleccionada
+                    if (imageInput.files.length > 0) {
+                        for (let i = 0; i < imageInput.files.length; i++) {
+                            const file = imageInput.files[i];
+                            if (file.size > 5 * 1024 * 1024) {
+                                alert(`❌ La imagen "${file.name}" es muy grande (máximo 5MB)`);
+                                e.preventDefault();
+                                return false;
+                            }
+                            if (!file.type.startsWith('image/')) {
+                                alert(`❌ El archivo "${file.name}" no es una imagen válida`);
+                                e.preventDefault();
+                                return false;
+                            }
+                        }
+                        console.log(`✅ ${imageInput.files.length} imágenes válidas para subir`);
+                    }
+                    
+                    // Deshabilitar botón para evitar doble envío
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Enviando...';
+                    
+                    console.log('✅ Formulario válido, enviando...');
+                    return true;
+                });
+            }
+            
+            // Manejo de múltiples imágenes
+            setupMultipleImageUpload();
+        });
+        
+        let selectedFiles = [];
+        
+        // Función para configurar la subida múltiple de imágenes
+        function setupMultipleImageUpload() {
+            const input = document.getElementById('imageUpload');
+            const container = document.getElementById('uploadContainer');
+            const previewContainer = document.getElementById('imagePreviewContainer');
+            const previewGrid = document.getElementById('imagePreviewGrid');
+            
+            if (!input || !container) return;
+            
+            // Eventos para drag & drop
+            container.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                container.style.borderColor = '#10b981';
+                container.style.background = 'rgba(16, 185, 129, 0.1)';
+            });
+            
+            container.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                container.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                container.style.background = 'rgba(255, 255, 255, 0.05)';
+            });
+            
+            container.addEventListener('drop', function(e) {
+                e.preventDefault();
+                container.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                container.style.background = 'rgba(255, 255, 255, 0.05)';
+                
+                const files = Array.from(e.dataTransfer.files);
+                handleMultipleFiles(files);
+            });
+            
+            // Evento para selección de archivos
+            input.addEventListener('change', function(e) {
+                const files = Array.from(e.target.files);
+                handleMultipleFiles(files);
+            });
+        }
+        
+        // Función para manejar múltiples archivos
+        function handleMultipleFiles(files) {
+            // Filtrar solo imágenes y limitar a 3
+            const imageFiles = files.filter(file => file.type.startsWith('image/')).slice(0, 3);
+            
+            if (imageFiles.length === 0) {
+                alert('❌ Por favor selecciona archivos de imagen válidos.');
+                return;
+            }
+            
+            if (files.length > 3) {
+                alert('⚠️ Solo se pueden subir máximo 3 imágenes. Se seleccionaron las primeras 3.');
+            }
+            
+            // Validar tamaño de archivos
+            const oversizedFiles = imageFiles.filter(file => file.size > 5 * 1024 * 1024);
+            if (oversizedFiles.length > 0) {
+                alert(`❌ Las siguientes imágenes son muy grandes (máximo 5MB):\n${oversizedFiles.map(f => f.name).join('\n')}`);
+                return;
+            }
+            
+            selectedFiles = imageFiles;
+            
+            // Actualizar el input file con los archivos seleccionados
+            const input = document.getElementById('imageUpload');
+            const dt = new DataTransfer();
+            selectedFiles.forEach(file => dt.items.add(file));
+            input.files = dt.files;
+            
+            displayImagePreviews();
+            updateUploadContainer();
+            
+            console.log(`📷 ${selectedFiles.length} imágenes seleccionadas:`, selectedFiles.map(f => f.name));
+        }
+        
+        // Función para mostrar vista previa de imágenes
+        function displayImagePreviews() {
+            const previewContainer = document.getElementById('imagePreviewContainer');
+            const previewGrid = document.getElementById('imagePreviewGrid');
+            
+            if (selectedFiles.length === 0) {
+                previewContainer.style.display = 'none';
+                return;
+            }
+            
+            previewContainer.style.display = 'block';
+            previewGrid.innerHTML = '';
+            
+            selectedFiles.forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const previewItem = document.createElement('div');
+                    previewItem.style.cssText = `
+                        position: relative;
+                        border-radius: 12px;
+                        overflow: hidden;
+                        background: rgba(255, 255, 255, 0.05);
+                        border: 1px solid rgba(255, 255, 255, 0.1);
+                        transition: transform 0.3s ease;
+                    `;
+                    
+                    previewItem.innerHTML = `
+                        <img src="${e.target.result}" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+                        <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); padding: 8px; color: white; font-size: 12px; text-align: center;">
+                            ${file.name.length > 15 ? file.name.substring(0, 15) + '...' : file.name}
+                        </div>
+                        <button type="button" onclick="removeImageFromSelection(${index})" style="position: absolute; top: 5px; right: 5px; background: rgba(239, 68, 68, 0.9); color: white; border: none; border-radius: 50%; width: 25px; height: 25px; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; transition: background 0.3s ease;" onmouseover="this.style.background='rgba(239, 68, 68, 1)'" 
+                           onmouseout="this.style.background='rgba(239, 68, 68, 0.9)'">×</button>
+                    `;
+                    
+                    previewItem.addEventListener('mouseenter', function() {
+                        this.style.transform = 'scale(1.05)';
+                    });
+                    
+                    previewItem.addEventListener('mouseleave', function() {
+                        this.style.transform = 'scale(1)';
+                    });
+                    
+                    previewGrid.appendChild(previewItem);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+        
+        // Función para actualizar el contenedor de subida
+        function updateUploadContainer() {
+            const container = document.getElementById('uploadContainer');
+            const uploadText = container.querySelector('.upload-text');
+            
+            if (selectedFiles.length > 0) {
+                container.style.borderColor = '#10b981';
+                container.style.background = 'rgba(16, 185, 129, 0.1)';
+                uploadText.innerHTML = `
+                    <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px; color: #10b981;">
+                        ✅ ${selectedFiles.length} imagen${selectedFiles.length > 1 ? 'es' : ''} seleccionada${selectedFiles.length > 1 ? 's' : ''}
+                    </div>
+                    <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7);">
+                        Haz clic para cambiar las imágenes
+                    </div>
+                `;
+            } else {
+                container.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                container.style.background = 'rgba(255, 255, 255, 0.05)';
+                uploadText.innerHTML = `
+                    <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px; color: white;">
+                        Selecciona hasta 3 imágenes
+                    </div>
+                    <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7);">
+                        Haz clic aquí o arrastra las imágenes
+                    </div>
+                `;
+            }
+        }
+        
+        // Función para remover imagen de la selección
+        function removeImageFromSelection(index) {
+            selectedFiles.splice(index, 1);
+            displayImagePreviews();
+            updateUploadContainer();
+            
+            // Actualizar el input file
+            const input = document.getElementById('imageUpload');
+            const dt = new DataTransfer();
+            selectedFiles.forEach(file => dt.items.add(file));
+            input.files = dt.files;
+            
+            console.log(`🗑️ Imagen removida. Quedan ${selectedFiles.length} imágenes.`);
+        }
+    </script>
+    
+    <!-- Script del menú hamburger -->
+    <script src="{{ url_for('static', filename='js/menu.js') }}"></script>
+</body>
+</html>
