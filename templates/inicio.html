@@ -131,4 +131,93 @@
                             </a>
                         </div>
                     </div>
-                   
+                    <div class="hero-image">
+                        <!-- Use a sleek icon for the hero image -->
+                        <div class="hero-icon">🚗</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="features-section">
+                <h2 class="section-title">Características Principales</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📝</div>
+                        <h3 class="feature-title">Reportes Fáciles</h3>
+                        <p class="feature-description">Crea reportes de anomalías viales en segundos con nuestra interfaz intuitiva.</p>
+                        <a href="{{ url_for('reports.registro_html') }}" class="feature-link">Probar ahora &rarr;</a>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🗺️</div>
+                        <h3 class="feature-title">Mapa Interactivo</h3>
+                        <p class="feature-description">Visualiza todas las anomalías reportadas en tu ciudad en tiempo real.</p>
+                        <a href="{{ url_for('visualizations.mapa_html') }}" class="feature-link">Ver mapa &rarr;</a>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3 class="feature-title">Estadísticas</h3>
+                        <p class="feature-description">Analiza los datos y descubre cuáles son las zonas con más problemas viales.</p>
+                        <a href="{{ url_for('visualizations.estadisticas_html') }}" class="feature-link">Ver estadísticas &rarr;</a>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔔</div>
+                        <h3 class="feature-title">Gestión de Reportes</h3>
+                        <p class="feature-description">Mantente al tanto del estado de tus reportes y las actualizaciones.</p>
+                        {% if session.get('user_role') == 'user' %}
+                        <a href="{{ url_for('reports.mis_reportes_html') }}" class="feature-link">Mis reportes &rarr;</a>
+                        {% else %}
+                        <a href="{{ url_for('auth.login') }}" class="feature-link">Inicia sesión &rarr;</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats Section -->
+            <section class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Reportes Activos</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">300+</div>
+                        <div class="stat-label">Problemas Resueltos</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">1000+</div>
+                        <div class="stat-label">Usuarios Registrados</div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script src="/static/js/menu.js"></script>
+    <script>
+        // Animations initialization
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.feature-card, .stat-card').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'all 0.6s ease';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
