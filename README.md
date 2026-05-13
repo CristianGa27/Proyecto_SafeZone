@@ -1,8 +1,8 @@
 # SafeZone - Sistema de Reportes de Anomalías Viales
 
-**Sistema completo para reportar y gestionar baches y vías dañadas**
+**Sistema completo para reportar y gestionar baches y vías dañadas - Ahora en Django**
 
-## ✅ Estado del Proyecto: LISTO PARA PRODUCCIÓN
+## ✅ Estado del Proyecto: MIGRADO A DJANGO
 
 ### 🚀 Características Principales
 - **2 tipos de anomalías:** Baches y Vías Dañadas
@@ -12,9 +12,10 @@
 - **Panel de información** con estadísticas en tiempo real
 - **Mapa interactivo** con geolocalización
 - **Interfaz responsive** y profesional
+- **Migración Exitosa:** Todo el sistema ahora corre sobre Django 6.0
 
 ## 📊 Base de Datos
-- **Nombre:** Prueba
+- **Nombre:** Prueba (MySQL)
 - **Codificación:** UTF-8 (utf8mb4)
 - **Usuarios:** 4 (Admin Principal, Admin Técnico, Usuario, Invitado)
 - **Barrios:** 114 organizados por 11 zonas geográficas
@@ -26,88 +27,24 @@
 - **Usuarios regulares** - Pueden crear y gestionar reportes
 - **Invitados** - Acceso básico para reportes
 
-## 🗂️ Estructura del Proyecto
+## 🗂️ Estructura del Proyecto (Django)
 
-El proyecto ha sido reorganizado en módulos separados para mejor mantenibilidad:
-
-### Archivos principales:
-
-- **`app.py`** - Aplicación Flask principal (simplificada)
-- **`config.py`** - Configuraciones y constantes
-- **`database.py`** - Conexión y operaciones de base de datos
-- **`auth.py`** - Rutas de autenticación (login, registro, logout)
-- **`reports.py`** - Rutas relacionadas con reportes
-- **`admin.py`** - Rutas de administración
-- **`visualizations.py`** - Rutas de mapa y estadísticas
-- **`utils.py`** - Funciones auxiliares
-- **`requirements.txt`** - Dependencias del proyecto
+El proyecto ha sido migrado de Flask a Django para mejorar la escalabilidad y seguridad.
 
 ### Estructura de carpetas:
 ```
-├── app.py                 # Aplicación principal
-├── config.py             # Configuraciones
-├── database.py           # Operaciones de BD
-├── auth.py               # Autenticación
-├── reports.py            # Gestión de reportes
-├── admin.py              # Panel de administración
-├── visualizations.py     # Mapa y estadísticas
-├── utils.py              # Utilidades
-├── requirements.txt      # Dependencias
-├── static/               # Archivos estáticos
-│   ├── CSS/             # Estilos
-│   ├── js/              # JavaScript
-│   ├── img/             # Imágenes
-│   └── uploads/         # Archivos subidos
-└── templates/           # Plantillas HTML
+├── manage.py                # Punto de entrada de Django
+├── safezone_project/        # Configuración del proyecto (settings.py, urls.py)
+├── safezone_app/            # Aplicación principal (models.py, views.py, urls.py)
+├── requirements.txt         # Dependencias actualizadas
+├── .env                     # Variables de entorno
+├── static/                  # Archivos estáticos
+│   ├── CSS/                # Estilos
+│   ├── js/                 # JavaScript
+│   ├── img/                # Imágenes
+│   └── uploads/            # Archivos subidos
+└── templates/               # Plantillas HTML migradas a Django syntax
 ```
-
-## Instalación
-
-1. Instalar dependencias:
-```bash
-pip install -r requirements.txt
-```
-
-2. Configurar la base de datos en `config.py`:
-```python
-DB_CONFIG = {
-    'host': "localhost",
-    'user': "root",
-    'password': "tu_password",  # Cambiar aquí
-    'database': "Prueba",
-    'port': 3306
-}
-```
-
-3. Ejecutar la aplicación:
-```bash
-python app.py
-```
-
-## Nuevas funcionalidades agregadas:
-
-### Mapa Interactivo
-- Visualización de reportes en mapa con coordenadas
-- Filtros por gravedad (crítico, severo, moderado, leve)
-- API endpoint para datos en tiempo real
-- Acceso desde: `/mapa`
-
-### Estadísticas
-- Dashboard con métricas del sistema
-- Reportes por estado, gravedad, zona y tipo
-- Gráficos de tendencias mensuales
-- API endpoint para datos estadísticos
-- Acceso desde: `/estadisticas`
-
-## Beneficios de la nueva estructura:
-
-- **Separación de responsabilidades**: Cada módulo tiene una función específica
-- **Mantenibilidad**: Más fácil encontrar y modificar código
-- **Escalabilidad**: Fácil agregar nuevas funcionalidades
-- **Reutilización**: Funciones de BD y utilidades pueden reutilizarse
-- **Testing**: Cada módulo puede probarse independientemente
-- **Navegación mejorada**: Enlaces consistentes a mapa y estadísticas en todos los paneles
-- **Diseño profesional**: Interfaz unificada con marca SafeZone consistente
 
 ## 🎯 Instalación y Configuración
 
@@ -119,43 +56,33 @@ python app.py
 ### Instalación
 1. **Clonar el repositorio**
 2. **Instalar dependencias:** `pip install -r requirements.txt`
-3. **Configurar base de datos:** Ejecutar `create_database_updated.sql`
-4. **Configurar config.py** con tus credenciales de MySQL
-5. **Ejecutar:** `python app.py`
+3. **Configurar base de datos:** Asegúrate de tener la base de datos `Prueba` creada (puedes usar `prueba.sql`).
+4. **Configurar .env** con tus credenciales de MySQL:
+   ```env
+   DB_HOST=localhost
+   DB_NAME=Prueba
+   DB_USER=root
+   DB_PASSWORD=tu_password
+   SECRET_KEY=tu_secreto
+   ```
+5. **Ejecutar servidor:**
+   ```bash
+   python manage.py runserver
+   ```
 
-### Acceso al Sistema
-- **URL:** http://localhost:5000
+## 🚀 Acceso al Sistema
+- **URL:** http://localhost:8000
 - **Admin Principal:** admin@safezone.com
 - **Admin Técnico:** tecnico@safezone.com
 
-## 🧹 Limpieza del Proyecto (Diciembre 2024):
+## 🧹 Migración de Flask a Django (Mayo 2026):
+- Se eliminaron todos los archivos relacionados con Flask (`app.py`, `auth.py`, `reports.py`, etc.).
+- Se implementaron los modelos en Django usando `managed = False` para respetar la base de datos existente.
+- Se adaptaron las vistas de Flask a la arquitectura de Django.
+- Se convirtieron las plantillas Jinja2 a la sintaxis nativa de Django.
+- Se configuró el sistema de autenticación para que reconozca los hashes de `bcrypt` existentes.
 
-### ✅ Archivos Eliminados
-- **PROYECTO_COMPLETADO.md** - Documentación temporal innecesaria
-- **__pycache__/** - Archivos compilados de Python (se regeneran automáticamente)
-- **.vscode/settings.json** - Configuración vacía de VSCode
-- **Imágenes duplicadas** - Eliminadas imágenes de prueba y duplicadas en uploads/
-
-### 🔧 Código Optimizado
-- **Espacios en blanco** eliminados en database.py
-- **Imports verificados** - todos los imports son necesarios
-- **Funciones consolidadas** - sin código duplicado
-- **.gitignore agregado** - para evitar archivos innecesarios en el futuro
-
-### 🎨 Interfaz Mejorada con Tema Oscuro
-- Fondo cambiado de blanco a tonos oscuros para mejor experiencia visual
-- Tabla de reportes con fondo oscuro (#111827) y mejor contraste
-- Botones de acción con efectos hover y gradientes
-- Formulario de edición con diseño moderno y oscuro
-- Mejores efectos visuales y transiciones
-
-### 🛡️ Seguridad Mejorada
-- Verificación de propiedad del reporte antes de permitir edición
-- Validación de campos obligatorios en la edición
-- Protección contra usuarios no autenticados
-- Solo el usuario propietario puede editar sus reportes
-
-## Configuración adicional:
-
-- Cambiar `SECRET_KEY` en `config.py`
-- Ajustar configuración de base de datos según tu entorno
+## 🛡️ Seguridad Mejorada
+- Verificación de propiedad del reporte antes de permitir edición.
+- Protección contra usuarios no autenticados mediante el sistema de sesiones de Django.
+- Sistema de validación de formularios robusto.

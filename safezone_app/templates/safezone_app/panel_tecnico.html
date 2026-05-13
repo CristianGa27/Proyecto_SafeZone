@@ -1,0 +1,300 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeZone - Panel Técnico</title>
+    <link rel="stylesheet" href="{% static 'CSS/validacion_de_reporte.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/menu.css' %}">
+    <style>
+        /* Estilos específicos para el panel técnico */
+        .panel-header {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .panel-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+        
+        .panel-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .status-pendiente { background: #fef3c7; color: #92400e; }
+        .status-asignado { background: #dbeafe; color: #1e40af; }
+        .status-en_progreso { background: #fed7aa; color: #c2410c; }
+        .status-resuelto { background: #d1fae5; color: #065f46; }
+        .status-cerrado { background: #e5e7eb; color: #374151; }
+        
+        .workflow-controls {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .workflow-btn {
+            padding: 0.4rem 0.8rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+
+        
+        .btn-progreso {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+        }
+        
+        .btn-resolver {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+        
+        .btn-cerrar {
+            background: linear-gradient(135deg, #6b7280, #4b5563);
+            color: white;
+        }
+        
+        .workflow-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .form-table tr {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <div style="display:none">{% csrf_token %}</div>
+
+    <!-- Botón hamburger -->
+    <button class="menu-toggle" id="menuToggle">
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </button>
+
+    <!-- Overlay para móviles -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <nav class="sidebar" id="sidebar">
+        <div class="logo">
+            <h1>SafeZone</h1>
+            <p>Sistema de Gestión Vial</p>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-title">Panel Técnico</div>
+            <div class="nav-item">
+                <a href="{% url 'panel_tecnico' %}" class="nav-link active">
+                    Gestión de Reportes
+                </a>
+            </div>
+            {% if request.session.user_role == 'admin_principal' or request.session.user_role == 'moderador' %}
+            <div class="nav-item">
+                <a href="{% url 'gestion_usuarios' %}" class="nav-link">
+                    Gestión de Usuarios
+                </a>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-title">Mi Cuenta</div>
+            <div class="nav-item">
+                <a href="{% url 'logout' %}" class="nav-link logout-link">
+                    Cerrar Sesión
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content" id="mainContent">
+        <header class="header">
+            <div class="header-content">
+                <div class="page-breadcrumb">
+                    <span>Panel Técnico</span>
+                </div>
+                <div class="user-info">
+                    <span>{{ request.session.username|default:"Admin Técnico" }}</span>
+                    <div class="user-avatar">
+                        {% if request.session.foto_perfil %}
+                            <img src="/media/{{ request.session.foto_perfil }}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="content-area">
+            
+            {% if messages %}
+            <div class="flash-messages">
+                {% for message in messages %}
+                <p class="flash-message flash-{{ message.tags }}">
+                    {% if message.tags == 'error' %}❌{% elif message.tags == 'success' %}✅{% elif message.tags == 'warning' %}⚠️{% else %}ℹ️{% endif %}
+                    {{ message }}
+                </p>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            
+            <div class="panel-header">
+                <h1 class="panel-title">Panel Técnico</h1>
+                <p class="panel-subtitle">
+                    Gestiona el flujo de trabajo de reportes aprobados
+                </p>
+            </div>
+
+            <div class="report-box">
+                <div class="form-container">
+                    <h2 class="page-title">Reportes en Flujo de Trabajo</h2>
+
+                    {% if reportes %}
+                    <div class="table-responsive">
+                        <table class="form-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Ubicación</th>
+                                    <th>Zona</th>
+                                    <th>Gravedad</th>
+                                    <th>Tipo</th>
+                                    <th>Estado</th>
+                                    <th>Fecha</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for r in reportes %}
+                                <tr class="table-row">
+                                    <td><strong>#{{ r.id }}</strong></td>
+                                    <td>{{ r.ubicacion }}</td>
+                                    <td>{{ r.zona }}</td>
+                                    <td>
+                                        <span class="gravedad-{{ r.gravedad }}">
+                                            {{ r.gravedad|title }}
+                                        </span>
+                                    </td>
+                                    <td>{{ r.nombre_anomalia }}</td>
+                                    <td>
+                                        <span class="status-badge status-{{ r.estado }}">
+                                            {% if r.estado == 'pendiente' %}Pendiente
+                                            {% elif r.estado == 'asignado' %}Asignado
+                                            {% elif r.estado == 'en_progreso' %}En Progreso
+                                            {% elif r.estado == 'resuelto' %}Resuelto
+                                            {% elif r.estado == 'cerrado' %}Cerrado
+                                            {% else %}{{ r.estado }}
+                                            {% endif %}
+                                        </span>
+                                    </td>
+                                    <td>{{ r.fecha_reporte|date:"d/m/Y"|default:"N/A" }}</td>
+                                    <td>
+                                        <div class="workflow-controls">
+                                            {% if r.estado == 'pendiente' %}
+                                                <button class="workflow-btn btn-progreso" onclick="cambiarEstadoTecnico({{ r.id }}, 'en_progreso')">
+                                                    Iniciar
+                                                </button>
+                                            {% elif r.estado == 'en_progreso' %}
+                                                <button class="workflow-btn btn-resolver" onclick="cambiarEstadoTecnico({{ r.id }}, 'resuelto')">
+                                                    Resolver
+                                                </button>
+                                            {% elif r.estado == 'resuelto' %}
+                                                <button class="workflow-btn btn-cerrar" onclick="cambiarEstadoTecnico({{ r.id }}, 'cerrado')">
+                                                    Cerrar
+                                                </button>
+                                            {% elif r.estado == 'cerrado' %}
+                                                <span style="color: #10b981; font-weight: 600;">Completado</span>
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div style="text-align: center; padding: 3rem; color: #6b7280;">
+                        <h3>No hay reportes en el flujo de trabajo</h3>
+                        <p>Los reportes aparecerán aquí cuando el administrador principal los apruebe.</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Función para cambiar estado en el flujo técnico
+        function cambiarEstadoTecnico(reporteId, nuevoEstado) {
+            // Crear formulario dinámico
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = `/validar/${reporteId}/`;
+            form.style.display = 'none';
+            
+            // CSRF Token
+            const csrfInput = document.createElement('input');
+            csrfInput.type = 'hidden';
+            csrfInput.name = 'csrfmiddlewaretoken';
+            csrfInput.value = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            form.appendChild(csrfInput);
+            
+            // Campo estado
+            const estadoInput = document.createElement('input');
+            estadoInput.type = 'hidden';
+            estadoInput.name = 'estado';
+            estadoInput.value = nuevoEstado;
+            form.appendChild(estadoInput);
+            
+            // Campo observaciones (vacío por defecto)
+            const obsInput = document.createElement('input');
+            obsInput.type = 'hidden';
+            obsInput.name = 'observaciones';
+            obsInput.value = `Estado cambiado a ${nuevoEstado}`;
+            form.appendChild(obsInput);
+            
+            // Enviar formulario
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
+    
+    <!-- Script del menú hamburger -->
+    <script src="{% static 'js/menu.js' %}"></script>
+</body>
+</html>
+
+
