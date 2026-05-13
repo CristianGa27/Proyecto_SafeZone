@@ -1,0 +1,222 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeZone - Gestión de Usuarios</title>
+    <link rel="stylesheet" href="{% static 'CSS/validacion_de_reporte.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/menu.css' %}">
+    <style>
+        .progress-bar-container {
+            width: 100%;
+            background-color: #e5e7eb;
+            border-radius: 9999px;
+            height: 0.5rem;
+            margin-top: 5px;
+        }
+        .progress-bar {
+            background-color: #10b981;
+            height: 0.5rem;
+            border-radius: 9999px;
+        }
+        .progress-bar.incomplete {
+            background-color: #f59e0b;
+        }
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        .filter-select, .search-input {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #d1d5db;
+        }
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: bold;
+            color: white;
+        }
+        .status-activo { background-color: #10b981; }
+        .status-inactivo { background-color: #6b7280; }
+        .status-pendiente { background-color: #f59e0b; }
+        .status-bloqueado { background-color: #ef4444; }
+    </style>
+</head>
+
+<body>
+    <div class="animated-bg"></div>
+
+    <button class="menu-toggle" id="menuToggle">
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </button>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <nav class="sidebar" id="sidebar">
+        <div class="logo">
+            <h1>SafeZone</h1>
+            <p>Sistema de Gestión Vial</p>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-title">Principal</div>
+            <div class="nav-item">
+                <a href="{% url 'panel_admin' %}" class="nav-link">
+                    Validación de Reportes
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="{% url 'gestion_usuarios' %}" class="nav-link active">
+                    Gestión de Usuarios
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="{% url 'panel_info_html' %}" class="nav-link">
+                    Panel de Información
+                </a>
+            </div>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-title">Mi Cuenta</div>
+            <div class="nav-item">
+                <a href="{% url 'logout' %}" class="nav-link logout-link">
+                    Cerrar Sesión
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content" id="mainContent">
+        <header class="header">
+            <div class="header-content">
+                <div class="page-breadcrumb">
+                    <span>Gestión de Usuarios</span>
+                </div>
+                <div class="user-info">
+                    <span>{{ request.session.username|default:"Admin" }}</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="content-area">
+            
+            {% if messages %}
+            <div class="flash-messages">
+                {% for message in messages %}
+                <p class="flash-message flash-{{ message.tags }}">{{ message }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+
+            <div class="page-header">
+                <h1 class="page-title">Panel de Usuarios</h1>
+                <p class="page-subtitle">Modera y verifica el estado de las cuentas de usuario.</p>
+            </div>
+
+            <div class="report-box">
+                <div class="form-container">
+                    <div class="filters">
+                        <select id="statusFilter" class="filter-select" onchange="filterUsers()">
+                            <option value="todos">Todos los Estados</option>
+                            <option value="activo">Activo</option>
+                            <option value="inactivo">Inactivo</option>
+                            <option value="pendiente">Pendiente</option>
+                            <option value="bloqueado">Bloqueado</option>
+                        </select>
+                        <input type="text" id="searchInput" class="search-input" placeholder="Buscar por nombre o correo..." onkeyup="filterUsers()">
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="form-table" id="usersTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre (Rol)</th>
+                                    <th>Contacto</th>
+                                    <th>Estado</th>
+                                    <th>Perfil Completado</th>
+                                    <th>Fecha Registro</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for u in usuarios %}
+                                <tr class="user-row" data-status="{{ u.estado_cuenta }}" data-name="{{ u.nombre_usuario|lower }}" data-email="{{ u.correo_electronico|lower }}">
+                                    <td>{{ u.id }}</td>
+                                    <td>
+                                        <strong>{{ u.nombre_usuario }}</strong><br>
+                                        <small>{{ u.nombre_rol }}</small>
+                                    </td>
+                                    <td>
+                                        <small>{{ u.correo_electronico }}</small><br>
+                                        <small>{{ u.telefono|default:"N/A" }}</small>
+                                    </td>
+                                    <td>
+                                        <span class="status-badge status-{{ u.estado_cuenta }}">{{ u.estado_cuenta | upper }}</span>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <span>{{ u.completitud }}%</span>
+                                            {% if u.completitud < 100 %}
+                                            <span style="font-size: 0.8em; color: #ef4444;" title="Falta: {{ u.faltantes }}">⚠️ Incompleto</span>
+                                            {% else %}
+                                            <span style="font-size: 0.8em; color: #10b981;">✅</span>
+                                            {% endif %}
+                                        </div>
+                                        <div class="progress-bar-container">
+                                            <div class="progress-bar {% if u.completitud < 100 %}incomplete{% endif %}" style="width: {{ u.completitud }}%"></div>
+                                        </div>
+                                        {% if u.completitud < 100 %}
+                                        <small style="color: #6b7280;">Falta: {{ u.faltantes }}</small>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ u.fecha_registro|date:"Y-m-d"|default:"N/A" }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="{% static 'js/menu.js' %}"></script>
+    <script>
+        function filterUsers() {
+            var input = document.getElementById("searchInput").value.toLowerCase();
+            var statusFilter = document.getElementById("statusFilter").value;
+            var rows = document.getElementsByClassName("user-row");
+
+            for (var i = 0; i < rows.length; i++) {
+                var rowName = rows[i].getAttribute("data-name");
+                var rowEmail = rows[i].getAttribute("data-email");
+                var rowStatus = rows[i].getAttribute("data-status");
+
+                var matchesText = rowName.includes(input) || rowEmail.includes(input);
+                var matchesStatus = (statusFilter === "todos" || statusFilter === rowStatus);
+
+                if (matchesText && matchesStatus) {
+                    rows[i].style.display = "";
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+
