@@ -289,6 +289,11 @@ def mis_reportes_html(request):
     return render(request, "safezone_app/mis_reportes.html", {'reportes': reportes})
 
 def registro_reporte(request):
+    # Requisito 1: El usuario debe estar autenticado
+    if is_guest(request):
+        messages.error(request, "Debes iniciar sesión con una cuenta para registrar un reporte.")
+        return redirect('login_html')
+
     if request.method == "POST":
         ubicacion = request.POST.get("location")
         barrio = request.POST.get("zone_id")
@@ -297,35 +302,55 @@ def registro_reporte(request):
         descripcion = request.POST.get("description")
         info_adicional = request.POST.get("additionalInfo")
         
+        # Requisito 2: El reporte debe contener información obligatoria y válida
         if not all([ubicacion, barrio, tipo_anomalia_id, gravedad, descripcion]):
-            messages.error(request, "Faltan campos obligatorios.")
+            messages.error(request, "Error: Faltan campos obligatorios para el reporte.")
             return redirect('registro_html')
             
-        latitud = float(request.POST.get("latitude") or 0) or None
-        longitud = float(request.POST.get("longitude") or 0) or None
-        
-        imagenes = [None, None, None]
-        files = request.FILES.getlist('imageUpload')[:3]
-        for i, file in enumerate(files):
-            if file:
-                filename = f"{os.urandom(8).hex()}_{file.name}"
-                path = os.path.join(settings.MEDIA_ROOT, filename)
-                with open(path, 'wb+') as f:
-                    for chunk in file.chunks(): f.write(chunk)
-                imagenes[i] = filename
-                
-        user = Usuarios.objects.get(id=request.session['user_id'])
-        tipo = Tiposanomalia.objects.get(id=tipo_anomalia_id)
-        
-        rep = Reportes(
-            ubicacion=ubicacion, barrio=barrio, id_tipo_anomalia=tipo, gravedad=gravedad,
-            descripcion=descripcion, info_adicional=info_adicional,
-            imagen=imagenes[0], imagen2=imagenes[1], imagen3=imagenes[2],
-            usuario=user, estado='nuevo', latitud=latitud, longitud=longitud,
-            fecha_reporte=datetime.now(), fecha_actualizacion=datetime.now()
-        )
-        rep.save()
-        messages.success(request, "Reporte enviado exitosamente.")
+        try:
+            user = Usuarios.objects.get(id=request.session['user_id'])
+            tipo = Tiposanomalia.objects.get(id=tipo_anomalia_id)
+            
+            latitud = float(request.POST.get("latitude") or 0) or None
+            longitud = float(request.POST.get("longitude") or 0) or None
+            
+            # Procesar imágenes (máximo 3)
+            imagenes = [None, None, None]
+            files = request.FILES.getlist('imageUpload')[:3]
+            for i, file in enumerate(files):
+                if file:
+                    filename = f"{uuid.uuid4().hex}_{file.name}"
+                    path = os.path.join(settings.MEDIA_ROOT, filename)
+                    os.makedirs(settings.MEDIA_ROOT, exist_ok=True)
+                    with open(path, 'wb+') as f:
+                        for chunk in file.chunks(): f.write(chunk)
+                    imagenes[i] = filename
+            
+            # Requisito 3: Identificador único (Generado automáticamente por la DB al guardar)
+            rep = Reportes(
+                ubicacion=ubicacion, 
+                barrio=barrio, 
+                id_tipo_anomalia=tipo, 
+                gravedad=gravedad,
+                descripcion=descripcion, 
+                info_adicional=info_adicional,
+                imagen=imagenes[0], 
+                imagen2=imagenes[1], 
+                imagen3=imagenes[2],
+                usuario=user, 
+                estado='nuevo', 
+                latitud=latitud, 
+                longitud=longitud,
+                fecha_reporte=datetime.now(), 
+                fecha_actualizacion=datetime.now()
+            )
+            rep.save()
+            messages.success(request, f"¡Reporte #{rep.id} enviado exitosamente!")
+        except (Usuarios.DoesNotExist, Tiposanomalia.DoesNotExist):
+            messages.error(request, "Error: Información de usuario o tipo de anomalía no válida.")
+        except Exception as e:
+            messages.error(request, f"Error inesperado al registrar el reporte: {e}")
+            
     return redirect('registro_html')
 
 def editar_reporte_html(request, reporte_id):
@@ -382,22 +407,44 @@ def api_reportes(request):
 # --- ADMIN VIEWS ---
 
 def panel_admin(request):
+    # Requisito 1: Solo el administrador puede consultar los reportes
     if request.session.get('user_role') not in ['admin_principal', 'admin', 'moderador']:
-        messages.error(request, "Acceso denegado.")
+        messages.error(request, "Acceso denegado. Se requiere perfil administrativo.")
         return redirect('login_html')
         
+    # Requisito 2: Búsqueda mediante criterios válidos (Filtros)
+    estado_filtro = request.GET.get('estado')
+    gravedad_filtro = request.GET.get('gravedad')
+    
+    query = """
+        SELECT R.id, U.nombre_usuario AS reportado_por, R.ubicacion, R.barrio as nombre_zona,
+            T.nombre_anomalia, R.gravedad, R.descripcion, R.info_adicional, R.fecha_reporte,
+            R.estado, R.observaciones, R.imagen, R.imagen2, R.imagen3, R.latitud, R.longitud
+        FROM Reportes R
+        LEFT JOIN Usuarios U ON R.usuario_id = U.id
+        LEFT JOIN TiposAnomalia T ON R.id_tipo_anomalia = T.id
+        WHERE 1=1
+    """
+    params = []
+    
+    if estado_filtro:
+        query += " AND R.estado = %s"
+        params.append(estado_filtro)
+    if gravedad_filtro:
+        query += " AND R.gravedad = %s"
+        params.append(gravedad_filtro)
+        
+    query += " ORDER BY R.id DESC"
+        
     with connection.cursor() as cursor:
-        cursor.execute("""
-            SELECT R.id, U.nombre_usuario AS reportado_por, R.ubicacion, R.barrio as nombre_zona,
-                T.nombre_anomalia, R.gravedad, R.descripcion, R.fecha_reporte,
-                R.estado, R.observaciones, R.imagen, R.latitud, R.longitud
-            FROM Reportes R
-            LEFT JOIN Usuarios U ON R.usuario_id = U.id
-            LEFT JOIN TiposAnomalia T ON R.id_tipo_anomalia = T.id
-            ORDER BY R.id DESC
-        """)
+        cursor.execute(query, params)
         reportes = dictfetchall(cursor)
-    return render(request, "safezone_app/validacion_reporte.html", {'reportes': reportes})
+        
+    # Requisito 3: Información completa (enviamos todos los datos a la plantilla)
+    return render(request, "safezone_app/validacion_reporte.html", {
+        'reportes': reportes,
+        'filtros': {'estado': estado_filtro, 'gravedad': gravedad_filtro}
+    })
 
 def panel_tecnico(request):
     if request.session.get('user_role') != 'admin_tecnico':
