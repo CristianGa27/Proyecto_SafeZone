@@ -1,4 +1,4 @@
-﻿# This is an auto-generated Django model module.
+# This is an auto-generated Django model module.
 # You'll have to do the following manually to clean this up:
 #   * Rearrange models' order
 #   * Make sure each model has one field with primary_key=True
@@ -16,8 +16,9 @@ class Configuracionsistema(models.Model):
     fecha_actualizacion = models.DateTimeField()
 
     class Meta:
-        managed = False
         db_table = 'configuracionsistema'
+        verbose_name = 'Configuración del sistema'
+        verbose_name_plural = 'Configuraciones del sistema'
 
 
 class Historialreporte(models.Model):
@@ -29,8 +30,9 @@ class Historialreporte(models.Model):
     fecha_cambio = models.DateTimeField()
 
     class Meta:
-        managed = False
         db_table = 'historialreporte'
+        verbose_name = 'Historial de reporte'
+        verbose_name_plural = 'Historial de reportes'
 
 
 class Reportes(models.Model):
@@ -52,8 +54,9 @@ class Reportes(models.Model):
     fecha_actualizacion = models.DateTimeField()
 
     class Meta:
-        managed = False
         db_table = 'reportes'
+        verbose_name = 'Reporte'
+        verbose_name_plural = 'Reportes'
 
 
 class Roles(models.Model):
@@ -62,8 +65,9 @@ class Roles(models.Model):
     fecha_creacion = models.DateTimeField()
 
     class Meta:
-        managed = False
         db_table = 'roles'
+        verbose_name = 'Rol'
+        verbose_name_plural = 'Roles'
 
 
 class Tiposanomalia(models.Model):
@@ -73,8 +77,9 @@ class Tiposanomalia(models.Model):
     fecha_creacion = models.DateTimeField()
 
     class Meta:
-        managed = False
         db_table = 'tiposanomalia'
+        verbose_name = 'Tipo de anomalía'
+        verbose_name_plural = 'Tipos de anomalía'
 
 
 class Usuarios(models.Model):
@@ -94,8 +99,9 @@ class Usuarios(models.Model):
     estado_cuenta = models.CharField(max_length=9, blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'usuarios'
+        verbose_name = 'Usuario'
+        verbose_name_plural = 'Usuarios'
 
 
 class Zonas(models.Model):
