@@ -62,23 +62,37 @@ def register(request):
     if request.method != "POST":
         return redirect('register_page')
 
-    nombres = request.POST.get('registerNombres', '').strip()
-    apellidos = request.POST.get('registerApellidos', '').strip()
-    nombre_usuario = f"{nombres} {apellidos}".strip()
-    telefono = request.POST.get('registerPhone', '').strip()
-    correo = request.POST.get('registerEmail', '').strip()
-    contrasena = request.POST.get('registerPassword', '')
+    from ..forms import RegisterForm
 
-    if Usuarios.objects.filter(correo_electronico=correo).exists():
-        messages.error(request, "El correo electrónico ya está registrado.")
+    form_data = {
+        'nombres': request.POST.get('registerNombres', '').strip(),
+        'apellidos': request.POST.get('registerApellidos', '').strip(),
+        'telefono': request.POST.get('registerPhone', '').strip(),
+        'email': request.POST.get('registerEmail', '').strip(),
+        'password': request.POST.get('registerPassword', ''),
+    }
+    form = RegisterForm(form_data)
+
+    if not form.is_valid():
+        for field, errors in form.errors.items():
+            for error in errors:
+                messages.error(request, error)
         return redirect('register_page')
+
+    nombres = form.cleaned_data['nombres']
+    apellidos = form.cleaned_data['apellidos']
+    nombre_usuario = f"{nombres} {apellidos}".strip()
+    correo = form.cleaned_data['email']
+    telefono = form.cleaned_data['telefono']
+    contrasena = form.cleaned_data['password']
 
     try:
         user, timed_token = create_user_account(nombre_usuario, correo, contrasena, telefono)
-        send_verification_email(correo, nombre_usuario, timed_token)
-        messages.success(request, "Te enviamos un correo de verificación.")
+        send_verification_email(correo, nombre_usuario, timed_token, request)
+        messages.success(request, "¡Registro exitoso! Te enviamos un correo de verificación a " + correo + ".")
         return redirect('esperando_verificacion')
     except Exception as e:
+        logger.exception("Error al registrar usuario")
         messages.error(request, f"Error al crear la cuenta: {e}")
 
     return redirect('register_page')

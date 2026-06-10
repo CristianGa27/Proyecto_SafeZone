@@ -7,6 +7,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SafeZone - Registro de Usuario</title>
     <link rel="stylesheet" href="{% static 'CSS/inicio_sesion.css' %}">
+    <style>
+        /* ── Alertas mejoradas ── */
+        .alert-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+        .alert {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            line-height: 1.4;
+            animation: slideInAlert 0.35s ease;
+            position: relative;
+        }
+        @keyframes slideInAlert {
+            from { opacity: 0; transform: translateY(-8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .alert-success {
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            color: #22c55e;
+        }
+        .alert-error {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #f87171;
+        }
+        .alert-warning {
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            color: #fbbf24;
+        }
+        .alert-info {
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            color: #818cf8;
+        }
+        .alert-icon { font-size: 1.1rem; flex-shrink: 0; }
+        .alert-text { flex: 1; }
+        .alert-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: inherit;
+            opacity: 0.6;
+            font-size: 1rem;
+            padding: 0;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        .alert-close:hover { opacity: 1; }
+
+        /* ── Validación inline ── */
+        .field-error {
+            font-size: 0.78rem;
+            color: #f87171;
+            margin-top: 5px;
+            display: none;
+            padding-left: 4px;
+        }
+        .form-input.is-invalid {
+            border-color: rgba(239, 68, 68, 0.6) !important;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12) !important;
+        }
+        .form-input.is-valid {
+            border-color: rgba(34, 197, 94, 0.5) !important;
+        }
+        .form-input-wrapper { position: relative; }
+
+        /* ── Password strength ── */
+        .password-strength {
+            height: 4px;
+            border-radius: 4px;
+            margin-top: 6px;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.1);
+        }
+        .strength-weak   { background: #ef4444; width: 33%; }
+        .strength-medium { background: #f59e0b; width: 66%; }
+        .strength-strong { background: #22c55e; width: 100%; }
+        .strength-label {
+            font-size: 0.72rem;
+            margin-top: 3px;
+            color: rgba(255,255,255,0.5);
+        }
+    </style>
 </head>
 
 <body>
@@ -22,36 +115,44 @@
                     <p class="auth-subtitle">Crea tu cuenta para empezar a reportar</p>
                 </div>
 
-                
                 {% if messages %}
-                <div class="flash-messages">
+                <div class="alert-container" id="alertContainer">
                     {% for message in messages %}
-                    <p class="flash-message flash-{{ message.tags }}">
-                        {% if message.tags == 'error' %}❌{% elif message.tags == 'success' %}✅{% elif message.tags == 'warning' %}⚠️{% else %}ℹ️{% endif %}
-                        {{ message }}
-                    </p>
+                    <div class="alert alert-{{ message.tags }}" role="alert">
+                        <span class="alert-icon">
+                            {% if message.tags == 'error' %}❌
+                            {% elif message.tags == 'success' %}✅
+                            {% elif message.tags == 'warning' %}⚠️
+                            {% else %}ℹ️{% endif %}
+                        </span>
+                        <span class="alert-text">{{ message }}</span>
+                        <button class="alert-close" onclick="dismissAlert(this)" aria-label="Cerrar">✕</button>
+                    </div>
                     {% endfor %}
                 </div>
                 {% endif %}
-                
 
-                <form class="auth-form" id="registerForm" method="POST" action="{% url 'register' %}">
-    {% csrf_token %}
+                <form class="auth-form" id="registerForm" method="POST" action="{% url 'register' %}" novalidate>
+                    {% csrf_token %}
 
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label" for="registerNombres">Nombres</label>
                             <div class="form-input-wrapper">
                                 <span class="form-icon">👤</span>
-                                <input class="form-input" type="text" id="registerNombres" name="registerNombres" placeholder="Tus nombres" required>
+                                <input class="form-input" type="text" id="registerNombres" name="registerNombres"
+                                    placeholder="Tus nombres" autocomplete="given-name">
                             </div>
+                            <span class="field-error" id="nombresError"></span>
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="registerApellidos">Apellidos</label>
                             <div class="form-input-wrapper">
                                 <span class="form-icon">👤</span>
-                                <input class="form-input" type="text" id="registerApellidos" name="registerApellidos" placeholder="Tus apellidos" required>
+                                <input class="form-input" type="text" id="registerApellidos" name="registerApellidos"
+                                    placeholder="Tus apellidos" autocomplete="family-name">
                             </div>
+                            <span class="field-error" id="apellidosError"></span>
                         </div>
                     </div>
 
@@ -59,28 +160,36 @@
                         <label class="form-label" for="registerPhone">Número de Teléfono</label>
                         <div class="form-input-wrapper">
                             <span class="form-icon">📱</span>
-                            <input class="form-input" type="tel" id="registerPhone" name="registerPhone" placeholder="Ej: 3001234567" pattern="[0-9]{7,15}" required>
+                            <input class="form-input" type="tel" id="registerPhone" name="registerPhone"
+                                placeholder="Ej: 3001234567" autocomplete="tel">
                         </div>
+                        <span class="field-error" id="phoneError"></span>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label" for="registerEmail">Correo Electrónico</label>
                         <div class="form-input-wrapper">
                             <span class="form-icon">✉️</span>
-                            <input class="form-input" type="email" id="registerEmail" name="registerEmail" placeholder="ejemplo@correo.com" required>
+                            <input class="form-input" type="email" id="registerEmail" name="registerEmail"
+                                placeholder="ejemplo@correo.com" autocomplete="email">
                         </div>
+                        <span class="field-error" id="emailError"></span>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label" for="registerPassword">Contraseña</label>
                         <div class="form-input-wrapper">
                             <span class="form-icon">🔒</span>
-                            <input class="form-input" type="password" id="registerPassword" name="registerPassword" placeholder="••••••••" required>
-                            <span class="toggle-password" onclick="togglePassword()">👁️</span>
+                            <input class="form-input" type="password" id="registerPassword" name="registerPassword"
+                                placeholder="••••••••" autocomplete="new-password">
+                            <span class="toggle-password" onclick="togglePassword()" title="Mostrar/ocultar contraseña">👁️</span>
                         </div>
+                        <div class="password-strength" id="strengthBar"></div>
+                        <div class="strength-label" id="strengthLabel"></div>
+                        <span class="field-error" id="passwordError"></span>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary" id="submitBtn">
                         <span>Registrarse</span>
                     </button>
                 </form>
@@ -94,6 +203,116 @@
     </div>
 
     <script>
+        /* ── Helpers ── */
+        const LETRAS_RE = /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ ]+$/;
+        const EMAIL_RE  = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        function showError(inputId, errorId, msg) {
+            const inp = document.getElementById(inputId);
+            const err = document.getElementById(errorId);
+            inp.classList.add('is-invalid');
+            inp.classList.remove('is-valid');
+            err.textContent = msg;
+            err.style.display = 'block';
+        }
+
+        function clearError(inputId, errorId) {
+            const inp = document.getElementById(inputId);
+            const err = document.getElementById(errorId);
+            inp.classList.remove('is-invalid');
+            inp.classList.add('is-valid');
+            err.style.display = 'none';
+        }
+
+        /* ── Validaciones individuales ── */
+        function validateNombres() {
+            const v = document.getElementById('registerNombres').value.trim();
+            if (!v) return showError('registerNombres', 'nombresError', 'Los nombres son obligatorios.');
+            if (v.length < 2) return showError('registerNombres', 'nombresError', 'El nombre debe tener al menos 2 caracteres.');
+            if (!LETRAS_RE.test(v)) return showError('registerNombres', 'nombresError', 'El nombre solo puede contener letras y espacios.');
+            clearError('registerNombres', 'nombresError');
+            return true;
+        }
+
+        function validateApellidos() {
+            const v = document.getElementById('registerApellidos').value.trim();
+            if (!v) return showError('registerApellidos', 'apellidosError', 'Los apellidos son obligatorios.');
+            if (v.length < 2) return showError('registerApellidos', 'apellidosError', 'El apellido debe tener al menos 2 caracteres.');
+            if (!LETRAS_RE.test(v)) return showError('registerApellidos', 'apellidosError', 'El apellido solo puede contener letras y espacios.');
+            clearError('registerApellidos', 'apellidosError');
+            return true;
+        }
+
+        function validatePhone() {
+            const v = document.getElementById('registerPhone').value.trim();
+            if (!v) return showError('registerPhone', 'phoneError', 'El teléfono es obligatorio.');
+            if (!/^[0-9]{7,15}$/.test(v)) return showError('registerPhone', 'phoneError', 'Ingresa un número de teléfono válido (7-15 dígitos).');
+            clearError('registerPhone', 'phoneError');
+            return true;
+        }
+
+        function validateEmail() {
+            const v = document.getElementById('registerEmail').value.trim();
+            if (!v) return showError('registerEmail', 'emailError', 'El correo electrónico es obligatorio.');
+            if (!EMAIL_RE.test(v)) return showError('registerEmail', 'emailError', 'Ingresa un correo electrónico válido.');
+            clearError('registerEmail', 'emailError');
+            return true;
+        }
+
+        function validatePassword() {
+            const v = document.getElementById('registerPassword').value;
+            if (!v) return showError('registerPassword', 'passwordError', 'La contraseña es obligatoria.');
+            if (v.length < 6) return showError('registerPassword', 'passwordError', 'La contraseña debe tener al menos 6 caracteres.');
+            clearError('registerPassword', 'passwordError');
+            return true;
+        }
+
+        /* ── Medidor de seguridad ── */
+        document.getElementById('registerPassword').addEventListener('input', function () {
+            const v = this.value;
+            const bar   = document.getElementById('strengthBar');
+            const label = document.getElementById('strengthLabel');
+            bar.className = 'password-strength';
+            if (!v) { label.textContent = ''; return; }
+            let score = 0;
+            if (v.length >= 6)  score++;
+            if (v.length >= 10) score++;
+            if (/[A-Z]/.test(v) && /[0-9]/.test(v)) score++;
+            if (score === 1) { bar.classList.add('strength-weak');   label.textContent = '🔴 Débil'; }
+            else if (score === 2) { bar.classList.add('strength-medium'); label.textContent = '🟡 Media'; }
+            else { bar.classList.add('strength-strong'); label.textContent = '🟢 Fuerte'; }
+        });
+
+        /* ── Eventos blur (validación al salir del campo) ── */
+        document.getElementById('registerNombres').addEventListener('blur', validateNombres);
+        document.getElementById('registerApellidos').addEventListener('blur', validateApellidos);
+        document.getElementById('registerPhone').addEventListener('blur', validatePhone);
+        document.getElementById('registerEmail').addEventListener('blur', validateEmail);
+        document.getElementById('registerPassword').addEventListener('blur', validatePassword);
+
+        /* ── Submit ── */
+        document.getElementById('registerForm').addEventListener('submit', function (e) {
+            const ok = [validateNombres(), validateApellidos(), validatePhone(), validateEmail(), validatePassword()];
+            if (ok.some(r => r !== true)) {
+                e.preventDefault();
+            }
+        });
+
+        /* ── Cerrar alertas ── */
+        function dismissAlert(btn) {
+            const alert = btn.closest('.alert');
+            alert.style.transition = 'opacity 0.25s, transform 0.25s';
+            alert.style.opacity = '0';
+            alert.style.transform = 'translateY(-6px)';
+            setTimeout(() => alert.remove(), 280);
+        }
+
+        /* ── Auto-cerrar alerta de éxito tras 6 s ── */
+        document.querySelectorAll('.alert-success').forEach(function (el) {
+            setTimeout(() => { if (el.parentNode) dismissAlert(el.querySelector('.alert-close')); }, 6000);
+        });
+
+        /* ── Toggle password ── */
         function togglePassword() {
             const input = document.getElementById('registerPassword');
             input.type = input.type === 'password' ? 'text' : 'password';
@@ -102,5 +321,3 @@
 </body>
 
 </html>
-
-

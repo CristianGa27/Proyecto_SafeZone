@@ -29,15 +29,67 @@ class LoginForm(forms.Form):
 class RegisterForm(forms.Form):
     """Formulario de registro de nuevo usuario."""
 
-    nombres = forms.CharField(max_length=50)
-    apellidos = forms.CharField(max_length=50)
-    telefono = forms.CharField(max_length=20)
-    email = forms.EmailField(max_length=150)
-    password = forms.CharField(min_length=6, max_length=255)
+    nombres = forms.CharField(
+        max_length=50,
+        min_length=2,
+        error_messages={
+            'required': 'Los nombres son obligatorios.',
+            'min_length': 'El nombre debe tener al menos 2 caracteres.',
+            'max_length': 'El nombre no puede superar los 50 caracteres.',
+        }
+    )
+    apellidos = forms.CharField(
+        max_length=50,
+        min_length=2,
+        error_messages={
+            'required': 'Los apellidos son obligatorios.',
+            'min_length': 'El apellido debe tener al menos 2 caracteres.',
+            'max_length': 'El apellido no puede superar los 50 caracteres.',
+        }
+    )
+    telefono = forms.CharField(
+        max_length=20,
+        error_messages={'required': 'El teléfono es obligatorio.'}
+    )
+    email = forms.EmailField(
+        max_length=150,
+        error_messages={
+            'required': 'El correo electrónico es obligatorio.',
+            'invalid': 'Ingresa un correo electrónico válido.',
+        }
+    )
+    password = forms.CharField(
+        min_length=6,
+        max_length=255,
+        error_messages={
+            'required': 'La contraseña es obligatoria.',
+            'min_length': 'La contraseña debe tener al menos 6 caracteres.',
+        }
+    )
+
+    def clean_nombres(self):
+        """Valida que los nombres solo contengan letras y espacios."""
+        import re
+        nombres = self.cleaned_data.get('nombres', '').strip()
+        if not re.match(r'^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ ]+$', nombres):
+            raise forms.ValidationError(
+                'El nombre solo puede contener letras y espacios.'
+            )
+        return nombres
+
+    def clean_apellidos(self):
+        """Valida que los apellidos solo contengan letras y espacios."""
+        import re
+        apellidos = self.cleaned_data.get('apellidos', '').strip()
+        if not re.match(r'^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ ]+$', apellidos):
+            raise forms.ValidationError(
+                'El apellido solo puede contener letras y espacios.'
+            )
+        return apellidos
 
     def clean_email(self):
         """Verifica que el correo no esté ya registrado."""
-        email = self.cleaned_data['email']
+        email = self.cleaned_data.get('email', '').strip()
         if Usuarios.objects.filter(correo_electronico=email).exists():
             raise forms.ValidationError(
                 "El correo electrónico ya está registrado."

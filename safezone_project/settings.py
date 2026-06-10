@@ -29,7 +29,10 @@ SECRET_KEY = 'django-insecure-p7_+ej%v2tl&1q-(3g$hoptnk_h)8vr_akd)e2oy^d93q3ekeq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']  # Permite conexiones desde cualquier dispositivo en la red local
+
+# URL base para enlaces en correos (usa la IP real de tu PC en la red local)
+SITE_URL = 'http://192.168.1.31:8000'
 
 
 # Application definition
