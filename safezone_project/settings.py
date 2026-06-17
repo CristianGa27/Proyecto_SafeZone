@@ -32,7 +32,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']  # Permite conexiones desde cualquier dispositivo en la red local
 
 # URL base para enlaces en correos (usa la IP real de tu PC en la red local)
-SITE_URL = 'http://192.168.1.31:8000'
+SITE_URL = 'http://127.0.0.1:8000'
 
 
 # Application definition
