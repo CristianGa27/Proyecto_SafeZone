@@ -109,15 +109,12 @@
 
         <div class="content-area">
             <div class="page-header">
-                <h1 class="page-title">Mapa Interactivo</h1>
-                <p class="page-subtitle">
-                    Visualización geográfica de reportes viales en tiempo real.
-                </p>
+                <h1 class="page-title">🗺️ Mapa Interactivo</h1>
                 
                 <!-- Controles de filtro -->
                 <div class="filter-controls">
                     <div class="filter-section">
-                        <h4 class="filter-title">Por Gravedad:</h4>
+                        <h4 class="filter-title">Gravedad:</h4>
                         <div class="filter-pills">
                             <div class="filter-pill filter-btn active" data-filter="all" data-type="gravedad">Todos</div>
                             <div class="filter-pill filter-btn" data-filter="critico" data-type="gravedad">Críticos</div>
@@ -129,7 +126,7 @@
                     
                     {% if request.session.user_role == 'admin' %}
                     <div class="filter-section">
-                        <h4 class="filter-title">Por Estado:</h4>
+                        <h4 class="filter-title">Estado:</h4>
                         <div class="filter-pills">
                             <div class="filter-pill filter-btn-estado active" data-estado="todos">Todos</div>
                             <div class="filter-pill filter-btn-estado" data-estado="pendiente">Pendiente</div>
