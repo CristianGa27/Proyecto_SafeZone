@@ -108,6 +108,13 @@
         </header>
         
         <div class="content-area">
+            {% if messages %}
+            <div class="flash-messages">
+                {% for message in messages %}
+                <p class="flash-message flash-{{ message.tags }}">{{ message }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
             <div class="page-header">
                 <h1 class="page-title">Estadísticas del Sistema</h1>
                 <p class="page-subtitle">
@@ -369,6 +376,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+<!-- Sistema de alertas global -->
+<script src="/static/js/alerts.js"></script>
 <!-- Script del menú hamburger -->
 <script src="/static/js/menu.js"></script>
 
