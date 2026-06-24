@@ -1,16 +1,19 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SafeZone - Editar Reporte</title>
-    <link rel="stylesheet" href="/static/CSS/registro_de_usuarios.css">
-    <link rel="stylesheet" href="/static/CSS/editar_reporte.css">
-    <link rel="stylesheet" href="/static/CSS/menu.css">
+    <title>SafeZone - Editar Reporte #{{ reporte.id }}</title>
+    <link rel="stylesheet" href="{% static 'CSS/registro_de_usuarios.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/menu.css' %}">
+    <!-- Leaflet CSS y JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 </head>
 <body>
     <div class="animated-bg"></div>
-
+    
     <!-- Botón hamburger -->
     <button class="menu-toggle" id="menuToggle">
         <div class="hamburger">
@@ -19,7 +22,7 @@
             <span></span>
         </div>
     </button>
-
+    
     <!-- Overlay para móviles -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
@@ -32,37 +35,27 @@
         <div class="nav-section">
             <div class="nav-title">Navegación</div>
             <div class="nav-item">
-                <a href="{% url 'inicio_html' %}" class="nav-link">
-                    Inicio
-                </a>
+                <a href="{% url 'inicio_html' %}" class="nav-link">Inicio</a>
             </div>
         </div>
 
         <div class="nav-section">
             <div class="nav-title">Reportes</div>
             <div class="nav-item">
-                <a href="{% url 'registro_html' %}" class="nav-link">
-                    Crear Nuevo Reporte
-                </a>
+                <a href="{% url 'registro_html' %}" class="nav-link">Crear Nuevo Reporte</a>
+            </div>
+            <div class="nav-item">
+                <a href="{% url 'mis_reportes_html' %}" class="nav-link active">Mis Reportes</a>
             </div>
         </div>
 
         <div class="nav-section">
             <div class="nav-title">Mi Cuenta</div>
             <div class="nav-item">
-                <a href="{% url 'perfil' %}" class="nav-link">
-                    Mi Perfil
-                </a>
+                <a href="{% url 'perfil' %}" class="nav-link">Mi Perfil</a>
             </div>
             <div class="nav-item">
-                <a href="{% url 'mis_reportes_html' %}" class="nav-link">
-                    Mis Reportes
-                </a>
-            </div>
-            <div class="nav-item">
-                <a href="{% url 'logout' %}" class="nav-link logout-link">
-                    Cerrar Sesión
-                </a>
+                <a href="{% url 'logout' %}" class="nav-link logout-link">Cerrar Sesión</a>
             </div>
         </div>
     </nav>
@@ -71,6 +64,8 @@
         <header class="header">
             <div class="header-content">
                 <div class="page-breadcrumb">
+                    <a href="{% url 'mis_reportes_html' %}" style="color:#6366f1;text-decoration:none;">Mis Reportes</a>
+                    <span style="color:#4b5563;margin:0 8px;">/</span>
                     <span>Editar Reporte #{{ reporte.id }}</span>
                 </div>
                 <div class="user-info">
@@ -83,230 +78,342 @@
                 </div>
             </div>
         </header>
-        
+
         <div class="content-area">
-            
             {% if messages %}
             <div class="flash-messages">
                 {% for message in messages %}
-                <p class="flash-message flash-{{ message.tags }}">
-                    {% if message.tags == 'error' %}❌{% elif message.tags == 'success' %}✅{% elif message.tags == 'warning' %}⚠️{% else %}ℹ️{% endif %}
-                    {{ message }}
-                </p>
+                <p class="flash-message flash-{{ message.tags }}">{{ message }}</p> 
                 {% endfor %}
             </div>
             {% endif %}
             
-            
             <div class="page-header">
-                <div class="header-badge">
-                    <span class="badge-text">Edición</span>
-                </div>
                 <h1 class="page-title">Editar Reporte #{{ reporte.id }}</h1>
                 <p class="page-subtitle">
-                    Modifica los detalles de tu reporte de anomalía vial. Los cambios se guardarán inmediatamente.
+                    Modifica los detalles de tu reporte de anomalía en la vía.
                 </p>
-                <div class="status-indicator {{ reporte.estado|lower }}">
-                    <span class="status-dot"></span>
-                    <span class="status-text">Estado actual: {{ reporte.estado|title }}</span>
-                </div>
             </div>
 
             <div class="form-container">
-                <form action="{% url 'actualizar_reporte' reporte.id %}" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="location">Ubicación *</label>
-                            <input type="text" id="location" name="location" class="form-control" 
-                                   value="{{ reporte.ubicacion }}" required 
-                                   placeholder="Ej: Calle 123 con Carrera 45">
+                <h2 class="form-title">Detalles del Reporte</h2>
+                
+                <form class="report-form" id="reportForm" method="POST" action="{% url 'actualizar_reporte' reporte.id %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <label for="location" class="form-label">Ubicación</label>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="location" name="location" class="form-input" value="{{ reporte.ubicacion }}" placeholder="Escribe la dirección, barrio o cruce" required style="flex: 1;">
+                            <button type="button" id="btnGPS" onclick="forceGPSLocation()" style="background: rgba(99, 102, 241, 0.2); border: 1px solid #6366f1; color: #818cf8; border-radius: 12px; padding: 0 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; white-space: nowrap;" title="Usar mi ubicación GPS actual">
+                                📍 Usar GPS
+                            </button>
                         </div>
-                        
-                        <div class="form-group">
-                            <label for="zone_id">Barrio/Zona *</label>
-                            <select id="zone_id" name="zone_id" class="form-control" required>
-                                <option value="">Selecciona un barrio</option>
-                                
-                                <!-- ZONA NORTE -->
-                                <optgroup label="ZONA NORTE">
-                                    {% for zona in zonas %}
-                                        {% if zona.zona_geografica == 'norte' %}
-                                            <option value="{{ zona.nombre_zona }}" {% if reporte.barrio == zona.nombre_zona %}selected{% endif %}>
-                                                {{ zona.nombre_zona|title }}
-                                            </option>
-                                        {% endif %}
-                                    {% endfor %}
-                                </optgroup>
-                                
-                                <!-- ZONA NORORIENTAL -->
-                                <optgroup label="ZONA NORORIENTAL">
-                                    {% for zona in zonas %}
-                                        {% if zona.zona_geografica == 'nororiente' %}
-                                            <option value="{{ zona.nombre_zona }}" {% if reporte.barrio == zona.nombre_zona %}selected{% endif %}>
-                                                {{ zona.nombre_zona|title }}
-                                            </option>
-                                        {% endif %}
-                                    {% endfor %}
-                                </optgroup>
-                                
-                                <!-- ZONA CENTRO-NORTE -->
-                                <optgroup label="ZONA CENTRO-NORTE">
-                                    {% for zona in zonas %}
-                                        {% if zona.zona_geografica == 'centro-norte' %}
-                                            <option value="{{ zona.nombre_zona }}" {% if reporte.barrio == zona.nombre_zona %}selected{% endif %}>
-                                                {{ zona.nombre_zona|title }}
-                                            </option>
-                                        {% endif %}
-                                    {% endfor %}
-                                </optgroup>
-                                
-                                <!-- ZONA CENTRO -->
-                                <optgroup label="ZONA CENTRO">
-                                    {% for zona in zonas %}
-                                        {% if zona.zona_geografica == 'centro' %}
-                                            <option value="{{ zona.nombre_zona }}" {% if reporte.barrio == zona.nombre_zona %}selected{% endif %}>
-                                                {{ zona.nombre_zona|title }}
-                                            </option>
-                                        {% endif %}
-                                    {% endfor %}
-                                </optgroup>
-                                
-                                <!-- ZONA CENTRO-SUR -->
-                                <optgroup label="ZONA CENTRO-SUR">
-                                    {% for zona in zonas %}
-                                        {% if zona.zona_geografica == 'centro-sur' %}
-                                            <option value="{{ zona.nombre_zona }}" {% if reporte.barrio == zona.nombre_zona %}selected{% endif %}>
-                                                {{ zona.nombre_zona|title }}
-                                            </option>
-                                        {% endif %}
-                                    {% endfor %}
-                                </optgroup>
-                                
-                                <!-- ZONA SUR -->
-                                <optgroup label="ZONA SUR">
-                                    {% for zona in zonas %}
-                                        {% if zona.zona_geografica == 'sur' %}
-                                            <option value="{{ zona.nombre_zona }}" {% if reporte.barrio == zona.nombre_zona %}selected{% endif %}>
-                                                {{ zona.nombre_zona|title }}
-                                            </option>
-                                        {% endif %}
-                                    {% endfor %}
-                                </optgroup>
-                                
-                                <!-- ZONA OCCIDENTAL -->
-                                <optgroup label="ZONA OCCIDENTAL">
-                                    {% for zona in zonas %}
-                                        {% if zona.zona_geografica == 'occidente' %}
-                                            <option value="{{ zona.nombre_zona }}" {% if reporte.barrio == zona.nombre_zona %}selected{% endif %}>
-                                                {{ zona.nombre_zona|title }}
-                                            </option>
-                                        {% endif %}
-                                    {% endfor %}
-                                </optgroup>
-                                
-                                <!-- URBANIZACIONES -->
-                                <optgroup label="URBANIZACIONES">
-                                    {% for zona in zonas %}
-                                        {% if zona.zona_geografica == 'urbanizacion' %}
-                                            <option value="{{ zona.nombre_zona }}" {% if reporte.barrio == zona.nombre_zona %}selected{% endif %}>
-                                                {{ zona.nombre_zona|title }}
-                                            </option>
-                                        {% endif %}
-                                    {% endfor %}
-                                </optgroup>
-                                
-                                <!-- BARRIOS POPULARES -->
-                                <optgroup label="BARRIOS POPULARES">
-                                    {% for zona in zonas %}
-                                        {% if zona.zona_geografica == 'popular' %}
-                                            <option value="{{ zona.nombre_zona }}" {% if reporte.barrio == zona.nombre_zona %}selected{% endif %}>
-                                                {{ zona.nombre_zona|title }}
-                                            </option>
-                                        {% endif %}
-                                    {% endfor %}
-                                </optgroup>
-                                
-                                <!-- ZONAS INDUSTRIALES -->
-                                <optgroup label="ZONAS INDUSTRIALES">
-                                    {% for zona in zonas %}
-                                        {% if zona.zona_geografica == 'industrial' %}
-                                            <option value="{{ zona.nombre_zona }}" {% if reporte.barrio == zona.nombre_zona %}selected{% endif %}>
-                                                {{ zona.nombre_zona|title }}
-                                            </option>
-                                        {% endif %}
-                                    {% endfor %}
-                                </optgroup>
-                                
-                                <!-- CORREGIMIENTOS -->
-                                <optgroup label="CORREGIMIENTOS">
-                                    {% for zona in zonas %}
-                                        {% if zona.zona_geografica == 'corregimiento' %}
-                                            <option value="{{ zona.nombre_zona }}" {% if reporte.barrio == zona.nombre_zona %}selected{% endif %}>
-                                                {{ zona.nombre_zona|title }}
-                                            </option>
-                                        {% endif %}
-                                    {% endfor %}
-                                </optgroup>
-                            </select>
+                        <small id="locationStatus" style="color: #9ca3af; font-size: 0.8rem; margin-top: 5px; display: block;"></small>
+                        <div id="miniMap" style="height: 250px; width: 100%; border-radius: 12px; margin-top: 15px; border: 1px solid rgba(255,255,255,0.2); z-index: 1;"></div>
+                        <small style="color: #6366f1; font-size: 0.8rem; margin-top: 5px; display: block;">💡 Mueve el marcador rojo en el mapa para fijar el punto exacto.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="zone" class="form-label">Zona/Barrio</label>
+                        <select id="zone" name="zone_id" class="form-select" required>
+                            <option value="">Selecciona el Barrio</option>
+                            
+                            <optgroup label="ZONA NORTE">
+                                {% for zona in zonas %}{% if zona.zona_geografica == 'norte' %}
+                                    <option value="{{ zona.nombre_zona }}" {% if reporte.barrio == zona.nombre_zona %}selected{% endif %}>{{ zona.nombre_zona|title }}</option>
+                                {% endif %}{% endfor %}
+                            </optgroup>
+                            
+                            <optgroup label="ZONA NORORIENTAL">
+                                {% for zona in zonas %}{% if zona.zona_geografica == 'nororiente' %}
+                                    <option value="{{ zona.nombre_zona }}" {% if reporte.barrio == zona.nombre_zona %}selected{% endif %}>{{ zona.nombre_zona|title }}</option>
+                                {% endif %}{% endfor %}
+                            </optgroup>
+                            
+                            <optgroup label="ZONA CENTRO-NORTE">
+                                {% for zona in zonas %}{% if zona.zona_geografica == 'centro-norte' %}
+                                    <option value="{{ zona.nombre_zona }}" {% if reporte.barrio == zona.nombre_zona %}selected{% endif %}>{{ zona.nombre_zona|title }}</option>
+                                {% endif %}{% endfor %}
+                            </optgroup>
+                            
+                            <optgroup label="ZONA CENTRO">
+                                {% for zona in zonas %}{% if zona.zona_geografica == 'centro' %}
+                                    <option value="{{ zona.nombre_zona }}" {% if reporte.barrio == zona.nombre_zona %}selected{% endif %}>{{ zona.nombre_zona|title }}</option>
+                                {% endif %}{% endfor %}
+                            </optgroup>
+                            
+                            <optgroup label="ZONA CENTRO-SUR">
+                                {% for zona in zonas %}{% if zona.zona_geografica == 'centro-sur' %}
+                                    <option value="{{ zona.nombre_zona }}" {% if reporte.barrio == zona.nombre_zona %}selected{% endif %}>{{ zona.nombre_zona|title }}</option>
+                                {% endif %}{% endfor %}
+                            </optgroup>
+                            
+                            <optgroup label="ZONA SUR">
+                                {% for zona in zonas %}{% if zona.zona_geografica == 'sur' %}
+                                    <option value="{{ zona.nombre_zona }}" {% if reporte.barrio == zona.nombre_zona %}selected{% endif %}>{{ zona.nombre_zona|title }}</option>
+                                {% endif %}{% endfor %}
+                            </optgroup>
+                            
+                            <optgroup label="ZONA OCCIDENTAL">
+                                {% for zona in zonas %}{% if zona.zona_geografica == 'occidente' %}
+                                    <option value="{{ zona.nombre_zona }}" {% if reporte.barrio == zona.nombre_zona %}selected{% endif %}>{{ zona.nombre_zona|title }}</option>
+                                {% endif %}{% endfor %}
+                            </optgroup>
+                            
+                            <optgroup label="URBANIZACIONES">
+                                {% for zona in zonas %}{% if zona.zona_geografica == 'urbanizacion' %}
+                                    <option value="{{ zona.nombre_zona }}" {% if reporte.barrio == zona.nombre_zona %}selected{% endif %}>{{ zona.nombre_zona|title }}</option>
+                                {% endif %}{% endfor %}
+                            </optgroup>
+                            
+                            <optgroup label="BARRIOS POPULARES">
+                                {% for zona in zonas %}{% if zona.zona_geografica == 'popular' %}
+                                    <option value="{{ zona.nombre_zona }}" {% if reporte.barrio == zona.nombre_zona %}selected{% endif %}>{{ zona.nombre_zona|title }}</option>
+                                {% endif %}{% endfor %}
+                            </optgroup>
+                            
+                            <optgroup label="ZONAS INDUSTRIALES">
+                                {% for zona in zonas %}{% if zona.zona_geografica == 'industrial' %}
+                                    <option value="{{ zona.nombre_zona }}" {% if reporte.barrio == zona.nombre_zona %}selected{% endif %}>{{ zona.nombre_zona|title }}</option>
+                                {% endif %}{% endfor %}
+                            </optgroup>
+                            
+                            <optgroup label="CORREGIMIENTOS">
+                                {% for zona in zonas %}{% if zona.zona_geografica == 'corregimiento' %}
+                                    <option value="{{ zona.nombre_zona }}" {% if reporte.barrio == zona.nombre_zona %}selected{% endif %}>{{ zona.nombre_zona|title }}</option>
+                                {% endif %}{% endfor %}
+                            </optgroup>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="anomalia_type" class="form-label">Tipo de Anomalía</label>
+                        <select id="anomalia_type" name="tipo_anomalia_id" class="form-select" required>
+                            <option value="">Selecciona el Tipo</option>
+                            {% for tipo in tipos_anomalia %}
+                            <option value="{{ tipo.id }}" {% if reporte.id_tipo_anomalia == tipo %}selected{% endif %}>{{ tipo.nombre_anomalia }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="severity" class="form-label">Niveles de Gravedad</label>
+                        <div class="severity-options">
+                            <div class="severity-option {% if reporte.gravedad == 'critico' %}selected{% endif %}" data-value="critico">
+                                <div class="severity-indicator severity-critical"></div>
+                                <div class="severity-text">
+                                    <div class="severity-label">Crítico</div>
+                                    <div class="severity-desc">Requiere atención inmediata</div>
+                                </div>
+                            </div>
+                            <div class="severity-option {% if reporte.gravedad == 'severo' %}selected{% endif %}" data-value="severo">
+                                <div class="severity-indicator severity-severe"></div>
+                                <div class="severity-text">
+                                    <div class="severity-label">Severo</div>
+                                    <div class="severity-desc">Atención prioritaria</div>
+                                </div>
+                            </div>
+                            <div class="severity-option {% if reporte.gravedad == 'moderado' %}selected{% endif %}" data-value="moderado">
+                                <div class="severity-indicator severity-moderate"></div>
+                                <div class="severity-text">
+                                    <div class="severity-label">Moderado</div>
+                                    <div class="severity-desc">Atención necesaria</div>
+                                </div>
+                            </div>
+                            <div class="severity-option {% if reporte.gravedad == 'leve' %}selected{% endif %}" data-value="leve">
+                                <div class="severity-indicator severity-light"></div>
+                                <div class="severity-text">
+                                    <div class="severity-label">Leve</div>
+                                    <div class="severity-desc">Baja prioridad</div>
+                                </div>
+                            </div>
                         </div>
+                        <input type="hidden" id="severity" name="severity" value="{{ reporte.gravedad }}" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description" class="form-label">Descripción</label>
+                        <textarea id="description" name="description" class="form-textarea" rows="4" placeholder="Describe brevemente la anomalía..." required>{{ reporte.descripcion }}</textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="additionalInfo" class="form-label">Información Adicional (Opcional)</label>
+                        <textarea id="additionalInfo" name="additionalInfo" class="form-textarea" rows="2" placeholder="Cualquier otro detalle relevante...">{{ reporte.info_adicional|default:'' }}</textarea>
                     </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="tipo_anomalia_id">Tipo de Anomalía *</label>
-                            <select id="tipo_anomalia_id" name="tipo_anomalia_id" class="form-control" required>
-                                <option value="">Selecciona el tipo de anomalía</option>
-                                {% for tipo in tipos_anomalia %}
-                                <option value="{{ tipo.id }}" {% if reporte.id_tipo_anomalia == tipo.id %}selected{% endif %}>
-                                    {{ tipo.nombre_anomalia }}
-                                </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="severity">Gravedad *</label>
-                            <select id="severity" name="severity" class="form-control" required>
-                                <option value="">Selecciona la gravedad</option>
-                                <option value="leve" {% if reporte.gravedad == 'leve' %}selected{% endif %}>Leve</option>
-                                <option value="moderado" {% if reporte.gravedad == 'moderado' %}selected{% endif %}>Moderado</option>
-                                <option value="severo" {% if reporte.gravedad == 'severo' %}selected{% endif %}>Severo</option>
-                                <option value="critico" {% if reporte.gravedad == 'critico' %}selected{% endif %}>Crítico</option>
-                            </select>
-                        </div>
+                    <input type="hidden" id="latitude" name="latitude" value="{{ reporte.latitud|default:'' }}">
+                    <input type="hidden" id="longitude" name="longitude" value="{{ reporte.longitud|default:'' }}">
+                    
+                    <div style="display: flex; gap: 15px;">
+                        <button type="submit" class="submit-btn" id="submitBtn" style="flex: 2;">Guardar Cambios</button>
+                        <a href="{% url 'mis_reportes_html' %}" class="submit-btn" style="flex: 1; text-align: center; background: rgba(255,255,255,0.1); text-decoration: none;">Cancelar</a>
                     </div>
-
-                    <div class="form-group full-width">
-                        <label for="description">Descripción *</label>
-                        <textarea id="description" name="description" class="form-control" rows="8" required 
-                                  placeholder="Describe detalladamente la anomalía encontrada...">{{ reporte.descripcion }}</textarea>
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label for="additionalInfo">Información Adicional</label>
-                        <textarea id="additionalInfo" name="additionalInfo" class="form-control" rows="6" 
-                                  placeholder="Información adicional, observaciones, etc...">{{ reporte.info_adicional|default:'' }}</textarea>
-                    </div>
-
-
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary" id="submitBtn">
-                            <span class="btn-text">Actualizar Reporte</span>
-                        </button>
-                        <a href="{% url 'mis_reportes_html' %}" class="btn btn-secondary">
-                            <span class="btn-text">Cancelar</span>
-                        </a>
-                    </div>
+                    
                 </form>
             </div>
         </div>
     </main>
+    <script>
+        // Coordenadas iniciales basadas en el reporte existente, o por defecto si no las hay
+        let REPORT_LAT = {% if reporte.latitud %}{{ reporte.latitud|stringformat:"f" }}{% else %}6.3389{% endif %};
+        let REPORT_LNG = {% if reporte.longitud %}{{ reporte.longitud|stringformat:"f" }}{% else %}-75.5627{% endif %};
+
+        // --- INICIO LÓGICA DEL MAPA ---
+        let miniMap;
+        let mapMarker;
+
+        function initMap() {
+            miniMap = L.map('miniMap').setView([REPORT_LAT, REPORT_LNG], 15);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap'
+            }).addTo(miniMap);
+
+            mapMarker = L.marker([REPORT_LAT, REPORT_LNG], {draggable: true}).addTo(miniMap);
+
+            // Al mover el marcador
+            mapMarker.on('dragend', function(e) {
+                const pos = mapMarker.getLatLng();
+                updateLocationFromMap(pos.lat, pos.lng);
+            });
+
+            // Al hacer clic en el mapa
+            miniMap.on('click', function(e) {
+                mapMarker.setLatLng(e.latlng);
+                updateLocationFromMap(e.latlng.lat, e.latlng.lng);
+            });
+            
+            // Arreglar problema de renderizado del mapa cuando se hace scroll
+            setTimeout(() => { miniMap.invalidateSize(); }, 500);
+        }
+
+        async function updateLocationFromMap(lat, lng) {
+            document.getElementById("latitude").value = lat;
+            document.getElementById("longitude").value = lng;
+            
+            try {
+                showLocationStatus("Obteniendo dirección...");
+                // Reverse geocoding con Nominatim
+                const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
+                const data = await response.json();
+                
+                if (data && data.display_name) {
+                    // Tomar la parte principal de la dirección
+                    let dirParts = data.display_name.split(',');
+                    let dirCorta = dirParts.slice(0, 3).join(',').trim();
+                    document.getElementById("location").value = dirCorta;
+                    showLocationStatus("Dirección detectada en el mapa.");
+                } else {
+                    document.getElementById("location").value = "Ubicación en mapa (" + lat.toFixed(4) + ", " + lng.toFixed(4) + ")";
+                    showLocationStatus("Coordenadas actualizadas desde el mapa.");
+                }
+            } catch (error) {
+                document.getElementById("location").value = "Ubicación en mapa (" + lat.toFixed(4) + ", " + lng.toFixed(4) + ")";
+                showLocationStatus("Coordenadas actualizadas desde el mapa.");
+            }
+        }
+
+        // Llamar a la inicialización al cargar la página
+        window.addEventListener('load', function() {
+            initMap();
+        });
+        // --- FIN LÓGICA DEL MAPA ---
+
+        function showLocationStatus(msg) {
+            const status = document.getElementById('locationStatus');
+            if (status) status.innerText = msg;
+        }
+
+        // Función para forzar la captura GPS desde el botón
+        function forceGPSLocation() {
+            const btn = document.getElementById("btnGPS");
+            if (!btn) return;
+            btn.innerHTML = "⏳ Buscando...";
+            btn.style.opacity = "0.7";
+            
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        const lat = position.coords.latitude;
+                        const lng = position.coords.longitude;
+                        
+                        // Centrar mapa y mover marcador
+                        if(miniMap && mapMarker) {
+                            miniMap.setView([lat, lng], 17);
+                            mapMarker.setLatLng([lat, lng]);
+                        }
+                        
+                        updateLocationFromMap(lat, lng);
+                        
+                        btn.innerHTML = "✅ ¡GPS Activo!";
+                        btn.style.background = "rgba(16, 185, 129, 0.2)";
+                        btn.style.borderColor = "#10b981";
+                        btn.style.color = "#34d399";
+                        
+                        if (typeof SafeZoneAlert === 'function') {
+                            SafeZoneAlert('Ubicación precisa capturada con éxito', 'success');
+                        }
+                    },
+                    function(error) {
+                        btn.innerHTML = "❌ Falló el GPS";
+                        btn.style.background = "rgba(239, 68, 68, 0.2)";
+                        btn.style.borderColor = "#ef4444";
+                        btn.style.color = "#f87171";
+                        setTimeout(() => { btn.innerHTML = "📍 Usar GPS"; btn.style = "background: rgba(99, 102, 241, 0.2); border: 1px solid #6366f1; color: #818cf8; border-radius: 12px; padding: 0 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; white-space: nowrap;"; }, 3000);
+                        
+                        if (typeof SafeZoneAlert === 'function') {
+                            SafeZoneAlert('No se pudo obtener el GPS. Revisa los permisos.', 'error');
+                        }
+                    },
+                    { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+                );
+            } else {
+                if (typeof SafeZoneAlert === 'function') {
+                    SafeZoneAlert('Tu navegador no soporta GPS', 'error');
+                }
+            }
+        }
+
+        // Manejo de selección de gravedad
+        document.addEventListener('DOMContentLoaded', function() {
+            const severityOptions = document.querySelectorAll('.severity-option');
+            const severityInput = document.getElementById('severity');
+            
+            severityOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remover selección anterior
+                    severityOptions.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Agregar selección actual
+                    this.classList.add('selected');
+                    
+                    // Actualizar valor del input hidden
+                    severityInput.value = this.dataset.value;
+                });
+            });
+            
+            // Validación del formulario antes del envío
+            const form = document.getElementById('reportForm');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            if (form && submitBtn) {
+                form.addEventListener('submit', function(e) {
+                    const gravedad = document.getElementById('severity').value;
+                    if (!gravedad) {
+                        alert('❌ Por favor selecciona la gravedad');
+                        e.preventDefault();
+                        return false;
+                    }
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Guardando...';
+                    return true;
+                });
+            }
+        });
+    </script>
     
     <!-- Script del menú hamburger -->
-    <script src="/static/js/alerts.js"></script>
-    <script src="/static/js/menu.js"></script>
+    <script src="{% static 'js/alerts.js' %}"></script>
+    <script src="{% static 'js/menu.js' %}"></script>
 </body>
 </html>
-
-
