@@ -130,9 +130,9 @@ body {
 .legend-item {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 0.75rem;
-    padding: 0.5rem;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+    padding: 0.4rem;
     background: rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     transition: all 0.3s ease;
@@ -144,13 +144,13 @@ body {
 }
 
 .legend-marker {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2rem;
+    font-size: 1rem;
     flex-shrink: 0;
 }
 
@@ -647,33 +647,42 @@ body {
     background: rgba(15, 23, 42, 0.95);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
+    border-radius: 12px;
     padding: 0;
-    width: 280px;
+    width: 240px;
+    max-height: calc(100% - 40px);
+    display: flex;
+    flex-direction: column;
     z-index: 1000;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     overflow: hidden;
 }
 
 .legend-header {
     background: linear-gradient(135deg, #1e293b, #334155);
-    padding: 1rem;
+    padding: 0.75rem 1rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
 }
 
 .legend-title {
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 700;
     color: white;
     margin: 0;
 }
 
 .legend-content {
-    padding: 1rem;
+    padding: 0.75rem;
+    overflow-y: auto;
 }
 
+.legend-content::-webkit-scrollbar { width: 4px; }
+.legend-content::-webkit-scrollbar-track { background: transparent; }
+.legend-content::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+
 .legend-section {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .legend-section:last-child {
@@ -681,23 +690,23 @@ body {
 }
 
 .section-title {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     font-weight: 600;
     color: #94a3b8;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
 
 .legend-label {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 600;
     color: white;
-    margin-bottom: 0.125rem;
+    margin-bottom: 0.1rem;
 }
 
 .legend-desc {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: #94a3b8;
 }
 
@@ -715,17 +724,17 @@ body {
 
 .stat-item {
     text-align: center;
-    padding: 0.75rem 0.5rem;
+    padding: 0.4rem;
     background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
+    border-radius: 6px;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .stat-value {
-    font-size: 1.25rem;
+    font-size: 1rem;
     font-weight: 700;
     color: #6366f1;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.1rem;
 }
 
 .stat-label {
@@ -739,12 +748,12 @@ body {
     grid-column: 1 / -1;
     background: linear-gradient(135deg, #6366f1, #8b5cf6);
     color: white;
-    margin-top: 0.5rem;
+    margin-top: 0.25rem;
 }
 
 .total-stat .stat-value {
     color: white;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
 }
 
 .total-stat .stat-label {
