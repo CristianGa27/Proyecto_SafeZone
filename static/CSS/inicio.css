@@ -85,6 +85,7 @@ body {
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    max-width: calc(100% - 2rem);
 }
 
 .page-breadcrumb {
@@ -96,6 +97,7 @@ body {
     display: flex;
     align-items: center;
     gap: 1rem;
+    margin-right: 1rem;
 }
 
 .user-avatar {
@@ -108,6 +110,13 @@ body {
     justify-content: center;
     font-weight: 600;
     cursor: pointer;
+    overflow: hidden;
+}
+
+.user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .content-area {
