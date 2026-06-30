@@ -55,40 +55,6 @@ def login_view(request):
     messages.success(request, "Bienvenido al sistema.")
     return redirect('inicio_html')
 
-def login_view(request):
-    if request.method != "POST":
-        return render(request, "safezone_app/login.html")
-
-    correo = request.POST.get('loginEmail', '').strip()
-    contrasena = request.POST.get('loginPassword', '')
-    user, role_name = authenticate_user(correo, contrasena)
-
-    if not user:
-        messages.error(request, "Correo o contraseña incorrectos.")
-        return redirect('login_html')
-
-    if role_name not in (UserRole.ADMIN_PRINCIPAL, UserRole.ADMIN_TECNICO) and user.verificado == 0:
-        messages.warning(request, "Debes verificar tu correo antes de iniciar sesión.")
-        return redirect('esperando_verificacion')
-
-    request.session[SESSION_USER_ID] = user.id
-    request.session[SESSION_USERNAME] = user.nombre_usuario
-    request.session[SESSION_FOTO_PERFIL] = user.foto_perfil
-
-    redirect_map = {
-        UserRole.ADMIN_PRINCIPAL: ('admin_principal', "Bienvenido al panel de administración.", 'panel_admin'),
-        UserRole.ADMIN_TECNICO: ('admin_tecnico', "Bienvenido al panel técnico.", 'panel_tecnico'),
-    }
-
-    if role_name in redirect_map:
-        session_role, msg, url = redirect_map[role_name]
-        request.session[SESSION_USER_ROLE] = session_role
-        messages.success(request, msg)
-        return redirect(url)
-
-    request.session[SESSION_USER_ROLE] = UserRole.USER
-    messages.success(request, "Bienvenido al sistema.")
-    return redirect('inicio_html')
 
 def register_page(request):
     return render(request, "safezone_app/registro.html")
