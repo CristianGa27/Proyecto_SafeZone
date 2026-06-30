@@ -22,38 +22,44 @@
                     <p class="auth-subtitle">Sistema de Gestión Vial Inteligente</p>
                 </div>
 
-                
                 {% if messages %}
                 <div class="flash-messages">
                     {% for message in messages %}
                     <p class="flash-message flash-{{ message.tags }}">
-                        {% if message.tags == 'error' %}❌{% elif message.tags == 'success' %}✅{% elif message.tags == 'warning' %}⚠️{% else %}ℹ️{% endif %}
+                        {% if message.tags == 'error' %}❌{% elif message.tags == 'success' %}✅{% elif message.tags == 'warning' %}⚠️{% else %}ℹTriangulito!{% endif %}
                         {{ message }}
                     </p>
                     {% endfor %}
                 </div>
                 {% endif %}
-                
 
-                <form class="auth-form" id="loginForm" method="POST" action="{% url 'login_post' %}">
+                <form class="auth-form" id="loginForm" method="POST" action="{% url 'login_html' %}">
     {% csrf_token %}
-                    <div class="form-group">
-                        <label for="loginEmail">Correo Electrónico</label>
-                        <input type="email" id="loginEmail" name="loginEmail" placeholder="ejemplo@correo.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="loginPassword">Contraseña</label>
-                        <input type="password" id="loginPassword" name="loginPassword" placeholder="••••••••" required>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary">
-                        <span>🚀 Iniciar Sesión</span>
-                    </button>
+    
+    <div class="form-group">
+        <label class="form-label" for="loginEmail">Correo Electrónico</label>
+        <div class="form-input-wrapper">
+            <span class="form-icon">✉️</span>
+            <input type="email" id="loginEmail" name="loginEmail" class="form-input" placeholder="ejemplo@correo.com" required>
+        </div>
+    </div>
 
-                    <div class="divider">
-                        <span>o</span>
-                    </div>
-                </form>
+    <div class="form-group">
+        <label class="form-label" for="loginPassword">Contraseña</label>
+        <div class="form-input-wrapper">
+            <span class="form-icon">🔒</span>
+            <input type="password" id="loginPassword" name="loginPassword" class="form-input" placeholder="••••••••" required>
+        </div>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">
+        <span>🚀 Iniciar Sesión</span>
+    </button>
+
+    <div class="divider">
+        <span>o</span>
+    </div>
+</form>
 
                 <div class="guest-warning">
                     <div class="guest-warning-icon">!</div>
@@ -84,5 +90,3 @@
 </body>
 
 </html>
-
-

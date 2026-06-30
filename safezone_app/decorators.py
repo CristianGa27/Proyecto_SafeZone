@@ -6,7 +6,7 @@ con decoradores reutilizables y consistentes.
 """
 
 from functools import wraps
-
+from django.utils.http import url_has_allowed_host_and_scheme
 from django.contrib import messages
 from django.shortcuts import redirect
 
@@ -105,3 +105,23 @@ def tecnico_required(view_func):
         return view_func(request, *args, **kwargs)
 
     return wrapper
+
+def verificar_url_segura(view_func):
+    @wraps(view_func)
+    def _wrapped_view(request, *args, **kwargs):
+        # Captura cualquier parámetro 'next' si intentan forzar una redirección
+        next_url = request.GET.get('next') or request.POST.get('next')
+        
+        if next_url:
+            # ESCUDO: Valida que la URL apunte estrictamente a nuestro dominio
+            is_safe = url_has_allowed_host_and_scheme(
+                url=next_url,
+                allowed_hosts={request.get_host()},
+                require_https=request.is_secure()
+            )
+            # Si intentan redirigir a un sitio externo malicioso, los mandamos a la página de inicio
+            if not is_safe:
+                return redirect('inicio_html')
+                
+        return view_func(request, *args, **kwargs)
+    return _wrapped_view
