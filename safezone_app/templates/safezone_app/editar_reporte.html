@@ -411,7 +411,22 @@
             }
         });
     </script>
+    <script>
+    // 1. Evita que el navegador guarde un estado de página activo en su historial de navegación
+    window.onload = function () {
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    }
     
+    // 2. Detecta si el usuario intentó usar el botón "Atrás" y lo obliga a recargar la página.
+    // Al recargar, Django detectará que la sesión no existe y exigirá el correo y contraseña.
+    window.onpageshow = function (event) {
+        if (event.persisted) {
+            window.location.reload();
+        }
+    };
+</script>
     <!-- Script del menú hamburger -->
     <script src="{% static 'js/alerts.js' %}"></script>
     <script src="{% static 'js/menu.js' %}"></script>
