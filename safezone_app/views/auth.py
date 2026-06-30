@@ -68,7 +68,7 @@ def guest_login(request):
     request.session[SESSION_USER_ID] = 0
     request.session[SESSION_USERNAME] = 'Invitado'
     messages.warning(request, "Has ingresado como invitado. Funciones limitadas.")
-    return redirect('registro_html')
+    return redirect('inicio_html')
 
 def register(request):
     if request.method != "POST":
