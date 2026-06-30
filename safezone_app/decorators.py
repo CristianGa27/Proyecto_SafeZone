@@ -9,6 +9,7 @@ from functools import wraps
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.contrib import messages
 from django.shortcuts import redirect
+from django.views.decorators.cache import never_cache
 
 from .constants import UserRole, SESSION_USER_ID, SESSION_USER_ROLE
 
@@ -33,7 +34,7 @@ def login_required_safezone(view_func):
 
         return view_func(request, *args, **kwargs)
 
-    return wrapper
+    return never_cache(wrapper)
 
 
 def session_required(view_func):
@@ -50,7 +51,7 @@ def session_required(view_func):
 
         return view_func(request, *args, **kwargs)
 
-    return wrapper
+    return never_cache(wrapper)
 
 
 def admin_required(view_func):
@@ -72,7 +73,7 @@ def admin_required(view_func):
 
         return view_func(request, *args, **kwargs)
 
-    return wrapper
+    return never_cache(wrapper)
 
 
 def admin_or_tecnico_required(view_func):
@@ -91,7 +92,7 @@ def admin_or_tecnico_required(view_func):
 
         return view_func(request, *args, **kwargs)
 
-    return wrapper
+    return never_cache(wrapper)
 
 
 def tecnico_required(view_func):
@@ -104,7 +105,7 @@ def tecnico_required(view_func):
 
         return view_func(request, *args, **kwargs)
 
-    return wrapper
+    return never_cache(wrapper)
 
 def verificar_url_segura(view_func):
     @wraps(view_func)
