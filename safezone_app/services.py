@@ -233,6 +233,156 @@ def send_verification_email(correo, nombre, token, request=None):
         logger.error("Error enviando correo de verificación: %s", e)
 
 
+def generate_reset_token(user_id):
+    """
+    Genera un token firmado con el ID del usuario.
+    """
+    token = f"{user_id}:{uuid.uuid4().hex}"
+    return signer.sign(token)
+
+def verify_reset_token(timed_token):
+    """
+    Verifica un token de recuperación y retorna el usuario si es válido.
+    """
+    from datetime import timedelta
+    try:
+        # Expira en 2 horas
+        token = signer.unsign(timed_token, max_age=timedelta(hours=2))
+        user_id = token.split(':')[0]
+        return Usuarios.objects.get(id=user_id)
+    except (SignatureExpired, BadSignature, Usuarios.DoesNotExist, IndexError):
+        return None
+
+def update_user_password(user_id, nueva_contrasena):
+    """
+    Actualiza la contraseña del usuario con bcrypt.
+    """
+    try:
+        user = Usuarios.objects.get(id=user_id)
+        hashed_password = bcrypt.hashpw(
+            nueva_contrasena.encode('utf-8'), bcrypt.gensalt()
+        ).decode('utf-8')
+        user.contrasena_hash = hashed_password
+        user.save()
+        return True
+    except Usuarios.DoesNotExist:
+        return False
+
+def send_password_reset_email(correo, nombre, token, request=None):
+    """Envía el correo de recuperación de contraseña con diseño HTML."""
+    from django.core.mail import EmailMultiAlternatives
+
+    base_url = getattr(settings, 'SITE_URL', None)
+    if not base_url and request is not None:
+        base_url = request.build_absolute_uri('/').rstrip('/')
+    if not base_url:
+        base_url = 'http://127.0.0.1:8000'
+
+    link = f"{base_url}/restablecer_contrasena/{token}/"
+    subject = "Recuperación de contraseña - SafeZone"
+
+    text_content = (
+        f"Hola {nombre},\n\n"
+        f"Has solicitado restablecer tu contraseña en SafeZone.\n"
+        f"Haz clic en el siguiente enlace para crear una nueva contraseña:\n\n"
+        f"{link}\n\n"
+        f"Este enlace expira en 2 horas.\n\n"
+        f"Si no solicitaste este cambio, puedes ignorar este correo.\n\n"
+        f"— El equipo de SafeZone"
+    )
+
+    html_content = f"""
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recupera tu contraseña - SafeZone</title>
+</head>
+<body style="margin:0;padding:0;background-color:#0f1117;font-family:'Segoe UI',Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#0f1117;padding:40px 20px;">
+    <tr>
+      <td align="center">
+        <table width="560" cellpadding="0" cellspacing="0" style="background:linear-gradient(145deg,#1a1d2e,#12151f);border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);">
+
+          <!-- Header -->
+          <tr>
+            <td style="background:linear-gradient(135deg,#f59e0b,#ef4444);padding:36px 40px;text-align:center;">
+              <div style="font-size:36px;margin-bottom:8px;">🔐</div>
+              <h1 style="margin:0;color:#ffffff;font-size:26px;font-weight:700;letter-spacing:1px;">SafeZone</h1>
+              <p style="margin:6px 0 0;color:rgba(255,255,255,0.85);font-size:13px;letter-spacing:2px;text-transform:uppercase;">Recuperación de Contraseña</p>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="padding:40px 40px 20px;">
+              <h2 style="margin:0 0 12px;color:#e8e8f0;font-size:22px;font-weight:600;">Hola, {nombre} 👋</h2>
+              <p style="margin:0 0 20px;color:#9a9ab0;font-size:15px;line-height:1.7;">
+                Recibimos una solicitud para restablecer la contraseña de tu cuenta en <strong style="color:#f59e0b;">SafeZone</strong>.
+              </p>
+              <p style="margin:0 0 30px;color:#9a9ab0;font-size:15px;line-height:1.7;">
+                Haz clic en el botón de abajo para crear tu nueva contraseña:
+              </p>
+
+              <!-- Botón -->
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td align="center" style="padding-bottom:30px;">
+                    <a href="{link}"
+                       style="display:inline-block;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#ffffff;text-decoration:none;font-size:16px;font-weight:700;padding:16px 44px;border-radius:50px;letter-spacing:0.5px;box-shadow:0 8px 24px rgba(245,158,11,0.4);">
+                      Restablecer Contraseña
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Info expiración -->
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.25);border-radius:12px;padding:16px 20px;">
+                    <p style="margin:0;color:#9a9ab0;font-size:13px;line-height:1.6;">
+                      ⏰ <strong style="color:#c8c8e0;">Este enlace expira en 2 horas.</strong><br>
+                      Si no funciona el botón, copia y pega este enlace en tu navegador:<br>
+                      <a href="{link}" style="color:#f59e0b;word-break:break-all;font-size:12px;">{link}</a>
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding:24px 40px 36px;border-top:1px solid rgba(255,255,255,0.06);margin-top:20px;">
+              <p style="margin:0;color:#5a5a72;font-size:12px;line-height:1.6;text-align:center;">
+                Si no solicitaste este cambio, puedes ignorar este correo de forma segura. Tu contraseña actual no cambiará.<br>
+                &copy; 2026 SafeZone. Todos los derechos reservados.
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+"""
+
+    try:
+        msg = EmailMultiAlternatives(
+            subject=subject,
+            body=text_content,
+            from_email=settings.EMAIL_HOST_USER,
+            to=[correo],
+        )
+        msg.attach_alternative(html_content, "text/html")
+        msg.send(fail_silently=True)
+    except Exception as e:
+        logger.error("Error enviando correo de recuperación: %s", e)
+
+
 
 # ============================================================
 # Servicios de archivos / imágenes

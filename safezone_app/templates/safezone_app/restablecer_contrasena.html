@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva Contraseña - SafeZone</title>
+    <link rel="stylesheet" href="{% static 'CSS/inicio_sesion.css' %}">
+</head>
+
+<body>
+    <div class="animated-bg"></div>
+
+    <div class="auth-screen" id="authScreen">
+        <div class="auth-container">
+            
+            <div id="loginContainer">
+                <div class="auth-header">
+                    <img src="{% static 'img/create_a_purple_urba-removebg-preview (2).png' %}" class="auth-logo" alt="Logo SafeZone">
+                    <h1 class="auth-title">Nueva Contraseña</h1>
+                    <p class="auth-subtitle">Ingresa tu nueva contraseña para acceder a SafeZone</p>
+                </div>
+
+                {% if messages %}
+                <div class="flash-messages">
+                    {% for message in messages %}
+                    <p class="flash-message flash-{{ message.tags }}">
+                        {% if message.tags == 'error' %}❌{% elif message.tags == 'success' %}✅{% elif message.tags == 'warning' %}⚠️{% else %}ℹ️{% endif %}
+                        {{ message }}
+                    </p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <form class="auth-form" method="POST" action="{% url 'restablecer_contrasena' token %}">
+                    {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="nueva_contrasena">Nueva Contraseña</label>
+                        <div class="form-input-wrapper">
+                            <span class="form-icon">🔒</span>
+                            <input type="password" id="nueva_contrasena" name="nueva_contrasena" class="form-input" placeholder="••••••••" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="confirmar_contrasena">Confirmar Nueva Contraseña</label>
+                        <div class="form-input-wrapper">
+                            <span class="form-icon">🔒</span>
+                            <input type="password" id="confirmar_contrasena" name="confirmar_contrasena" class="form-input" placeholder="••••••••" required>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">
+                        <span>🔐 Guardar Contraseña</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{% static 'js/alerts.js' %}"></script>
+    <script>
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const pwd = document.getElementById('nueva_contrasena').value;
+            const confirm = document.getElementById('confirmar_contrasena').value;
+            if (pwd !== confirm) {
+                e.preventDefault();
+                alert('Las contraseñas no coinciden. Por favor, verifícalas.');
+            }
+        });
+    </script>
+</body>
+</html>

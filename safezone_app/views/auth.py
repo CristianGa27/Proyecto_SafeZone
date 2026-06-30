@@ -8,7 +8,8 @@ from ..constants import UserRole, SESSION_USER_ID, SESSION_USERNAME, SESSION_USE
 from ..models import Usuarios
 from ..services import (
     authenticate_user, create_user_account, verify_user_token,
-    send_verification_email, save_uploaded_image, delete_old_image
+    send_verification_email, save_uploaded_image, delete_old_image,
+    generate_reset_token, send_password_reset_email, verify_reset_token, update_user_password
 )
 from ..decorators import verificar_url_segura, login_required_safezone, no_cache_required
 @login_required_safezone
@@ -153,3 +154,41 @@ def perfil(request):
         messages.success(request, "Perfil actualizado.")
 
     return render(request, "safezone_app/perfil.html", {'user': user})
+
+@verificar_url_segura
+def solicitar_recuperacion(request):
+    if request.method == "POST":
+        correo = request.POST.get('correo', '').strip()
+        try:
+            user = Usuarios.objects.get(correo_electronico=correo)
+            token = generate_reset_token(user.id)
+            send_password_reset_email(correo, user.nombre_usuario, token, request)
+        except Usuarios.DoesNotExist:
+            # Para evitar enumeración de usuarios, siempre mostramos éxito
+            pass
+        messages.success(request, "Si el correo está registrado, recibirás un enlace de recuperación pronto.")
+        return redirect('login_html')
+    return render(request, "safezone_app/solicitar_recuperacion.html")
+
+@verificar_url_segura
+def restablecer_contrasena(request, token):
+    user = verify_reset_token(token)
+    if not user:
+        messages.error(request, "El enlace de recuperación es inválido o ha expirado.")
+        return redirect('solicitar_recuperacion')
+
+    if request.method == "POST":
+        nueva_contrasena = request.POST.get('nueva_contrasena')
+        confirmar_contrasena = request.POST.get('confirmar_contrasena')
+
+        if not nueva_contrasena or nueva_contrasena != confirmar_contrasena:
+            messages.error(request, "Las contraseñas no coinciden o están vacías.")
+        else:
+            if update_user_password(user.id, nueva_contrasena):
+                messages.success(request, "Tu contraseña ha sido actualizada exitosamente. Ya puedes iniciar sesión.")
+                return redirect('login_html')
+            else:
+                messages.error(request, "Ocurrió un error al actualizar la contraseña.")
+
+    return render(request, "safezone_app/restablecer_contrasena.html", {'token': token})
+

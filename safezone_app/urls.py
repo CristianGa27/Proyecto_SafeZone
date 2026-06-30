@@ -12,6 +12,8 @@ urlpatterns = [
     path('perfil/', views.perfil, name='perfil'),
     path('esperando_verificacion/', views.esperando_verificacion, name='esperando_verificacion'),
     path('verificar/<str:timed_token>/', views.verificar_token, name='verificar_token'),
+    path('recuperar_contrasena/', views.solicitar_recuperacion, name='solicitar_recuperacion'),
+    path('restablecer_contrasena/<str:token>/', views.restablecer_contrasena, name='restablecer_contrasena'),
 
     # Reports
     path('inicio/', views.inicio_html, name='inicio_html'),
