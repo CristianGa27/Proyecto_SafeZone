@@ -11,7 +11,16 @@ from ..services import save_report_images
 
 @session_required
 def inicio_html(request):
-    return render(request, "safezone_app/inicio.html")
+    reportes_activos = Reportes.objects.exclude(estado__in=[ReportStatus.RESUELTO, ReportStatus.CERRADO, ReportStatus.RECHAZADO]).count()
+    problemas_resueltos = Reportes.objects.filter(estado__in=[ReportStatus.RESUELTO, ReportStatus.CERRADO]).count()
+    usuarios_registrados = Usuarios.objects.count()
+    
+    context = {
+        'reportes_activos': reportes_activos,
+        'problemas_resueltos': problemas_resueltos,
+        'usuarios_registrados': usuarios_registrados
+    }
+    return render(request, "safezone_app/inicio.html", context)
 
 @login_required_safezone
 def registro_html(request):
