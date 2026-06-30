@@ -10,8 +10,12 @@ from ..services import (
     authenticate_user, create_user_account, verify_user_token,
     send_verification_email, save_uploaded_image, delete_old_image
 )
-from ..decorators import verificar_url_segura
-
+from ..decorators import verificar_url_segura, login_required_safezone, no_cache_required
+@login_required_safezone
+@no_cache_required
+def inicio_sistema(request):
+    # Tu vista del mapa o panel principal de SafeZone
+    return render(request, 'safezone_app/inicio.html')
 logger = logging.getLogger(__name__)
 @verificar_url_segura
 def login_view(request):

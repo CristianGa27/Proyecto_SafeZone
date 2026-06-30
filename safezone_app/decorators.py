@@ -126,3 +126,14 @@ def verificar_url_segura(view_func):
                 
         return view_func(request, *args, **kwargs)
     return _wrapped_view
+
+def no_cache_required(view_func):
+    @wraps(view_func)
+    def _wrapped_view(request, *args, **kwargs):
+        response = view_func(request, *args, **kwargs)
+        # Añade cabeceras HTTP para destruir la caché por completo
+        response['Cache-Control'] = 'no-cache, no-store, must-revalidate, max-age=0'
+        response['Pragma'] = 'no-cache'
+        response['Expires'] = '0'
+        return response
+    return _wrapped_view
