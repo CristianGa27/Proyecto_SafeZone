@@ -19,7 +19,7 @@ def panel_admin(request):
     gravedad = request.GET.get('gravedad')
     q = """
         SELECT R.id, U.nombre_usuario AS reportado_por, R.ubicacion,
-            R.barrio as nombre_zona, T.nombre_anomalia, R.gravedad,
+            R.barrio as zona, T.nombre_anomalia, R.gravedad,
             R.descripcion, R.info_adicional, R.fecha_reporte, R.estado,
             R.observaciones, R.imagen, R.imagen2, R.imagen3,
             R.latitud, R.longitud

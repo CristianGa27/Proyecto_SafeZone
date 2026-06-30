@@ -9,54 +9,66 @@
     width: 100%;
     border-collapse: collapse;
     margin-top: 2rem;
-    background: rgba(0, 0, 0, 0.4);
-    border-radius: 16px;
+    background: #1e2129;
+    border-radius: 12px;
     overflow: hidden;
     table-layout: auto;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 }
 
 /* Contenedor que habilita el scroll */
 .table-responsive {
     overflow-x: auto;
+    background: #151821;
+    padding: 1rem;
+    border-radius: 16px;
 }
 
 .form-table th, 
 .form-table td {
-    padding: 1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.2rem 1rem;
     text-align: left;
     font-size: 0.95rem;
-    color: #e5e7eb;
-    word-wrap: break-word;
-    word-break: break-all;
-    white-space: normal;
+    color: #e2e8f0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .form-table th {
-    background: var(--gradient);
-    color: white;
+    background: #6366f1;
+    color: #ffffff;
     font-weight: 700;
     text-transform: uppercase;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    border-bottom: none;
+    white-space: nowrap;
+}
+
+.form-table tr {
+    background: #242730;
+    transition: background 0.2s ease;
 }
 
 .form-table tr:nth-child(even) {
-    background: rgba(255, 255, 255, 0.05);
+    background: #1e2129;
 }
 
-.form-table .table-row:hover {
-    background: rgba(99, 102, 241, 0.15);
+.form-table .table-row:hover, .form-table tr:hover {
+    background: rgba(99, 102, 241, 0.1);
     cursor: pointer;
 }
 
 /* Anchos mínimos para celdas clave para evitar compresión excesiva */
-.form-table td:nth-child(2) { min-width: 180px; }
-.form-table td:nth-child(5) { min-width: 250px; }
-.form-table td:nth-child(6) { min-width: 200px; }
-.form-table td:nth-child(7) { min-width: 120px; }
-.form-table td:nth-child(8) { min-width: 100px; }
-.form-table td:nth-child(9) { min-width: 200px; }
-.form-table td:nth-child(10) { min-width: 120px; }
+.form-table th:nth-child(1), .form-table td:nth-child(1) { min-width: 60px; }
+.form-table th:nth-child(2), .form-table td:nth-child(2) { min-width: 180px; }
+.form-table th:nth-child(3), .form-table td:nth-child(3) { min-width: 120px; }
+.form-table th:nth-child(4), .form-table td:nth-child(4) { min-width: 120px; }
+.form-table th:nth-child(5), .form-table td:nth-child(5) { min-width: 200px; }
+.form-table th:nth-child(6), .form-table td:nth-child(6) { min-width: 150px; }
+.form-table th:nth-child(7), .form-table td:nth-child(7) { min-width: 120px; }
+.form-table th:nth-child(8), .form-table td:nth-child(8) { min-width: 120px; }
+.form-table th:nth-child(9), .form-table td:nth-child(9) { min-width: 180px; }
+.form-table th:nth-child(10), .form-table td:nth-child(10) { min-width: 150px; }
 
 /* Estilos de botones y select */
 .form-table button {
