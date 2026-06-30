@@ -361,10 +361,10 @@ def get_dashboard_stats():
     # Reportes por mes (últimos 6 meses) — requiere SQL por DATE_FORMAT de MySQL
     with connection.cursor() as cursor:
         cursor.execute("""
-            SELECT DATE_FORMAT(fecha_reporte, '%%Y-%%m') as mes, COUNT(*) as total
+            SELECT DATE_FORMAT(fecha_reporte, '%Y-%m') as mes, COUNT(*) as total
             FROM Reportes
             WHERE fecha_reporte >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
-            GROUP BY DATE_FORMAT(fecha_reporte, '%%Y-%%m')
+            GROUP BY DATE_FORMAT(fecha_reporte, '%Y-%m')
             ORDER BY mes DESC
             LIMIT 6
         """)
@@ -373,14 +373,20 @@ def get_dashboard_stats():
 
     if meses:
         max_r = max(r['total'] for r in meses)
-        stats['reportes_mes'] = [
-            {
-                'mes': r['mes'],
+        meses_esp = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+        stats['reportes_mes'] = []
+        for r in reversed(meses):
+            try:
+                y, m = r['mes'].split('-')
+                mes_str = f"{meses_esp[int(m)-1]} {y}"
+            except Exception:
+                mes_str = r['mes']
+                
+            stats['reportes_mes'].append({
+                'mes': mes_str,
                 'total': r['total'],
                 'height': max(int((r['total'] / max_r) * 100), 10),
-            }
-            for r in reversed(meses)
-        ]
+            })
 
     return stats
 
@@ -404,19 +410,20 @@ def get_chart_statistics():
     with connection.cursor() as cursor:
         # Reportes por mes
         cursor.execute("""
-            SELECT DATE_FORMAT(fecha_reporte, '%%Y-%%m') as mes, COUNT(*) as total
+            SELECT DATE_FORMAT(fecha_reporte, '%Y-%m') as mes, COUNT(*) as total
             FROM Reportes
             WHERE fecha_reporte >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
-            GROUP BY DATE_FORMAT(fecha_reporte, '%%Y-%%m')
+            GROUP BY DATE_FORMAT(fecha_reporte, '%Y-%m')
             ORDER BY mes
         """)
         columns = [col[0] for col in cursor.description]
         rmes = [dict(zip(columns, row)) for row in cursor.fetchall()]
 
+        meses_esp = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
         for r in rmes:
             try:
                 y, m = r['mes'].split('-')
-                r['mes'] = f"{calendar.month_name[int(m)][:3]} {y}"
+                r['mes'] = f"{meses_esp[int(m)-1]} {y}"
             except (ValueError, IndexError):
                 pass
 
