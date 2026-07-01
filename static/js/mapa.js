@@ -78,7 +78,10 @@ const estadoTexts = {
 let currentEstadoFilter = 'todos';
 let currentGravedadFilter = 'all';
 
-// Cargar reportes desde la API
+/**
+ * Carga los reportes desde la API según el estado filtrado.
+ * @param {string} [estadoFiltro='todos'] - El estado de los reportes a cargar ('todos', 'pendiente', 'aprobado', etc.).
+ */
 async function loadReports(estadoFiltro = 'todos') {
     try {
         showLoadingIndicator(true);
@@ -135,7 +138,10 @@ async function loadReports(estadoFiltro = 'todos') {
     }
 }
 
-// Funciones de UI para mensajes
+/**
+ * Muestra u oculta el indicador de carga en pantalla.
+ * @param {boolean} show - Verdadero para mostrar el indicador, falso para ocultarlo.
+ */
 function showLoadingIndicator(show) {
     const existing = document.getElementById('loading-indicator');
     if (existing) {
@@ -181,14 +187,27 @@ function showLoadingIndicator(show) {
     }
 }
 
+/**
+ * Muestra un mensaje de error tipo toast.
+ * @param {string} message - El mensaje de error a mostrar.
+ */
 function showErrorMessage(message) {
     showMessage(message, 'error');
 }
 
+/**
+ * Muestra un mensaje de información tipo toast.
+ * @param {string} message - El mensaje informativo a mostrar.
+ */
 function showInfoMessage(message) {
     showMessage(message, 'info');
 }
 
+/**
+ * Función base para crear y mostrar mensajes tipo toast animados.
+ * @param {string} message - El texto del mensaje.
+ * @param {string} [type='info'] - El tipo de mensaje ('error', 'info', 'success').
+ */
 function showMessage(message, type = 'info') {
     const existing = document.querySelectorAll('.toast-message');
     existing.forEach(el => el.remove());
@@ -236,7 +255,11 @@ function showMessage(message, type = 'info') {
     }, 5000);
 }
 
-// Función para parsear coordenadas
+/**
+ * Convierte y valida una coordenada (latitud o longitud) a número.
+ * @param {number|string|null} coord - La coordenada a parsear.
+ * @returns {number|null} La coordenada como número flotante, o null si es inválida.
+ */
 function parseCoordinate(coord) {
     // Verificar valores nulos o indefinidos
     if (coord === null || coord === undefined || coord === 'null' || coord === 'undefined' || coord === '') {
@@ -257,7 +280,11 @@ function parseCoordinate(coord) {
     return null;
 }
 
-// Crear marcador
+/**
+ * Crea un marcador personalizado en el mapa para un reporte específico.
+ * @param {Object} r - El objeto con los datos del reporte.
+ * @returns {L.marker|null} El marcador Leaflet creado, o null si las coordenadas son inválidas.
+ */
 function createMarker(r) {
     try {
         // Validación de coordenadas
@@ -437,7 +464,12 @@ function createMarker(r) {
     }
 }
 
-// Función auxiliar para ajustar colores
+/**
+ * Ajusta el brillo de un color hexadecimal.
+ * @param {string} color - El color en formato hexadecimal (ej. "#ffffff").
+ * @param {number} amount - La cantidad a ajustar (positivo aclara, negativo oscurece).
+ * @returns {string} El nuevo color ajustado en formato hexadecimal.
+ */
 function adjustColor(color, amount) {
     const usePound = color[0] === "#";
     const col = usePound ? color.slice(1) : color;
@@ -451,7 +483,11 @@ function adjustColor(color, amount) {
     return (usePound ? "#" : "") + (r << 16 | g << 8 | b).toString(16).padStart(6, '0');
 }
 
-// Función auxiliar para mostrar estado con emoji
+/**
+ * Obtiene el texto y emoji correspondiente para un estado de reporte.
+ * @param {string} estado - El estado en formato de código (ej. 'pendiente').
+ * @returns {string} El estado formateado para mostrar en la interfaz.
+ */
 function getEstadoDisplay(estado) {
     const estados = {
         "pendiente": "⏳ Pendiente",
@@ -463,7 +499,11 @@ function getEstadoDisplay(estado) {
     return estados[estado] || estado;
 }
 
-// Abrir modal desde popup
+/**
+ * Abre el modal de detalles buscando el reporte por su ID.
+ * Se llama desde los popups de los marcadores del mapa.
+ * @param {number} reportId - El ID del reporte a mostrar.
+ */
 function openModalFromPopup(reportId) {
     const report = allReports.find(r => r.id === reportId);
     if (report) {
@@ -471,7 +511,10 @@ function openModalFromPopup(reportId) {
     }
 }
 
-// Mostrar detalles en modal
+/**
+ * Muestra los detalles de un reporte en el modal (ventana emergente).
+ * @param {Object} r - El objeto con los datos completos del reporte.
+ */
 function showReportDetails(r) {
     // Título y fecha
     modalTitle.textContent = `Reporte #${r.id}`;
@@ -581,7 +624,9 @@ function showReportDetails(r) {
     }
 }
 
-// Cerrar modal con animación
+/**
+ * Cierra el modal de detalles aplicando una animación de desvanecimiento (fade out).
+ */
 function closeModalWithAnimation() {
     modal.style.animation = 'fadeOut 0.3s ease';
     setTimeout(() => {
@@ -609,7 +654,10 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Actualizar mapa con filtro
+/**
+ * Actualiza los marcadores del mapa aplicando un filtro por gravedad.
+ * @param {string} filter - El filtro a aplicar ('all', 'leve', 'moderado', 'severo', 'critico').
+ */
 function updateMap(filter) {
     // Limpiar marcadores existentes
     markersLayer.clearLayers();
@@ -674,7 +722,10 @@ function updateMap(filter) {
     updateFilterUI(filter);
 }
 
-// Actualizar UI del filtro activo
+/**
+ * Actualiza el estado visual (clases activas) de los botones de filtro.
+ * @param {string} activeFilter - El identificador del filtro activo.
+ */
 function updateFilterUI(activeFilter) {
     const filterButtons = document.querySelectorAll('.filter-btn');
     filterButtons.forEach(btn => {
@@ -686,7 +737,9 @@ function updateFilterUI(activeFilter) {
     });
 }
 
-// Actualizar estadísticas
+/**
+ * Recalcula y actualiza los contadores de estadísticas mostrados en pantalla.
+ */
 function updateStatistics() {
     const criticalCount = allReports.filter(r => r.gravedad === "critico").length;
     const severeCount = allReports.filter(r => r.gravedad === "severo").length;

@@ -7,7 +7,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     let isMenuOpen = false;
     
-    // Función para alternar el menú
+    /**
+     * Alterna la visibilidad y el estado del menú lateral (sidebar).
+     * Aplica clases CSS diferentes dependiendo del ancho de la pantalla (móvil vs escritorio).
+     */
     function toggleMenu() {
         isMenuOpen = !isMenuOpen;
         
@@ -39,7 +42,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Función para cerrar el menú
+    /**
+     * Cierra el menú lateral si se encuentra abierto.
+     */
     function closeMenu() {
         if (isMenuOpen) {
             toggleMenu();
@@ -116,7 +121,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 250);
     });
     
-    // Inicialización
+    /**
+     * Inicializa el estado del menú al cargar la página, asegurando que esté cerrado
+     * y sin las clases activas.
+     */
     function initializeMenu() {
         isMenuOpen = false;
         

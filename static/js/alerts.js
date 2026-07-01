@@ -14,7 +14,10 @@
         debug   : '🔧',
     };
 
-    /* ── Dismiss one alert ─────────────────────────────────── */
+    /**
+     * Cierra (oculta) un elemento de alerta con una animación.
+     * @param {HTMLElement} el - El elemento de alerta que se va a cerrar.
+     */
     function dismissAlert(el) {
         if (!el || el._dismissing) return;
         el._dismissing = true;
@@ -28,7 +31,9 @@
         setTimeout(() => el.remove(), 420);
     }
 
-    /* ── Inject global CSS if not already present ──────────── */
+    /**
+     * Inyecta los estilos CSS globales para las alertas en el documento si aún no están presentes.
+     */
     function injectStyles() {
         if (document.getElementById('sz-alert-styles')) return;
         const style = document.createElement('style');
@@ -166,7 +171,10 @@
         document.head.appendChild(style);
     }
 
-    /* ── Build container ───────────────────────────────────── */
+    /**
+     * Obtiene o crea el contenedor principal para las alertas.
+     * @returns {HTMLElement} El elemento contenedor de alertas.
+     */
     function getContainer() {
         let c = document.getElementById('sz-alert-container');
         if (!c) {
@@ -187,7 +195,13 @@
         debug   : 'Debug',
     };
 
-    /* ── Public: show a toast programmatically ─────────────── */
+    /**
+     * Muestra una alerta (toast) de forma programática.
+     * @param {string} message - El mensaje a mostrar en la alerta.
+     * @param {string} [type='info'] - El tipo de alerta ('success', 'error', 'warning', 'info', 'debug').
+     * @param {number} [duration=5000] - La duración en milisegundos antes de que la alerta se cierre automáticamente (0 para no cerrar).
+     * @returns {HTMLElement} El elemento de alerta creado.
+     */
     window.SafeZoneAlert = function (message, type, duration) {
         type     = type     || 'info';
         duration = duration !== undefined ? duration : 5000;
@@ -218,7 +232,9 @@
         return el;
     };
 
-    /* ── Convert Django inline flash messages to toasts ─────── */
+    /**
+     * Convierte los mensajes flash de Django (ocultos por CSS) en alertas toast.
+     */
     function convertInlineMessages() {
         document.querySelectorAll('.flash-messages .flash-message, .flash-messages p').forEach(msg => {
             const text = msg.textContent.trim();
@@ -239,7 +255,9 @@
         });
     }
 
-    /* ── Init ──────────────────────────────────────────────── */
+    /**
+     * Inicializa el sistema de alertas inyectando los estilos y convirtiendo los mensajes en línea.
+     */
     function init() {
         injectStyles();
         convertInlineMessages();
