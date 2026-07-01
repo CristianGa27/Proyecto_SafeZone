@@ -134,14 +134,17 @@
                     <div class="form-group">
                         <label for="location" class="form-label">Ubicación</label>
                         <div style="display: flex; gap: 10px;">
-                            <input type="text" id="location" name="location" class="form-input" placeholder="Escribe la dirección, barrio o cruce" required style="flex: 1;">
+                            <input type="text" id="location" name="location" class="form-input" placeholder="Escribe la dirección, barrio o cruce" required style="flex: 1;" onkeypress="if(event.key === 'Enter'){event.preventDefault(); searchLocation();}">
+                            <button type="button" id="btnSearchLoc" onclick="searchLocation()" style="background: rgba(16, 185, 129, 0.2); border: 1px solid #10b981; color: #34d399; border-radius: 12px; padding: 0 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; white-space: nowrap;" title="Buscar dirección en el mapa">
+                                🔍 Buscar
+                            </button>
                             <button type="button" id="btnGPS" onclick="forceGPSLocation()" style="background: rgba(99, 102, 241, 0.2); border: 1px solid #6366f1; color: #818cf8; border-radius: 12px; padding: 0 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; white-space: nowrap;" title="Usar mi ubicación GPS actual">
                                 📍 Usar GPS
                             </button>
                         </div>
                         <small id="locationStatus" style="color: #9ca3af; font-size: 0.8rem; margin-top: 5px; display: block;"></small>
                         <div id="miniMap" style="height: 250px; width: 100%; border-radius: 12px; margin-top: 15px; border: 1px solid rgba(255,255,255,0.2); z-index: 1;"></div>
-                        <small style="color: #6366f1; font-size: 0.8rem; margin-top: 5px; display: block;">💡 Mueve el marcador rojo en el mapa para fijar el punto exacto.</small>
+                        <small style="color: #6366f1; font-size: 0.8rem; margin-top: 5px; display: block;">💡 Busca tu dirección o mueve el marcador en el mapa para fijar el punto exacto.</small>
                     </div>
 
                     <div class="form-group">
@@ -413,6 +416,52 @@
             }
         }
 
+        function showLocationStatus(message) {
+            const statusLabel = document.getElementById('locationStatus');
+            if(statusLabel) {
+                statusLabel.textContent = message;
+            }
+        }
+
+        async function searchLocation() {
+            const address = document.getElementById('location').value.trim();
+            if (!address) {
+                showLocationStatus("Escribe una dirección antes de buscar.");
+                return;
+            }
+            
+            showLocationStatus("Buscando dirección...");
+            try {
+                // Agregar el contexto geográfico (Antioquia, Colombia) para resultados más precisos
+                const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address + ', Antioquia, Colombia')}&limit=1`);
+                const data = await res.json();
+                
+                if(data && data.length > 0) {
+                    const lat = parseFloat(data[0].lat);
+                    const lon = parseFloat(data[0].lon);
+                    
+                    if(miniMap && mapMarker) {
+                        miniMap.setView([lat, lon], 17);
+                        mapMarker.setLatLng([lat, lon]);
+                    }
+                    
+                    document.getElementById("latitude").value = lat;
+                    document.getElementById("longitude").value = lon;
+                    
+                    // Actualizamos el input con el nombre oficial devuelto por el mapa
+                    let dirParts = data[0].display_name.split(',');
+                    let dirCorta = dirParts.slice(0, 3).join(',').trim();
+                    document.getElementById("location").value = dirCorta;
+                    
+                    showLocationStatus("📍 Dirección encontrada con éxito.");
+                } else {
+                    showLocationStatus("❌ No se encontró. Intenta ser más específico (ej: Calle 45, Bello).");
+                }
+            } catch (e) {
+                showLocationStatus("❌ Error al conectar con el buscador.");
+            }
+        }
+
         // Llamar a la inicialización al cargar la página
         window.addEventListener('load', function() {
             initMap();
@@ -612,14 +661,15 @@
                 });
             });
             
-            // Manejo de selección de barrio
+            // Manejo de selección de barrio (ahora solo se usa para la base de datos)
             const zoneSelect = document.getElementById('zone');
             if (zoneSelect) {
                 zoneSelect.addEventListener('change', function() {
                     const selectedBarrio = this.value;
                     if (selectedBarrio) {
-                        console.log(`🏘️ Barrio seleccionado: ${selectedBarrio}`);
-                        updateCoordinatesByBarrio(selectedBarrio);
+                        console.log(`🏘️ Barrio seleccionado para la base de datos: ${selectedBarrio}`);
+                        // Ya no intentamos mover el mapa desde aquí porque el mapa y el GPS 
+                        // son los encargados de la precisión matemática.
                     }
                 });
             }
