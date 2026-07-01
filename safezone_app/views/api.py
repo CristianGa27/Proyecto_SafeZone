@@ -25,9 +25,9 @@ def api_reportes(request):
     for r in reportes:
         if r['fecha_reporte']:
             r['fecha_reporte'] = r['fecha_reporte'].strftime('%Y-%m-%d %H:%M:%S')
-        r['image_url'] = f"/media/{r['imagen']}" if r['imagen'] else None
-        r['image_url2'] = f"/media/{r['imagen2']}" if r['imagen2'] else None
-        r['image_url3'] = f"/media/{r['imagen3']}" if r['imagen3'] else None
+        r['image_url'] = r['imagen'] if r['imagen'] else None
+        r['image_url2'] = r['imagen2'] if r['imagen2'] else None
+        r['image_url3'] = r['imagen3'] if r['imagen3'] else None
 
     return JsonResponse(reportes, safe=False)
 

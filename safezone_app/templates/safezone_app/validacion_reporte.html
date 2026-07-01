@@ -74,7 +74,7 @@
                     <span>{{ request.session.username|default:"Admin" }}</span>
                     <div class="user-avatar">
                         {% if request.session.foto_perfil %}
-                            <img src="/media/{{ request.session.foto_perfil }}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                            <img src="{{ request.session.foto_perfil  }}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
                         {% endif %}
                     </div>
                 </div>
@@ -132,18 +132,18 @@
                                     <td>
                                         <div style="display: flex; gap: 5px; flex-wrap: wrap;">
                                             {% if r.imagen and r.imagen != 'None' %}
-                                            <a href="/media/{{ r.imagen }}" target="_blank" onclick="event.stopPropagation();">
-                                                <img src="/media/{{ r.imagen }}" alt="Img 1" style="max-width: 60px; border-radius: 4px;">
+                                            <a href="{{ r.imagen  }}" target="_blank" onclick="event.stopPropagation();">
+                                                <img src="{{ r.imagen  }}" alt="Img 1" style="max-width: 60px; border-radius: 4px;">
                                             </a>
                                             {% endif %}
                                             {% if r.imagen2 and r.imagen2 != 'None' %}
-                                            <a href="/media/{{ r.imagen2 }}" target="_blank" onclick="event.stopPropagation();">
-                                                <img src="/media/{{ r.imagen2 }}" alt="Img 2" style="max-width: 60px; border-radius: 4px;">
+                                            <a href="{{ r.imagen2  }}" target="_blank" onclick="event.stopPropagation();">
+                                                <img src="{{ r.imagen2  }}" alt="Img 2" style="max-width: 60px; border-radius: 4px;">
                                             </a>
                                             {% endif %}
                                             {% if r.imagen3 and r.imagen3 != 'None' %}
-                                            <a href="/media/{{ r.imagen3 }}" target="_blank" onclick="event.stopPropagation();">
-                                                <img src="/media/{{ r.imagen3 }}" alt="Img 3" style="max-width: 60px; border-radius: 4px;">
+                                            <a href="{{ r.imagen3  }}" target="_blank" onclick="event.stopPropagation();">
+                                                <img src="{{ r.imagen3  }}" alt="Img 3" style="max-width: 60px; border-radius: 4px;">
                                             </a>
                                             {% endif %}
                                             {% if not r.imagen or r.imagen == 'None' %}
@@ -260,13 +260,13 @@
             const imgStyle = 'width: 120px; height: 120px; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); transition: transform 0.2s;';
             
             if (imagen !== 'None' && imagen !== '') {
-                imageHtml += `<a href="/media/${imagen}" target="_blank"><img src="/media/${imagen}" alt="Imagen 1" style="${imgStyle}" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"></a>`;
+                imageHtml += `<a href="${imagen}" target="_blank"><img src="${imagen}" alt="Imagen 1" style="${imgStyle}" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"></a>`;
             }
             if (imagen2 !== 'None' && imagen2 !== '') {
-                imageHtml += `<a href="/media/${imagen2}" target="_blank"><img src="/media/${imagen2}" alt="Imagen 2" style="${imgStyle}" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"></a>`;
+                imageHtml += `<a href="${imagen2}" target="_blank"><img src="${imagen2}" alt="Imagen 2" style="${imgStyle}" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"></a>`;
             }
             if (imagen3 !== 'None' && imagen3 !== '') {
-                imageHtml += `<a href="/media/${imagen3}" target="_blank"><img src="/media/${imagen3}" alt="Imagen 3" style="${imgStyle}" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"></a>`;
+                imageHtml += `<a href="${imagen3}" target="_blank"><img src="${imagen3}" alt="Imagen 3" style="${imgStyle}" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"></a>`;
             }
             if (imageHtml === '') {
                 imageHtml = 'No hay imágenes';

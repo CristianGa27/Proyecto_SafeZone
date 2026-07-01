@@ -390,14 +390,7 @@ def send_password_reset_email(correo, nombre, token, request=None):
 
 def save_uploaded_image(file, prefix="upload"):
     """
-    Guarda un archivo de imagen subido en MEDIA_ROOT.
-
-    Args:
-        file: Archivo subido (UploadedFile).
-        prefix: Prefijo para el nombre del archivo.
-
-    Returns:
-        str: Nombre del archivo guardado, o None si la extensión no es válida.
+    Guarda un archivo de imagen subido en Cloudinary.
     """
     if not file:
         return None
@@ -406,55 +399,39 @@ def save_uploaded_image(file, prefix="upload"):
     if ext not in ALLOWED_IMAGE_EXTENSIONS:
         return None
 
-    filename = f"{prefix}_{uuid.uuid4().hex[:8]}.{ext}"
-    path = os.path.join(settings.MEDIA_ROOT, filename)
-    os.makedirs(settings.MEDIA_ROOT, exist_ok=True)
-
-    with open(path, 'wb+') as f:
-        for chunk in file.chunks():
-            f.write(chunk)
-
-    return filename
+    import cloudinary.uploader
+    try:
+        res = cloudinary.uploader.upload(file, folder="safezone/avatars")
+        return res.get('secure_url')
+    except Exception as e:
+        logger.error(f"Error subiendo a cloudinary: {e}")
+        return None
 
 
 def save_report_images(files):
     """
-    Guarda las imágenes de un reporte (máximo 3).
-
-    Args:
-        files: Lista de archivos subidos.
-
-    Returns:
-        list: Lista de 3 elementos con nombres de archivo o None.
+    Guarda las imágenes de un reporte (máximo 3) en Cloudinary.
     """
+    import cloudinary.uploader
     images = [None] * MAX_REPORT_IMAGES
 
     for i, file in enumerate(files[:MAX_REPORT_IMAGES]):
         if file:
-            filename = f"{uuid.uuid4().hex}_{file.name}"
-            path = os.path.join(settings.MEDIA_ROOT, filename)
-            os.makedirs(settings.MEDIA_ROOT, exist_ok=True)
-
-            with open(path, 'wb+') as f:
-                for chunk in file.chunks():
-                    f.write(chunk)
-
-            images[i] = filename
+            try:
+                res = cloudinary.uploader.upload(file, folder="safezone/reportes")
+                images[i] = res.get('secure_url')
+            except Exception as e:
+                logger.error(f"Error subiendo a cloudinary: {e}")
 
     return images
 
 
 def delete_old_image(filename):
-    """Elimina una imagen anterior si existe."""
-    if not filename:
-        return
-
-    path = os.path.join(settings.MEDIA_ROOT, filename)
-    if os.path.exists(path):
-        try:
-            os.remove(path)
-        except OSError:
-            pass
+    """
+    Las imágenes ahora viven en Cloudinary, por lo que la eliminación
+    se omite para mantener el historial (y evitar borrados accidentales de URLs).
+    """
+    pass
 
 
 # ============================================================
