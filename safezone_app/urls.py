@@ -1,3 +1,7 @@
+"""
+Mapeo de rutas (URLs) para la aplicación SafeZone.
+Define las conexiones entre las direcciones web y las vistas que procesan las peticiones.
+"""
 from django.urls import path
 from . import views
 

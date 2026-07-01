@@ -11,6 +11,10 @@ from ..services import save_report_images
 
 @session_required
 def inicio_html(request):
+    """
+    Renderiza la página principal de inicio para cualquier usuario logueado.
+    Calcula y muestra estadísticas rápidas (reportes activos, resueltos, usuarios).
+    """
     reportes_activos = Reportes.objects.exclude(estado__in=[ReportStatus.RESUELTO, ReportStatus.CERRADO, ReportStatus.RECHAZADO]).count()
     problemas_resueltos = Reportes.objects.filter(estado__in=[ReportStatus.RESUELTO, ReportStatus.CERRADO]).count()
     usuarios_registrados = Usuarios.objects.count()
@@ -24,6 +28,10 @@ def inicio_html(request):
 
 @login_required_safezone
 def registro_html(request):
+    """
+    Renderiza el formulario para registrar un nuevo reporte.
+    Verifica primero que el perfil del usuario esté completo.
+    """
     user = Usuarios.objects.get(id=request.session[SESSION_USER_ID])
     if not user.telefono or not user.direccion_residencia or not user.numero_documento:
         messages.warning(request, "Completa tu perfil.")
@@ -35,6 +43,10 @@ def registro_html(request):
 
 @login_required_safezone
 def registro_reporte(request):
+    """
+    Procesa los datos enviados desde el formulario de nuevo reporte.
+    Sube las imágenes, asocia la zona y guarda el reporte como 'pendiente'.
+    """
     if request.method != "POST":
         return redirect('registro_html')
 
@@ -66,6 +78,10 @@ def registro_reporte(request):
 
 @login_required_safezone
 def mis_reportes_html(request):
+    """
+    Renderiza el historial personal de reportes creados por el usuario actual.
+    Realiza una consulta a la base de datos para traer el historial detallado.
+    """
     from django.db import connection
     with connection.cursor() as cursor:
         cursor.execute("""
@@ -83,6 +99,10 @@ def mis_reportes_html(request):
 
 @login_required_safezone
 def editar_reporte_html(request, reporte_id):
+    """
+    Renderiza el formulario de edición para un reporte existente,
+    verificando que pertenezca al usuario logueado.
+    """
     try:
         reporte = Reportes.objects.get(id=reporte_id, usuario_id=request.session[SESSION_USER_ID])
     except Reportes.DoesNotExist:
@@ -95,6 +115,10 @@ def editar_reporte_html(request, reporte_id):
 
 @login_required_safezone
 def actualizar_reporte(request, reporte_id):
+    """
+    Procesa la actualización de los datos de un reporte existente
+    que pertenece al usuario (zona, descripción, gravedad, etc.).
+    """
     if request.method == "POST":
         try:
             r = Reportes.objects.get(id=reporte_id, usuario_id=request.session[SESSION_USER_ID])

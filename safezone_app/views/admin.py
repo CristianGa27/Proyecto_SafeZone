@@ -10,11 +10,19 @@ from ..models import Reportes
 from ..services import get_dashboard_stats
 
 def _dictfetchall(cursor):
+    """
+    Convierte los resultados de un cursor SQL (tuplas) a una lista de diccionarios
+    donde las claves son los nombres de las columnas.
+    """
     columns = [col[0] for col in cursor.description]
     return [dict(zip(columns, row)) for row in cursor.fetchall()]
 
 @admin_required
 def panel_admin(request):
+    """
+    Renderiza el panel de control del administrador principal.
+    Muestra todos los reportes, permite filtrar por estado o gravedad.
+    """
     estado = request.GET.get('estado')
     gravedad = request.GET.get('gravedad')
     q = """
@@ -43,6 +51,10 @@ def panel_admin(request):
 
 @tecnico_required
 def panel_tecnico(request):
+    """
+    Renderiza el panel para el administrador técnico.
+    Muestra los reportes priorizados según su estado operativo.
+    """
     with connection.cursor() as cursor:
         cursor.execute("""
             SELECT R.id, U.nombre_usuario AS reportado_por, R.ubicacion,
@@ -63,6 +75,10 @@ def panel_tecnico(request):
 
 @admin_or_tecnico_required
 def validar(request, id):
+    """
+    Procesa el cambio de estado de un reporte y guarda observaciones técnicas.
+    Verifica que los técnicos solo puedan cambiar a estados permitidos para su rol.
+    """
     user_role = request.session.get(SESSION_USER_ROLE)
     estado = request.POST.get("estado")
     if user_role == UserRole.ADMIN_TECNICO and estado not in ReportStatus.TECHNICAL_FLOW:
@@ -74,13 +90,23 @@ def validar(request, id):
 
 @admin_required
 def panel_info_html(request):
+    """
+    Renderiza la vista principal del Dashboard con las estadísticas resumidas.
+    """
     return render(request, "safezone_app/panel_de_informacion.html", {'stats': get_dashboard_stats()})
 
 def admin_info(request):
+    """
+    Renderiza el panel informativo básico (sin cargar estadísticas pesadas).
+    """
     return render(request, "safezone_app/panel_de_informacion.html")
 
 @admin_required
 def gestion_usuarios(request):
+    """
+    Renderiza la página de gestión de usuarios para los administradores.
+    Calcula un porcentaje de completitud de perfil para cada usuario.
+    """
     with connection.cursor() as cursor:
         cursor.execute("""
             SELECT u.id, u.nombre_usuario, u.correo_electronico, u.telefono,

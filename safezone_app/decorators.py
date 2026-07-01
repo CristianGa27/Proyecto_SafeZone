@@ -108,6 +108,11 @@ def tecnico_required(view_func):
     return never_cache(wrapper)
 
 def verificar_url_segura(view_func):
+    """
+    Verifica que las redirecciones en parámetros 'next' apunten
+    estrictamente al dominio seguro de la aplicación.
+    Evita ataques de Open Redirect.
+    """
     @wraps(view_func)
     def _wrapped_view(request, *args, **kwargs):
         # Captura cualquier parámetro 'next' si intentan forzar una redirección
@@ -128,6 +133,10 @@ def verificar_url_segura(view_func):
     return _wrapped_view
 
 def no_cache_required(view_func):
+    """
+    Añade cabeceras HTTP a la respuesta para destruir la caché por completo,
+    asegurando que los datos no se queden cacheados en el navegador del usuario.
+    """
     @wraps(view_func)
     def _wrapped_view(request, *args, **kwargs):
         response = view_func(request, *args, **kwargs)

@@ -9,6 +9,10 @@ from django.db import models
 
 
 class Configuracionsistema(models.Model):
+    """
+    Modelo que representa la tabla 'configuracionsistema'.
+    Almacena variables de configuración globales del sistema (como límites, correos de soporte, etc.).
+    """
     clave = models.CharField(unique=True, max_length=100)
     valor = models.TextField()
     descripcion = models.TextField(blank=True, null=True)
@@ -22,6 +26,11 @@ class Configuracionsistema(models.Model):
 
 
 class Historialreporte(models.Model):
+    """
+    Modelo que representa la tabla 'historialreporte'.
+    Mantiene un registro de auditoría de todos los cambios de estado que sufre un reporte,
+    incluyendo quién realizó el cambio y sus observaciones.
+    """
     reporte = models.ForeignKey('Reportes', models.DO_NOTHING)
     usuario_admin = models.ForeignKey('Usuarios', models.DO_NOTHING, blank=True, null=True)
     estado_anterior = models.CharField(max_length=11, blank=True, null=True)
@@ -36,6 +45,11 @@ class Historialreporte(models.Model):
 
 
 class Reportes(models.Model):
+    """
+    Modelo que representa la tabla 'reportes'.
+    Es la entidad principal del sistema donde se almacenan las anomalías viales
+    reportadas por los ciudadanos (baches, vías dañadas, estado, fotos, ubicación).
+    """
     usuario = models.ForeignKey('Usuarios', models.DO_NOTHING, blank=True, null=True)
     id_tipo_anomalia = models.ForeignKey('Tiposanomalia', models.DO_NOTHING, db_column='id_tipo_anomalia')
     barrio = models.CharField(max_length=100)
@@ -60,6 +74,11 @@ class Reportes(models.Model):
 
 
 class Roles(models.Model):
+    """
+    Modelo que representa la tabla 'roles'.
+    Define los diferentes niveles de acceso y permisos dentro del sistema
+    (ej. Admin Principal, Admin Técnico, Usuario, Invitado).
+    """
     nombre_rol = models.CharField(unique=True, max_length=50)
     descripcion = models.TextField(blank=True, null=True)
     fecha_creacion = models.DateTimeField()
@@ -71,6 +90,10 @@ class Roles(models.Model):
 
 
 class Tiposanomalia(models.Model):
+    """
+    Modelo que representa la tabla 'tiposanomalia'.
+    Catálogo de los tipos de problemas que pueden reportarse (ej. Baches, Alcantarillado).
+    """
     nombre_anomalia = models.CharField(unique=True, max_length=100)
     descripcion = models.TextField(blank=True, null=True)
     activo = models.IntegerField(blank=True, null=True)
@@ -83,6 +106,11 @@ class Tiposanomalia(models.Model):
 
 
 class Usuarios(models.Model):
+    """
+    Modelo que representa la tabla 'usuarios'.
+    Almacena la información personal, credenciales de acceso e información
+    de perfil de todas las personas registradas en el sistema.
+    """
     nombre_usuario = models.CharField(unique=True, max_length=100)
     correo_electronico = models.CharField(unique=True, max_length=150)
     contrasena_hash = models.CharField(max_length=255)
@@ -105,6 +133,11 @@ class Usuarios(models.Model):
 
 
 class Zonas(models.Model):
+    """
+    Modelo que representa la tabla 'zonas'.
+    Catálogo geográfico que agrupa diferentes barrios en zonas más grandes
+    para facilitar la filtración y gestión técnica.
+    """
     nombre_zona = models.CharField(unique=True, max_length=100)
     zona_geografica = models.CharField(max_length=13)
     activo = models.IntegerField(blank=True, null=True)

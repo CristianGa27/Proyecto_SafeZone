@@ -15,11 +15,19 @@ from ..decorators import verificar_url_segura, login_required_safezone, no_cache
 @login_required_safezone
 @no_cache_required
 def inicio_sistema(request):
+    """
+    Renderiza la vista principal del sistema (dashboard o mapa)
+    después de que el usuario haya iniciado sesión correctamente.
+    """
     # Tu vista del mapa o panel principal de SafeZone
     return render(request, 'safezone_app/inicio.html')
 logger = logging.getLogger(__name__)
 @verificar_url_segura
 def login_view(request):
+    """
+    Procesa el inicio de sesión. Si es GET, renderiza el formulario.
+    Si es POST, valida las credenciales y redirige según el rol del usuario.
+    """
     if request.method != "POST":
         return render(request, "safezone_app/login.html")
 
@@ -62,9 +70,16 @@ def login_view(request):
 
 
 def register_page(request):
+    """
+    Renderiza la página del formulario de registro de usuario.
+    """
     return render(request, "safezone_app/registro.html")
 
 def guest_login(request):
+    """
+    Permite iniciar sesión como invitado, configurando variables
+    de sesión limitadas para que pueda acceder a funciones básicas.
+    """
     request.session[SESSION_USER_ROLE] = UserRole.GUEST
     request.session[SESSION_USER_ID] = 0
     request.session[SESSION_USERNAME] = 'Invitado'
@@ -72,6 +87,10 @@ def guest_login(request):
     return redirect('inicio_html')
 
 def register(request):
+    """
+    Procesa los datos enviados desde el formulario de registro.
+    Crea la cuenta de usuario, genera un token y envía el correo de verificación.
+    """
     if request.method != "POST":
         return redirect('register_page')
 
@@ -111,9 +130,17 @@ def register(request):
     return redirect('register_page')
 
 def esperando_verificacion(request):
+    """
+    Renderiza la página que avisa al usuario que debe revisar su correo
+    para verificar su cuenta antes de iniciar sesión.
+    """
     return render(request, "safezone_app/esperando_verificacion.html")
 
 def verificar_token(request, timed_token):
+    """
+    Valida el token enviado por correo electrónico.
+    Si es válido, marca al usuario como verificado y lo loguea automáticamente.
+    """
     user = verify_user_token(timed_token)
     if not user:
         messages.error(request, "Enlace inválido o expirado.")
@@ -127,11 +154,19 @@ def verificar_token(request, timed_token):
     return redirect('inicio_html')
 
 def logout_view(request):
+    """
+    Limpia completamente los datos de la sesión del usuario actual
+    y lo redirige a la página de inicio de sesión.
+    """
     request.session.flush()
     messages.info(request, "Has cerrado sesión.")
     return redirect('login_html')
 
 def perfil(request):
+    """
+    Renderiza la vista del perfil del usuario y procesa la actualización
+    de sus datos personales, incluyendo la subida de una foto de perfil.
+    """
     user_id = request.session.get(SESSION_USER_ID)
     if not user_id or request.session.get(SESSION_USER_ROLE) == UserRole.GUEST:
         return redirect('login_html')
@@ -157,6 +192,10 @@ def perfil(request):
 
 @verificar_url_segura
 def solicitar_recuperacion(request):
+    """
+    Procesa la solicitud de recuperación de contraseña.
+    Verifica si el correo existe, genera un token temporal y envía el enlace.
+    """
     if request.method == "POST":
         correo = request.POST.get('correo', '').strip()
         try:
@@ -172,6 +211,10 @@ def solicitar_recuperacion(request):
 
 @verificar_url_segura
 def restablecer_contrasena(request, token):
+    """
+    Verifica el token de recuperación y, si es válido, procesa la nueva
+    contraseña ingresada por el usuario, actualizándola en la base de datos.
+    """
     user = verify_reset_token(token)
     if not user:
         messages.error(request, "El enlace de recuperación es inválido o ha expirado.")
