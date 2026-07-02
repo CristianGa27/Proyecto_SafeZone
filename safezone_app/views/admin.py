@@ -60,7 +60,7 @@ def panel_tecnico(request):
             SELECT R.id, U.nombre_usuario AS reportado_por, R.ubicacion,
                 R.barrio as zona, T.nombre_anomalia, R.gravedad,
                 R.descripcion, R.fecha_reporte, R.estado, R.observaciones,
-                R.imagen, R.latitud, R.longitud, R.info_adicional
+                R.imagen, R.imagen2, R.imagen3, R.latitud, R.longitud, R.info_adicional
             FROM reportes R
             LEFT JOIN usuarios U ON R.usuario_id = U.id
             LEFT JOIN tiposanomalia T ON R.id_tipo_anomalia = T.id

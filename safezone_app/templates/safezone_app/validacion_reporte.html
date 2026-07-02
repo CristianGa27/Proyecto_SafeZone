@@ -257,7 +257,7 @@
             const modalDetails = document.getElementById('modal-details');
             
             let imageHtml = '';
-            const imgStyle = 'width: 120px; height: 120px; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); transition: transform 0.2s;';
+            const imgStyle = 'width: 80px; height: 80px; object-fit: cover; border-radius: 6px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); transition: transform 0.2s;';
             
             if (imagen !== 'None' && imagen !== '') {
                 imageHtml += `<a href="${imagen}" target="_blank"><img src="${imagen}" alt="Imagen 1" style="${imgStyle}" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"></a>`;
@@ -269,13 +269,13 @@
                 imageHtml += `<a href="${imagen3}" target="_blank"><img src="${imagen3}" alt="Imagen 3" style="${imgStyle}" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"></a>`;
             }
             if (imageHtml === '') {
-                imageHtml = 'No hay imágenes';
+                imageHtml = '<span style="color:#9ca3af; font-style:italic;">No hay imágenes adjuntas</span>';
             }
 
             const modalImageHtml = `<tr><th>Imágenes:</th><td><div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 15px; margin-top: 5px;">${imageHtml}</div></td></tr>`;
 
             modalDetails.innerHTML = `
-                <h2>Detalles del Reporte ${id}</h2>
+                <h2>Detalles del Reporte #${id}</h2>
                 <table class="modal-table">
                     <tr><th>Ubicación:</th><td>${ubicacion}</td></tr>
                     <tr><th>Zona:</th><td>${zona}</td></tr>
@@ -287,11 +287,19 @@
                     <tr><th>Observaciones:</th><td>${observaciones}</td></tr>
                 </table>
             `;
-            document.getElementById('modal-container').style.display = 'flex';
+            const modal = document.getElementById('modal-container');
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 10);
         }
 
         function hideModal() {
-            document.getElementById('modal-container').style.display = 'none';
+            const modal = document.getElementById('modal-container');
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
         }
     </script>
     <script>

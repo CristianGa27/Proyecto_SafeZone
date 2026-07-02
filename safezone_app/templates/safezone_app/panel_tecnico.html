@@ -199,7 +199,7 @@
                             </thead>
                             <tbody>
                                 {% for r in reportes %}
-                                <tr class="table-row">
+                                <tr class="table-row" style="cursor: pointer;" onclick="showDetails('{{ r.id }}', '{{ r.ubicacion|escapejs }}', '{{ r.zona|escapejs }}', '{{ r.gravedad|escapejs }}', '{{ r.descripcion|escapejs }}', '{{ r.info_adicional|escapejs }}', '{{ r.imagen }}', '{{ r.imagen2 }}', '{{ r.imagen3 }}', '{{ r.estado|escapejs }}', '{{ r.observaciones|escapejs }}')">
                                     <td><strong>#{{ r.id }}</strong></td>
                                     <td>{{ r.ubicacion }}</td>
                                     <td>{{ r.zona }}</td>
@@ -224,15 +224,15 @@
                                     <td>
                                         <div class="workflow-controls">
                                             {% if r.estado == 'pendiente' %}
-                                                <button class="workflow-btn btn-progreso" onclick="cambiarEstadoTecnico({{ r.id }}, 'en_progreso')">
+                                                <button class="workflow-btn btn-progreso" onclick="event.stopPropagation(); cambiarEstadoTecnico({{ r.id }}, 'en_progreso')">
                                                     Iniciar
                                                 </button>
                                             {% elif r.estado == 'en_progreso' %}
-                                                <button class="workflow-btn btn-resolver" onclick="cambiarEstadoTecnico({{ r.id }}, 'resuelto')">
+                                                <button class="workflow-btn btn-resolver" onclick="event.stopPropagation(); cambiarEstadoTecnico({{ r.id }}, 'resuelto')">
                                                     Resolver
                                                 </button>
                                             {% elif r.estado == 'resuelto' %}
-                                                <button class="workflow-btn btn-cerrar" onclick="cambiarEstadoTecnico({{ r.id }}, 'cerrado')">
+                                                <button class="workflow-btn btn-cerrar" onclick="event.stopPropagation(); cambiarEstadoTecnico({{ r.id }}, 'cerrado')">
                                                     Cerrar
                                                 </button>
                                             {% elif r.estado == 'cerrado' %}
@@ -256,7 +256,66 @@
         </div>
     </main>
 
+    <!-- Modal HTML -->
+    <div id="modal-container" class="modal-container" onclick="hideModal()">
+        <div id="modal-content" class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="hideModal()">&times;</span>
+            <div id="modal-details"></div>
+        </div>
+    </div>
+
     <script>
+        // Funciones del Modal
+        function showDetails(id, ubicacion, zona, gravedad, descripcion, info_adicional, imagen, imagen2, imagen3, estado, observaciones) {
+            const modalDetails = document.getElementById('modal-details');
+            
+            let imageHtml = '';
+            const imgStyle = 'width: 80px; height: 80px; object-fit: cover; border-radius: 6px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); transition: transform 0.2s;';
+            
+            if (imagen !== 'None' && imagen !== '') {
+                imageHtml += `<a href="${imagen}" target="_blank"><img src="${imagen}" alt="Imagen 1" style="${imgStyle}" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"></a>`;
+            }
+            if (imagen2 !== 'None' && imagen2 !== '') {
+                imageHtml += `<a href="${imagen2}" target="_blank"><img src="${imagen2}" alt="Imagen 2" style="${imgStyle}" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"></a>`;
+            }
+            if (imagen3 !== 'None' && imagen3 !== '') {
+                imageHtml += `<a href="${imagen3}" target="_blank"><img src="${imagen3}" alt="Imagen 3" style="${imgStyle}" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"></a>`;
+            }
+            if (imageHtml === '') {
+                imageHtml = '<span style="color:#9ca3af; font-style:italic;">No hay imágenes adjuntas</span>';
+            }
+
+            const modalImageHtml = `<tr><th>Imágenes:</th><td><div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 15px; margin-top: 5px;">${imageHtml}</div></td></tr>`;
+
+            modalDetails.innerHTML = `
+                <h2>Detalles del Reporte #${id}</h2>
+                <table class="modal-table">
+                    <tr><th>Ubicación:</th><td>${ubicacion}</td></tr>
+                    <tr><th>Zona:</th><td>${zona}</td></tr>
+                    <tr><th>Gravedad:</th><td><span class="status-badge gravedad-${gravedad}" style="background:rgba(255,255,255,0.1); color:#e2e8f0;">${gravedad}</span></td></tr>
+                    <tr><th>Descripción:</th><td>${descripcion}</td></tr>
+                    <tr><th>Info Adicional:</th><td>${info_adicional}</td></tr>
+                    ${modalImageHtml}
+                    <tr><th>Estado:</th><td><span class="status-badge status-${estado}" style="background:rgba(255,255,255,0.1); color:#e2e8f0;">${estado}</span></td></tr>
+                    <tr><th>Observaciones:</th><td>${observaciones}</td></tr>
+                </table>
+            `;
+            
+            const modal = document.getElementById('modal-container');
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 10);
+        }
+
+        function hideModal() {
+            const modal = document.getElementById('modal-container');
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+
         // Función para cambiar estado en el flujo técnico
         function cambiarEstadoTecnico(reporteId, nuevoEstado) {
             // Crear formulario dinámico
