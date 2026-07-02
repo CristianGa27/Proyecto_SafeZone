@@ -1,6 +1,6 @@
 # SafeZone - Sistema de Reportes de Anomalías Viales
 
-**Sistema completo para reportar y gestionar baches y vías dañadas - Ahora en Django**
+**Sistema completo  inteligente para el reporte y gestión de anomalías en la ciudad. - en Django**
 
 ## ✅ Estado del Proyecto: MIGRADO A DJANGO
 
@@ -26,6 +26,32 @@
 - **tecnico@safezone.com** - Administrador Técnico
 - **Usuarios regulares** - Pueden crear y gestionar reportes
 - **Invitados** - Acceso básico para reportes
+
+## 🛠️ Stack Tecnológico
+
+**Backend y Framework:**
+- **Python 3.8+**
+- **Django 6.0.5** (Framework web principal)
+
+**Base de Datos:**
+- **MySQL 8.0+**
+- **mysql-connector-python** / **pymysql**
+- **dj-database-url**
+
+**Frontend:**
+- **HTML5, CSS3, JavaScript (Vanilla)**
+- **Django Templates**
+- **Leaflet.js 1.7.1** (Mapas interactivos y geolocalización)
+- **Chart.js** (Estadísticas y gráficos en tiempo real)
+
+**Seguridad y Entorno:**
+- **Bcrypt 4.2.1** (Hashing de contraseñas)
+- **Python-dotenv** (Gestión de variables de entorno)
+- **Cloudinary** (Almacenamiento de imágenes/archivos multimedia)
+
+**Despliegue:**
+- **Gunicorn** (Servidor HTTP WSGI)
+- **WhiteNoise** (Gestión de archivos estáticos en producción)
 
 ## 🗂️ Estructura del Proyecto (Django)
 
