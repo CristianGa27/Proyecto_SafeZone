@@ -126,7 +126,7 @@
                                     <td>{{ r.id }}</td>
                                     <td>{{ r.ubicacion }}</td>
                                     <td>{{ r.zona }}</td>
-                                    <td>{{ r.gravedad }}</td>
+                                    <td><span class="gravedad-{{ r.gravedad|lower }}">{{ r.gravedad|upper }}</span></td>
                                     <td>{{ r.descripcion }}</td>
                                     <td>{{ r.info_adicional|default:"" }}</td>
                                     <td>
@@ -155,7 +155,7 @@
                                             {% endif %}
                                         </div>
                                     </td>
-                                    <td>{{ r.estado }}</td>
+                                    <td><span class="status-badge status-{{ r.estado|lower }}">{{ r.estado|upper }}</span></td>
                                     <td>{{ r.observaciones|default:"" }}</td>
                                     <td>
                                         <div class="action-buttons" onclick="event.stopPropagation();">
@@ -279,11 +279,11 @@
                 <table class="modal-table">
                     <tr><th>Ubicación:</th><td>${ubicacion}</td></tr>
                     <tr><th>Zona:</th><td>${zona}</td></tr>
-                    <tr><th>Gravedad:</th><td>${gravedad}</td></tr>
+                    <tr><th>Gravedad:</th><td><span class="gravedad-${gravedad.toLowerCase()}">${gravedad.toUpperCase()}</span></td></tr>
                     <tr><th>Descripción:</th><td>${descripcion}</td></tr>
                     <tr><th>Información Adicional:</th><td>${info_adicional}</td></tr>
                     ${modalImageHtml}
-                    <tr><th>Estado:</th><td>${estado}</td></tr>
+                    <tr><th>Estado:</th><td><span class="status-badge status-${estado.toLowerCase()}">${estado.toUpperCase()}</span></td></tr>
                     <tr><th>Observaciones:</th><td>${observaciones}</td></tr>
                 </table>
             `;

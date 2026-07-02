@@ -29,21 +29,7 @@
             opacity: 0.9;
         }
         
-        .status-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .status-pendiente { background: #fef3c7; color: #92400e; }
-        .status-asignado { background: #dbeafe; color: #1e40af; }
-        .status-en_progreso { background: #fed7aa; color: #c2410c; }
-        .status-resuelto { background: #d1fae5; color: #065f46; }
-        .status-cerrado { background: #e5e7eb; color: #374151; }
+        /* Las clases .status-badge y de estado están en validacion_de_reporte.css */
         
         .workflow-controls {
             display: flex;
@@ -204,8 +190,8 @@
                                     <td>{{ r.ubicacion }}</td>
                                     <td>{{ r.zona }}</td>
                                     <td>
-                                        <span class="gravedad-{{ r.gravedad }}">
-                                            {{ r.gravedad|title }}
+                                        <span class="gravedad-{{ r.gravedad|lower }}">
+                                            {{ r.gravedad|upper }}
                                         </span>
                                     </td>
                                     <td>{{ r.nombre_anomalia }}</td>
@@ -292,11 +278,11 @@
                 <table class="modal-table">
                     <tr><th>Ubicación:</th><td>${ubicacion}</td></tr>
                     <tr><th>Zona:</th><td>${zona}</td></tr>
-                    <tr><th>Gravedad:</th><td><span class="status-badge gravedad-${gravedad}" style="background:rgba(255,255,255,0.1); color:#e2e8f0;">${gravedad}</span></td></tr>
+                    <tr><th>Gravedad:</th><td><span class="gravedad-${gravedad.toLowerCase()}">${gravedad.toUpperCase()}</span></td></tr>
                     <tr><th>Descripción:</th><td>${descripcion}</td></tr>
                     <tr><th>Info Adicional:</th><td>${info_adicional}</td></tr>
                     ${modalImageHtml}
-                    <tr><th>Estado:</th><td><span class="status-badge status-${estado}" style="background:rgba(255,255,255,0.1); color:#e2e8f0;">${estado}</span></td></tr>
+                    <tr><th>Estado:</th><td><span class="status-badge status-${estado.toLowerCase()}">${estado.toUpperCase()}</span></td></tr>
                     <tr><th>Observaciones:</th><td>${observaciones}</td></tr>
                 </table>
             `;

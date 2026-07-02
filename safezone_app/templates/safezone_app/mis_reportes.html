@@ -7,74 +7,6 @@
     <link rel="stylesheet" href="/static/CSS/mis_reportes.css">
     <link rel="stylesheet" href="/static/CSS/menu.css">
     <style>
-        /* Estilos para gravedad */
-        .gravedad-leve {
-            background-color: #d4edda;
-            color: #155724;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.85em;
-            font-weight: 500;
-        }
-        .gravedad-moderado {
-            background-color: #fff3cd;
-            color: #856404;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.85em;
-            font-weight: 500;
-        }
-        .gravedad-severo {
-            background-color: #ffeaa7;
-            color: #d63031;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.85em;
-            font-weight: 500;
-        }
-        .gravedad-critico {
-            background-color: #f8d7da;
-            color: #721c24;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.85em;
-            font-weight: 500;
-        }
-        
-        /* Estilos para estados */
-        .status-pendiente {
-            background-color: #fff3cd;
-            color: #856404;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.85em;
-            font-weight: 500;
-        }
-        .status-en_proceso {
-            background-color: #cce5ff;
-            color: #004085;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.85em;
-            font-weight: 500;
-        }
-        .status-completado, .status-aprobado {
-            background-color: #d4edda;
-            color: #155724;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.85em;
-            font-weight: 500;
-        }
-        .status-rechazado {
-            background-color: #f8d7da;
-            color: #721c24;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.85em;
-            font-weight: 500;
-        }
-        
         /* Estilo para cuando no hay datos */
         .no-data {
             text-align: center;
@@ -316,12 +248,12 @@
                                 <td>{{ reporte.nombre_anomalia|default:"N/A" }}</td>
                                 <td>
                                     <span class="gravedad-{{ reporte.gravedad|lower|default:'leve' }}">
-                                        {{ reporte.gravedad|capfirst|default:'N/A' }}
+                                        {{ reporte.gravedad|upper|default:'N/A' }}
                                     </span>
                                 </td>
                                 <td>
-                                    <span class="status-{{ reporte.estado|lower|default:'pendiente' }}">
-                                        {{ reporte.estado|default:"Pendiente" }}
+                                    <span class="status-badge status-{{ reporte.estado|lower|default:'pendiente' }}">
+                                        {{ reporte.estado|upper|default:"PENDIENTE" }}
                                     </span>
                                 </td>
                                 <td>{{ reporte.descripcion|truncatechars:50|default:"Sin descripción" }}</td>
