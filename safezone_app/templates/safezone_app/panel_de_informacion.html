@@ -158,13 +158,26 @@
                     </div>
                     <div class="stat-content">
                         <h3 class="stat-title">Reportes por Mes</h3>
-                        <div class="chart-container">
-                            {% for mes_data in stats.reportes_mes %}
-                            <div class="chart-bar" 
-                                 data-height="{{ mes_data.height }}" 
-                                 title="{{ mes_data.mes }}: {{ mes_data.total }} reportes">
+                        <div class="chart-wrapper-main">
+                            <div class="chart-container" style="border-bottom: 1px solid #374151; padding-bottom: 2px; margin-bottom: 0;">
+                                {% for mes_data in stats.reportes_mes %}
+                                <div class="chart-bar" 
+                                     data-height="{{ mes_data.height }}" 
+                                     title="{{ mes_data.mes }}: {{ mes_data.total }} reportes"
+                                     style="position: relative;">
+                                     <span style="position: absolute; top: -18px; left: 50%; transform: translateX(-50%); font-size: 0.75rem; color: #e5e7eb; font-weight: 600;">
+                                         {{ mes_data.total }}
+                                     </span>
+                                </div>
+                                {% endfor %}
                             </div>
-                            {% endfor %}
+                            <div class="chart-labels" style="display: flex; gap: 8px; margin-top: 6px;">
+                                {% for mes_data in stats.reportes_mes %}
+                                <div style="flex: 1; text-align: center; font-size: 0.75rem; color: #9ca3af; text-transform: uppercase; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                    {{ mes_data.mes|slice:":3" }}
+                                </div>
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                 </div>
