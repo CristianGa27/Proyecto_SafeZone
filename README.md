@@ -1,6 +1,6 @@
 # SafeZone - Sistema de Reportes de Anomalías Viales
 
-**Sistema completo  inteligente para el reporte y gestión de anomalías en la ciudad. - en Django**
+**Sistema inteligente para el reporte y gestión de daños viales en la ciudad. - en Django**
 
 ## ✅ Estado del Proyecto: MIGRADO A DJANGO
 
