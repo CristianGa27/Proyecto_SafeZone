@@ -55,11 +55,16 @@ def registro_reporte(request):
         tipo = Tiposanomalia.objects.get(id=request.POST.get("tipo_anomalia_id"))
         imagenes = save_report_images(request.FILES.getlist('imageUpload'))
 
+        gravedad_val = request.POST.get("severity")
+        prioridad_map = {'critico': 'critica', 'severo': 'alta', 'moderado': 'media', 'leve': 'baja'}
+        prioridad_val = prioridad_map.get(gravedad_val, 'media')
+
         reporte = Reportes(
             ubicacion=request.POST.get("location"),
             barrio=request.POST.get("zone_id"),
             id_tipo_anomalia=tipo,
-            gravedad=request.POST.get("severity"),
+            gravedad=gravedad_val,
+            prioridad=prioridad_val,
             descripcion=request.POST.get("description"),
             info_adicional=request.POST.get("additionalInfo"),
             imagen=imagenes[0], imagen2=imagenes[1], imagen3=imagenes[2],

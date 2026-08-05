@@ -21,13 +21,14 @@ def _dictfetchall(cursor):
 def panel_admin(request):
     """
     Renderiza el panel de control del administrador principal.
-    Muestra todos los reportes, permite filtrar por estado o gravedad.
+    Muestra todos los reportes, permite filtrar por estado, gravedad o prioridad.
     """
     estado = request.GET.get('estado')
     gravedad = request.GET.get('gravedad')
+    prioridad = request.GET.get('prioridad')
     q = """
         SELECT R.id, U.nombre_usuario AS reportado_por, R.ubicacion,
-            R.barrio as zona, T.nombre_anomalia, R.gravedad,
+            R.barrio as zona, T.nombre_anomalia, R.gravedad, R.prioridad,
             R.descripcion, R.info_adicional, R.fecha_reporte, R.estado,
             R.observaciones, R.imagen, R.imagen2, R.imagen3,
             R.latitud, R.longitud
@@ -39,33 +40,40 @@ def panel_admin(request):
     p = []
     if estado: q += " AND R.estado = %s"; p.append(estado)
     if gravedad: q += " AND R.gravedad = %s"; p.append(gravedad)
-    q += " ORDER BY R.id DESC"
+    if prioridad: q += " AND R.prioridad = %s"; p.append(prioridad)
+    q += """ ORDER BY CASE R.prioridad
+        WHEN 'critica' THEN 1 WHEN 'alta' THEN 2
+        WHEN 'media' THEN 3 WHEN 'baja' THEN 4 ELSE 5
+    END, R.id DESC"""
 
     with connection.cursor() as cursor:
         cursor.execute(q, p)
         reportes = _dictfetchall(cursor)
 
     return render(request, "safezone_app/validacion_reporte.html", {
-        'reportes': reportes, 'filtros': {'estado': estado, 'gravedad': gravedad}
+        'reportes': reportes, 'filtros': {'estado': estado, 'gravedad': gravedad, 'prioridad': prioridad}
     })
 
 @tecnico_required
 def panel_tecnico(request):
     """
     Renderiza el panel para el administrador técnico.
-    Muestra los reportes priorizados según su estado operativo.
+    Muestra los reportes priorizados según su estado operativo y prioridad.
     """
     with connection.cursor() as cursor:
         cursor.execute("""
             SELECT R.id, U.nombre_usuario AS reportado_por, R.ubicacion,
-                R.barrio as zona, T.nombre_anomalia, R.gravedad,
+                R.barrio as zona, T.nombre_anomalia, R.gravedad, R.prioridad,
                 R.descripcion, R.fecha_reporte, R.estado, R.observaciones,
                 R.imagen, R.imagen2, R.imagen3, R.latitud, R.longitud, R.info_adicional
             FROM reportes R
             LEFT JOIN usuarios U ON R.usuario_id = U.id
             LEFT JOIN tiposanomalia T ON R.id_tipo_anomalia = T.id
             WHERE R.estado IN ('pendiente', 'en_progreso', 'resuelto', 'cerrado')
-            ORDER BY CASE R.estado
+            ORDER BY CASE R.prioridad
+                WHEN 'critica' THEN 1 WHEN 'alta' THEN 2
+                WHEN 'media' THEN 3 WHEN 'baja' THEN 4 ELSE 5
+            END, CASE R.estado
                 WHEN 'pendiente' THEN 1 WHEN 'en_progreso' THEN 2
                 WHEN 'resuelto' THEN 3 WHEN 'cerrado' THEN 4
             END, R.fecha_reporte DESC
@@ -76,15 +84,19 @@ def panel_tecnico(request):
 @admin_or_tecnico_required
 def validar(request, id):
     """
-    Procesa el cambio de estado de un reporte y guarda observaciones técnicas.
-    Verifica que los técnicos solo puedan cambiar a estados permitidos para su rol.
+    Procesa el cambio de estado y prioridad de un reporte y guarda observaciones técnicas.
     """
     user_role = request.session.get(SESSION_USER_ROLE)
     estado = request.POST.get("estado")
+    prioridad = request.POST.get("prioridad")
     if user_role == UserRole.ADMIN_TECNICO and estado not in ReportStatus.TECHNICAL_FLOW:
         return redirect('panel_tecnico')
 
-    Reportes.objects.filter(id=id).update(estado=estado, observaciones=request.POST.get("observaciones"))
+    update_fields = {"estado": estado, "observaciones": request.POST.get("observaciones")}
+    if prioridad:
+        update_fields["prioridad"] = prioridad
+
+    Reportes.objects.filter(id=id).update(**update_fields)
     messages.success(request, "Guardado.")
     return redirect('panel_tecnico' if user_role == UserRole.ADMIN_TECNICO else 'panel_admin')
 

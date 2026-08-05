@@ -52,6 +52,17 @@ class SeverityLevel:
     ORDER = (CRITICO, SEVERO, MODERADO, LEVE)
 
 
+class PriorityLevel:
+    """Niveles de prioridad de un reporte."""
+
+    CRITICA = 'critica'
+    ALTA = 'alta'
+    MEDIA = 'media'
+    BAJA = 'baja'
+
+    ORDER = (CRITICA, ALTA, MEDIA, BAJA)
+
+
 # --- Configuración de archivos ---
 
 ALLOWED_IMAGE_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}

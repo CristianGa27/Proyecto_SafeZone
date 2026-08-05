@@ -11,7 +11,7 @@ def api_reportes(request):
     with connection.cursor() as cursor:
         cursor.execute("""
             SELECT R.id, R.ubicacion, R.barrio as zona, T.nombre_anomalia as tipo_anomalia,
-                R.gravedad, R.descripcion, R.info_adicional, R.fecha_reporte, R.estado,
+                R.gravedad, R.prioridad, R.descripcion, R.info_adicional, R.fecha_reporte, R.estado,
                 R.latitud as lat, R.longitud as lng, R.imagen, R.imagen2, R.imagen3,
                 U.nombre_usuario AS reportado_por
             FROM reportes R

@@ -55,6 +55,7 @@ class Reportes(models.Model):
     barrio = models.CharField(max_length=100)
     ubicacion = models.CharField(max_length=500)
     gravedad = models.CharField(max_length=8)
+    prioridad = models.CharField(max_length=8, blank=True, null=True)
     descripcion = models.TextField()
     info_adicional = models.TextField(blank=True, null=True)
     imagen = models.CharField(max_length=255, blank=True, null=True)
