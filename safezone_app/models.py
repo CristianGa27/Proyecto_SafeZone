@@ -145,5 +145,4 @@ class Zonas(models.Model):
     fecha_creacion = models.DateTimeField()
 
     class Meta:
-        managed = False
         db_table = 'zonas'
