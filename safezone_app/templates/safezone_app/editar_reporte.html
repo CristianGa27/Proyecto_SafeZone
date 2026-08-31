@@ -256,8 +256,8 @@
     </main>
     <script>
         // Coordenadas iniciales basadas en el reporte existente, o por defecto si no las hay
-        let REPORT_LAT = {% if reporte.latitud %}{{ reporte.latitud|stringformat:"f" }}{% else %}6.3389{% endif %};
-        let REPORT_LNG = {% if reporte.longitud %}{{ reporte.longitud|stringformat:"f" }}{% else %}-75.5627{% endif %};
+        let REPORT_LAT = parseFloat("{% if reporte.latitud %}{{ reporte.latitud|stringformat:'f' }}{% else %}6.3389{% endif %}".replace(',', '.'));
+        let REPORT_LNG = parseFloat("{% if reporte.longitud %}{{ reporte.longitud|stringformat:'f' }}{% else %}-75.5627{% endif %}".replace(',', '.'));
 
         // --- INICIO LÓGICA DEL MAPA ---
         let miniMap;

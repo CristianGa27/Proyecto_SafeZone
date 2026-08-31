@@ -210,15 +210,15 @@
                                     <td>
                                         <div class="workflow-controls">
                                             {% if r.estado == 'pendiente' %}
-                                                <button class="workflow-btn btn-progreso" onclick="event.stopPropagation(); cambiarEstadoTecnico({{ r.id }}, 'en_progreso')">
+                                                <button class="workflow-btn btn-progreso" onclick="event.stopPropagation(); cambiarEstadoTecnico('{{ r.id }}', 'en_progreso')">
                                                     Iniciar
                                                 </button>
                                             {% elif r.estado == 'en_progreso' %}
-                                                <button class="workflow-btn btn-resolver" onclick="event.stopPropagation(); cambiarEstadoTecnico({{ r.id }}, 'resuelto')">
+                                                <button class="workflow-btn btn-resolver" onclick="event.stopPropagation(); cambiarEstadoTecnico('{{ r.id }}', 'resuelto')">
                                                     Resolver
                                                 </button>
                                             {% elif r.estado == 'resuelto' %}
-                                                <button class="workflow-btn btn-cerrar" onclick="event.stopPropagation(); cambiarEstadoTecnico({{ r.id }}, 'cerrado')">
+                                                <button class="workflow-btn btn-cerrar" onclick="event.stopPropagation(); cambiarEstadoTecnico('{{ r.id }}', 'cerrado')">
                                                     Cerrar
                                                 </button>
                                             {% elif r.estado == 'cerrado' %}

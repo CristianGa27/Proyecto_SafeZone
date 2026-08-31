@@ -16,25 +16,31 @@
             height: 0.5rem;
             margin-top: 5px;
         }
+
         .progress-bar {
             background-color: #10b981;
             height: 0.5rem;
             border-radius: 9999px;
         }
+
         .progress-bar.incomplete {
             background-color: #f59e0b;
         }
+
         .filters {
             display: flex;
             gap: 15px;
             margin-bottom: 20px;
             align-items: center;
         }
-        .filter-select, .search-input {
+
+        .filter-select,
+        .search-input {
             padding: 8px;
             border-radius: 5px;
             border: 1px solid #d1d5db;
         }
+
         .status-badge {
             padding: 4px 8px;
             border-radius: 4px;
@@ -42,10 +48,22 @@
             font-weight: bold;
             color: white;
         }
-        .status-activo { background-color: #10b981; }
-        .status-inactivo { background-color: #6b7280; }
-        .status-pendiente { background-color: #f59e0b; }
-        .status-bloqueado { background-color: #ef4444; }
+
+        .status-activo {
+            background-color: #10b981;
+        }
+
+        .status-inactivo {
+            background-color: #6b7280;
+        }
+
+        .status-pendiente {
+            background-color: #f59e0b;
+        }
+
+        .status-bloqueado {
+            background-color: #ef4444;
+        }
     </style>
 </head>
 
@@ -110,7 +128,7 @@
         </header>
 
         <div class="content-area">
-            
+
             {% if messages %}
             <div class="flash-messages">
                 {% for message in messages %}
@@ -118,7 +136,7 @@
                 {% endfor %}
             </div>
             {% endif %}
-            
+
 
             <div class="page-header">
                 <h1 class="page-title">Panel de Usuarios</h1>
@@ -135,7 +153,8 @@
                             <option value="pendiente">Pendiente</option>
                             <option value="bloqueado">Bloqueado</option>
                         </select>
-                        <input type="text" id="searchInput" class="search-input" placeholder="Buscar por nombre o correo..." onkeyup="filterUsers()">
+                        <input type="text" id="searchInput" class="search-input"
+                            placeholder="Buscar por nombre o correo..." onkeyup="filterUsers()">
                     </div>
 
                     <div class="table-responsive">
@@ -152,7 +171,9 @@
                             </thead>
                             <tbody>
                                 {% for u in usuarios %}
-                                <tr class="user-row" data-status="{{ u.estado_cuenta }}" data-name="{{ u.nombre_usuario|lower }}" data-email="{{ u.correo_electronico|lower }}">
+                                <tr class="user-row" data-status="{{ u.estado_cuenta }}"
+                                    data-name="{{ u.nombre_usuario|lower }}"
+                                    data-email="{{ u.correo_electronico|lower }}">
                                     <td>{{ u.id }}</td>
                                     <td>
                                         <strong>{{ u.nombre_usuario }}</strong><br>
@@ -163,23 +184,25 @@
                                         <small>{{ u.telefono|default:"N/A" }}</small>
                                     </td>
                                     <td>
-                                        <span class="status-badge status-{{ u.estado_cuenta }}">{{ u.estado_cuenta | upper }}</span>
+                                        <span class="status-badge status-{{ u.estado_cuenta }}">{{ u.estado_cuenta |
+                                            upper }}</span>
                                     </td>
                                     <td>
                                         <div>
                                             <span>{{ u.completitud }}%</span>
-                                            {% if u.completitud < 100 %}
-                                            <span style="font-size: 0.8em; color: #ef4444;" title="Falta: {{ u.faltantes }}">⚠️ Incompleto</span>
-                                            {% else %}
-                                            <span style="font-size: 0.8em; color: #10b981;">✅</span>
-                                            {% endif %}
+                                            {% if u.completitud < 100 %} <span style="font-size: 0.8em; color: #ef4444;"
+                                                title="Falta: {{ u.faltantes }}">⚠️ Incompleto</span>
+                                                {% else %}
+                                                <span style="font-size: 0.8em; color: #10b981;">✅</span>
+                                                {% endif %}
                                         </div>
                                         <div class="progress-bar-container">
-                                            <div class="progress-bar {% if u.completitud < 100 %}incomplete{% endif %}" style="width: {{ u.completitud }}%"></div>
+                                            <div class="progress-bar {% if u.completitud < 100 %}incomplete{% endif %}"
+                                                style="width: {{ u.completitud }}%;"></div>
                                         </div>
-                                        {% if u.completitud < 100 %}
-                                        <small style="color: #6b7280;">Falta: {{ u.faltantes }}</small>
-                                        {% endif %}
+                                        {% if u.completitud < 100 %} <small style="color: #6b7280;">Falta: {{
+                                            u.faltantes }}</small>
+                                            {% endif %}
                                     </td>
                                     <td>{{ u.fecha_registro|date:"Y-m-d"|default:"N/A" }}</td>
                                 </tr>
@@ -217,23 +240,21 @@
         }
     </script>
     <script>
-    // 1. Evita que el navegador guarde un estado de página activo en su historial de navegación
-    window.onload = function () {
-        if (window.history.replaceState) {
-            window.history.replaceState(null, null, window.location.href);
+        // 1. Evita que el navegador guarde un estado de página activo en su historial de navegación
+        window.onload = function () {
+            if (window.history.replaceState) {
+                window.history.replaceState(null, null, window.location.href);
+            }
         }
-    }
-    
-    // 2. Detecta si el usuario intentó usar el botón "Atrás" y lo obliga a recargar la página.
-    // Al recargar, Django detectará que la sesión no existe y exigirá el correo y contraseña.
-    window.onpageshow = function (event) {
-        if (event.persisted) {
-            window.location.reload();
-        }
-    };
-</script>
+
+        // 2. Detecta si el usuario intentó usar el botón "Atrás" y lo obliga a recargar la página.
+        // Al recargar, Django detectará que la sesión no existe y exigirá el correo y contraseña.
+        window.onpageshow = function (event) {
+            if (event.persisted) {
+                window.location.reload();
+            }
+        };
+    </script>
 </body>
+
 </html>
-
-
-

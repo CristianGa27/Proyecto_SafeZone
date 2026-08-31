@@ -14,8 +14,20 @@
 
             
             {% if messages %}
+                <style>
+                    .msg-alert {
+                        padding: 0.9rem 1.2rem;
+                        border-radius: 12px;
+                        margin-bottom: 1.5rem;
+                        font-size: 0.95rem;
+                        font-weight: 600;
+                    }
+                    .msg-alert-warning { background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.4); color: #fbbf24; }
+                    .msg-alert-error { background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.4); color: #f87171; }
+                    .msg-alert-default { background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.4); color: #a78bfa; }
+                </style>
                 {% for message in messages %}
-                <div style="padding: 0.9rem 1.2rem; border-radius: 12px; margin-bottom: 1.5rem; font-size: 0.95rem; font-weight: 600; {% if message.tags == 'warning' %} background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.4); color: #fbbf24; {% elif message.tags == 'error' %} background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.4); color: #f87171; {% else %} background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.4); color: #a78bfa; {% endif %}">
+                <div class="msg-alert {% if message.tags == 'warning' %}msg-alert-warning{% elif message.tags == 'error' %}msg-alert-error{% else %}msg-alert-default{% endif %}">
                     ⚠️ {{ message }}
                 </div>
                 {% endfor %}
