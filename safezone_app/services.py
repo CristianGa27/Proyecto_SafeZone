@@ -520,13 +520,14 @@ def get_dashboard_stats():
 
 def get_chart_statistics():
     """
-    Obtiene estadísticas para los gráficos.
-
-    Returns:
-        dict con reportes_mes, severidad y evolucion.
+    Obtiene estadísticas para los gráficos usando ORM de Django
+    (Compatible con PostgreSQL y MySQL)
     """
-    import calendar
-    from django.db import connection
+    from django.db.models import Count, Case, When, IntegerField
+    from django.db.models.functions import TruncMonth, ExtractWeek
+    from django.utils import timezone
+    from datetime import timedelta
+    from .models import Reportes
 
     stats = {
         'reportes_mes': [],
@@ -534,56 +535,50 @@ def get_chart_statistics():
         'evolucion': [],
     }
 
-    with connection.cursor() as cursor:
-        # Reportes por mes
-        cursor.execute("""
-            SELECT DATE_FORMAT(fecha_reporte, '%Y-%m') as mes, COUNT(*) as total
-            FROM Reportes
-            WHERE fecha_reporte >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
-            GROUP BY DATE_FORMAT(fecha_reporte, '%Y-%m')
-            ORDER BY mes
-        """)
-        columns = [col[0] for col in cursor.description]
-        rmes = [dict(zip(columns, row)) for row in cursor.fetchall()]
+    now = timezone.now()
+    six_months_ago = now - timedelta(days=6*30)
 
-        meses_esp = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
-        for r in rmes:
-            try:
-                y, m = r['mes'].split('-')
-                r['mes'] = f"{meses_esp[int(m)-1]} {y}"
-            except (ValueError, IndexError):
-                pass
+    # Reportes por mes
+    qs_mes = Reportes.objects.filter(fecha_reporte__gte=six_months_ago) \
+                             .annotate(mes_trunc=TruncMonth('fecha_reporte')) \
+                             .values('mes_trunc') \
+                             .annotate(total=Count('id')) \
+                             .order_by('mes_trunc')
+    
+    meses_esp = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+    rmes = []
+    for row in qs_mes:
+        if row['mes_trunc']:
+            mes = f"{meses_esp[row['mes_trunc'].month - 1]} {row['mes_trunc'].year}"
+            rmes.append({'mes': mes, 'total': row['total']})
+    stats['reportes_mes'] = rmes
 
-        stats['reportes_mes'] = rmes
+    # Por severidad
+    severidad_order = Case(
+        When(gravedad='critico', then=1),
+        When(gravedad='severo', then=2),
+        When(gravedad='moderado', then=3),
+        When(gravedad='leve', then=4),
+        default=5,
+        output_field=IntegerField(),
+    )
+    qs_sev = Reportes.objects.values('gravedad') \
+                             .annotate(total=Count('id')) \
+                             .alias(orden=severidad_order) \
+                             .order_by('orden')
+    
+    stats['severidad'] = [{'gravedad': row['gravedad'], 'total': row['total']} for row in qs_sev]
 
-        # Por severidad
-        cursor.execute("""
-            SELECT gravedad, COUNT(*) as total
-            FROM Reportes
-            GROUP BY gravedad
-            ORDER BY CASE gravedad
-                WHEN 'critico' THEN 1
-                WHEN 'severo' THEN 2
-                WHEN 'moderado' THEN 3
-                WHEN 'leve' THEN 4
-            END
-        """)
-        columns = [col[0] for col in cursor.description]
-        stats['severidad'] = [dict(zip(columns, row)) for row in cursor.fetchall()]
-
-        # Evolución semanal
-        cursor.execute("""
-            SELECT WEEK(fecha_reporte) as semana, COUNT(*) as total
-            FROM Reportes
-            WHERE fecha_reporte >= DATE_SUB(NOW(), INTERVAL 8 WEEK)
-            GROUP BY WEEK(fecha_reporte)
-            ORDER BY semana
-        """)
-        columns = [col[0] for col in cursor.description]
-        rows = [dict(zip(columns, row)) for row in cursor.fetchall()]
-        stats['evolucion'] = [
-            {'semana': i + 1, 'total': row['total']}
-            for i, row in enumerate(rows)
-        ]
+    # Evolución semanal (last 8 weeks)
+    eight_weeks_ago = now - timedelta(weeks=8)
+    qs_evo = Reportes.objects.filter(fecha_reporte__gte=eight_weeks_ago) \
+                             .annotate(semana=ExtractWeek('fecha_reporte')) \
+                             .values('semana') \
+                             .annotate(total=Count('id')) \
+                             .order_by('semana')
+    
+    stats['evolucion'] = []
+    for i, row in enumerate(qs_evo):
+        stats['evolucion'].append({'semana': i + 1, 'total': row['total']})
 
     return stats
