@@ -1,1 +1,1936 @@
-[{"model": "sessions.session", "pk": "2b3kcwsu45s0mj6w0g98pz3lf7dibldv", "fields": {"session_data": ".eJyrViotTi2Kz0xRsjI31wFz8hJzU5WslJyLMotLMhPzFJwTczNz8hXcE4uSMxMVAhJLMmNKDQzSDPOVdJTS8kvy4wtSi9Iyc5Ss8kpzciBGxBfl54DMALGVagHBXCKX:1wZrXJ:02RUtkI3OaDZUuhDJhrVYw7Nrwxy3DnRHn8yCJLB7mA", "expire_date": "2026-07-01T14:46:37.096Z"}}, {"model": "sessions.session", "pk": "331tg090c3xdr06c879id30vhnggi5b9", "fields": {"session_data": ".eJyrViotTi2Kz0xRsjIy0AFz8hJzU5WslBxTcjPzFEJiSg0MUi2T8zKT85V0lNLyS_LjC1KL0jJzlKzySnNyIFrii_JzQHoSQXriS1IhymsBxdggUw:1wff17:aCYhUnhIz2KU1FF2WPWX2s_2iAfh2xI6692zWzY2yWE", "expire_date": "2026-07-17T14:37:21.005Z"}}, {"model": "sessions.session", "pk": "eraw68ch9sxivfebwm766d3pizy121g3", "fields": {"session_data": ".eJyrViotTi2Kz0xRsjIz0wFz8hJzU5WslJyLMotLMhPzFJwTczNz8hXcE4uSMxMVAhJLMmNKDQzSDPOVIOrji_JzQBpAbKBQWn5JfnxBalFaZo6SVV5pTk4tALcYIpU:1wXL99:s58k7lEGGnzVXaKpO5N7S_MoDa9mOU-kdbc1Eu-pX_M", "expire_date": "2026-06-24T15:47:15.042Z"}}, {"model": "sessions.session", "pk": "f37wc103mkw9b0x86o9xmarx36vqphaz", "fields": {"session_data": ".eJyrViotTi2Kz0xRsjI31wFz8hJzU5WslJyLMotLMhPzFJwTczNz8hXcE4uSMxMVAhJLMmNKDQzSDPOVdJTS8kvy4wtSi9Iyc5Ss8kpzciBGxBfl54DMALGVagHBXCKX:1wfcwk:yA5Erj0NNiRyC9F6uy-8QqrJ_9pUoNZXdz-nEA096uk", "expire_date": "2026-07-17T12:24:42.572Z"}}, {"model": "sessions.session", "pk": "i6ortq3dzcn375ua5h0il5j2p9dz8dpd", "fields": {"session_data": ".eJyrViotTi2Kz0xRsjI31wFz8hJzU5WslJyLMotLMhPzFJwTczNz8hXcE4uSMxMVAhJLMmNKDQzSDPOVdJTS8kvy4wtSi9Iyc5Ss8kpzciBGxBfl54DMALGVagHBXCKX:1wfd9v:V1l4m5wtK4OmYfuZUNUpMnzJoGafdyTnHx9ElhMGlh4", "expire_date": "2026-07-17T12:38:19.862Z"}}, {"model": "sessions.session", "pk": "iqi873kiezw0x8nurlqk7c4nfcu68z1d", "fields": {"session_data": ".eJyrViotTi2Kz0xRsjK01AFz8hJzU5WslBxTcjPzFAKKMvOSMwsSc5R0lNLyS_LjC1KL0jJzlKzySnNyIOrji_JzQBoSQRriC-AaagHHlSCr:1wrdBJ:MXOIJACS0cduRet5ZD4WfWJ1ZZEWINxrXpuv8S3mrO0", "expire_date": "2026-08-19T15:05:21.848Z"}}, {"model": "sessions.session", "pk": "mifnndc4q8g7eynn5i9j2sncbm20s2ry", "fields": {"session_data": ".eJyrViotTi2Kz0xRsjK01AFz8hJzU5WslBxTcjPzFAKKMvOSMwsSc5R0lNLyS_LjC1KL0jJzlKzySnNyIOrji_JzQBoSQRriC-AaagHHlSCr:1wuAVo:wuaZZkVroA2T4idl5VUI_Juy_lklGdhwg83IRoYyAL4", "expire_date": "2026-08-26T15:05:00.241Z"}}, {"model": "sessions.session", "pk": "q74m51uxihwiyt0v20dmu6skhyi5076g", "fields": {"session_data": ".eJyrViotTi2Kz0xRsjI31wFz8hJzU5WslJyLMotLMhPzFJwTczNz8hXcE4uSMxMVAhJLMmNKDQzSDPOVdJTS8kvy4wtSi9Iyc5Ss8kpzciBGxBfl54DMALGVagHBXCKX:1x1013:X2PVWZg2mLArbVOmcVjUr1Tup87JhzCRyXoIQsdjyLo", "expire_date": "2026-09-14T11:17:29.658Z"}}, {"model": "safezone_app.configuracionsistema", "pk": 1, "fields": {"clave": "sistema_nombre", "valor": "SafeZone", "descripcion": "Nombre del sistema", "tipo": "string", "fecha_actualizacion": "2025-12-14T23:41:39Z"}}, {"model": "safezone_app.configuracionsistema", "pk": 2, "fields": {"clave": "sistema_version", "valor": "2.0.0", "descripcion": "Versi¾n actual del sistema", "tipo": "string", "fecha_actualizacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.configuracionsistema", "pk": 3, "fields": {"clave": "reportes_por_pagina", "valor": "10", "descripcion": "N·mero de reportes por pßgina", "tipo": "number", "fecha_actualizacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.configuracionsistema", "pk": 4, "fields": {"clave": "max_imagenes_reporte", "valor": "3", "descripcion": "Mßximo n·mero de imßgenes por reporte", "tipo": "number", "fecha_actualizacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.configuracionsistema", "pk": 5, "fields": {"clave": "auto_aprobar_reportes", "valor": "false", "descripcion": "Aprobar reportes automßticamente", "tipo": "boolean", "fecha_actualizacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.configuracionsistema", "pk": 6, "fields": {"clave": "coordenadas_centro", "valor": "{\"lat\": 6.3372, \"lng\": -75.5625}", "descripcion": "Coordenadas del centro del mapa (Bello, Antioquia)", "tipo": "json", "fecha_actualizacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.configuracionsistema", "pk": 7, "fields": {"clave": "colores_gravedad", "valor": "{\"leve\": \"#22c55e\", \"moderado\": \"#eab308\", \"severo\": \"#f97316\", \"critico\": \"#ef4444\"}", "descripcion": "Colores para niveles de gravedad", "tipo": "json", "fecha_actualizacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.configuracionsistema", "pk": 8, "fields": {"clave": "estados_permitidos", "valor": "[\"pendiente\", \"aprobado\", \"en_proceso\", \"resuelto\", \"rechazado\"]", "descripcion": "Estados permitidos para reportes", "tipo": "json", "fecha_actualizacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.reportes", "pk": 1, "fields": {"usuario": null, "id_tipo_anomalia": 1, "barrio": "el rosario", "ubicacion": "Carrera 58 #50-24", "gravedad": "critico", "prioridad": "critica", "descripcion": "fefwfwefwe", "info_adicional": "fwefwefwefwe", "imagen": "be924c8a9173d91a_2025_Acer_Consumer_Default_3840x2400.jpg", "imagen2": "0f6cfe262417a94c_2025_Acer_Consumer_Option_3840x2400.jpg", "imagen3": null, "latitud": "6.32980000", "longitud": "-75.55730000", "estado": "cerrado", "observaciones": "Estado cambiado a cerrado", "fecha_reporte": "2026-03-04T07:13:55Z", "fecha_actualizacion": "2026-08-05T09:55:02Z"}}, {"model": "safezone_app.reportes", "pk": 2, "fields": {"usuario": null, "id_tipo_anomalia": 1, "barrio": "el rosario", "ubicacion": "Carrera 58 #50-24", "gravedad": "moderado", "prioridad": "media", "descripcion": "fedgfwfwe", "info_adicional": "fwefwe", "imagen": "bce2dd194ceed0a6_2025_Acer_Consumer_Default_3840x2400.jpg", "imagen2": "427b8331dc225b70_2025_Acer_Consumer_Option_3840x2400.jpg", "imagen3": null, "latitud": "6.32980000", "longitud": "-75.55730000", "estado": "cerrado", "observaciones": "Estado cambiado a cerrado", "fecha_reporte": "2026-03-04T07:37:40Z", "fecha_actualizacion": "2026-03-11T09:25:51Z"}}, {"model": "safezone_app.reportes", "pk": 3, "fields": {"usuario": null, "id_tipo_anomalia": 1, "barrio": "la florida", "ubicacion": "Carrera 58 #50-22", "gravedad": "moderado", "prioridad": "media", "descripcion": "fdasdfsdff", "info_adicional": "dasdfasda", "imagen": "e541ed372da96397_2025_Acer_Consumer_Default_3840x2400.jpg", "imagen2": "e7f1de9a939fd2e6_2025_Acer_Consumer_Option_3840x2400.jpg", "imagen3": null, "latitud": "6.33700000", "longitud": "-75.55200000", "estado": "rechazado", "observaciones": "", "fecha_reporte": "2026-03-04T07:38:46Z", "fecha_actualizacion": "2026-03-04T07:43:30Z"}}, {"model": "safezone_app.reportes", "pk": 4, "fields": {"usuario": null, "id_tipo_anomalia": 1, "barrio": "niquÝa bifamiliares", "ubicacion": "Av. 43 #57-07", "gravedad": "critico", "prioridad": "critica", "descripcion": "fsdfsdf", "info_adicional": "fsdfsdfsdf", "imagen": "b5b7e5aa24db1445_2025_Acer_Consumer_Default_3840x2400.jpg", "imagen2": "b7d63d279200a96c_2025_Acer_Consumer_Option_3840x2400.jpg", "imagen3": null, "latitud": "6.34300000", "longitud": "-75.54500000", "estado": "cerrado", "observaciones": "Estado cambiado a cerrado", "fecha_reporte": "2026-03-04T07:41:13Z", "fecha_actualizacion": "2026-08-05T09:55:10Z"}}, {"model": "safezone_app.reportes", "pk": 5, "fields": {"usuario": null, "id_tipo_anomalia": 1, "barrio": "altos de niquÝa", "ubicacion": "Carrera 58 #50-22", "gravedad": "critico", "prioridad": "critica", "descripcion": "dwfwrf", "info_adicional": "efwfe", "imagen": "76a9c0e286be3396_2025_Acer_Consumer_Default_3840x2400.jpg", "imagen2": "f03c949f77a3f8b1_2025_Acer_Consumer_Option_3840x2400.jpg", "imagen3": null, "latitud": "6.34500000", "longitud": "-75.54300000", "estado": "cerrado", "observaciones": "Estado cambiado a cerrado", "fecha_reporte": "2026-03-18T18:21:08Z", "fecha_actualizacion": "2026-08-05T09:55:16Z"}}, {"model": "safezone_app.reportes", "pk": 6, "fields": {"usuario": null, "id_tipo_anomalia": 2, "barrio": "r¾terdam", "ubicacion": "Carrera 58 #50-22", "gravedad": "critico", "prioridad": "critica", "descripcion": "fqwfewfwe", "info_adicional": "", "imagen": null, "imagen2": null, "imagen3": null, "latitud": "6.33720000", "longitud": "-75.56250000", "estado": "nuevo", "observaciones": null, "fecha_reporte": "2026-03-24T22:26:29Z", "fecha_actualizacion": "2026-08-05T09:55:21Z"}}, {"model": "safezone_app.reportes", "pk": 7, "fields": {"usuario": null, "id_tipo_anomalia": 2, "barrio": "alcalß", "ubicacion": "tg5gt5", "gravedad": "severo", "prioridad": "alta", "descripcion": "vtgvt", "info_adicional": "vtgvtg", "imagen": null, "imagen2": null, "imagen3": null, "latitud": "6.33550000", "longitud": "-75.55150000", "estado": "nuevo", "observaciones": null, "fecha_reporte": "2026-04-08T07:20:42Z", "fecha_actualizacion": "2026-08-05T09:57:07Z"}}, {"model": "safezone_app.reportes", "pk": 8, "fields": {"usuario": null, "id_tipo_anomalia": 1, "barrio": "panamericano", "ubicacion": "Carrera 58 #50-24", "gravedad": "severo", "prioridad": "alta", "descripcion": "5hg6hr\r\n", "info_adicional": "g6gy6gy6", "imagen": null, "imagen2": null, "imagen3": null, "latitud": "6.33900000", "longitud": "-75.54900000", "estado": "nuevo", "observaciones": null, "fecha_reporte": "2026-04-08T07:21:24Z", "fecha_actualizacion": "2026-08-05T09:57:07Z"}}, {"model": "safezone_app.reportes", "pk": 9, "fields": {"usuario": null, "id_tipo_anomalia": 1, "barrio": "aralias", "ubicacion": "Av. 43 #57-07", "gravedad": "leve", "prioridad": "baja", "descripcion": "dfwerwef", "info_adicional": "wefwefwef", "imagen": "d2c4b597334b88b3_WhatsApp Image 2026-04-27 at 5.18.37 PM (2).jpeg", "imagen2": "3a999d5e4e99c9b3_WhatsApp Image 2026-04-27 at 5.18.37 PM (1).jpeg", "imagen3": "3c98d89a5a7b3677_WhatsApp Image 2026-04-27 at 5.18.37 PM.jpeg", "latitud": "6.33720000", "longitud": "-75.56250000", "estado": "cerrado", "observaciones": "Estado cambiado a cerrado", "fecha_reporte": "2026-05-12T18:42:54Z", "fecha_actualizacion": "2026-08-05T09:55:37Z"}}, {"model": "safezone_app.reportes", "pk": 10, "fields": {"usuario": null, "id_tipo_anomalia": 1, "barrio": "guasimalito", "ubicacion": "Crerra 58 #50-33", "gravedad": "leve", "prioridad": "baja", "descripcion": "sfefwefew", "info_adicional": "dvfwevwe", "imagen": "86bb9a24dec06e9c_WhatsApp Image 2026-04-27 at 5.18.38 PM.jpeg", "imagen2": "46ef1f8ca9965c26_WhatsApp Image 2026-04-27 at 5.18.37 PM (2).jpeg", "imagen3": "57cf940973d7a152_WhatsApp Image 2026-04-27 at 5.18.37 PM (1).jpeg", "latitud": "6.34350000", "longitud": "-75.54550000", "estado": "cerrado", "observaciones": "Estado cambiado a cerrado", "fecha_reporte": "2026-05-12T18:43:30Z", "fecha_actualizacion": "2026-08-05T09:55:43Z"}}, {"model": "safezone_app.reportes", "pk": 11, "fields": {"usuario": 77, "id_tipo_anomalia": 2, "barrio": "la navarra", "ubicacion": "Carrera 58 #50-22", "gravedad": "moderado", "prioridad": "media", "descripcion": "rfergeg", "info_adicional": "rgegre", "imagen": "da49da474c9a4f1f9da415f244dcd2d4_Captura de pantalla 2026-06-23 152550.png", "imagen2": "cb9826542e8f4a6b895c996db6794c1c_Captura de pantalla 2026-06-23 151440.png", "imagen3": "e37d5f5a33874be5a7d8181551ee12ef_Captura de pantalla 2026-06-23 134652.png", "latitud": "6.34550000", "longitud": "-75.54350000", "estado": "nuevo", "observaciones": null, "fecha_reporte": "2026-06-24T12:22:55Z", "fecha_actualizacion": "2026-06-24T12:22:55Z"}}, {"model": "safezone_app.reportes", "pk": 12, "fields": {"usuario": 77, "id_tipo_anomalia": 1, "barrio": "el trÚbol", "ubicacion": "Ubicaci¾n en mapa (6.3341, -75.5646)", "gravedad": "critico", "prioridad": "critica", "descripcion": "cv vc vcvc", "info_adicional": "v vc vc vcvfvefd", "imagen": "f5cc2e17414440bda685886b2a6345aa_Captura de pantalla 2025-06-17 063619.png", "imagen2": "c50871c433f14911856be512d10d9d65_Captura de pantalla 2025-06-17 063628.png", "imagen3": "b6d9d17a98ca4338853a360b1954ef9f_Captura de pantalla 2025-06-17 065039.png", "latitud": "6.33413514", "longitud": "-75.56463857", "estado": "nuevo", "observaciones": null, "fecha_reporte": "2026-06-24T13:01:10Z", "fecha_actualizacion": "2026-08-05T09:55:50Z"}}, {"model": "safezone_app.reportes", "pk": 13, "fields": {"usuario": 77, "id_tipo_anomalia": 2, "barrio": "altos de niquÝa", "ubicacion": "Ubicaci¾n en mapa (6.3454, -75.5546)", "gravedad": "leve", "prioridad": "baja", "descripcion": "cvcbgbgf", "info_adicional": "vdfvdfvfd", "imagen": "c5768f22392c4938928afe64643163cf_Captura de pantalla 2025-06-17 063628.png", "imagen2": "016e323245d341c8b4d82781e5c64604_Captura de pantalla 2025-06-17 065039.png", "imagen3": "ba8519aeb71649dd9166fe81b4a3b96f_Captura de pantalla 2025-06-24 114730.png", "latitud": "6.34537898", "longitud": "-75.55460954", "estado": "nuevo", "observaciones": null, "fecha_reporte": "2026-06-24T13:03:59Z", "fecha_actualizacion": "2026-08-05T09:57:07Z"}}, {"model": "safezone_app.reportes", "pk": 14, "fields": {"usuario": 77, "id_tipo_anomalia": 1, "barrio": "el rosario", "ubicacion": "Ubicaci¾n en mapa (6.3341, -75.5641)", "gravedad": "leve", "prioridad": "baja", "descripcion": "vfdbdbb", "info_adicional": "dfbdbdfbfd", "imagen": "66b764f37c2d4025a0a9a20fc529cd67_Captura de pantalla 2025-06-17 063619.png", "imagen2": "f658bc4b0e834501937a2515b64d7969_Captura de pantalla 2025-06-17 063628.png", "imagen3": "b8d7797eb9264ae98b78d3dca274ee97_Captura de pantalla 2025-06-17 065039.png", "latitud": "6.33412234", "longitud": "-75.56410472", "estado": "nuevo", "observaciones": null, "fecha_reporte": "2026-06-24T13:09:50Z", "fecha_actualizacion": "2026-08-05T09:57:07Z"}}, {"model": "safezone_app.reportes", "pk": 15, "fields": {"usuario": 77, "id_tipo_anomalia": 1, "barrio": "el rosario", "ubicacion": "Ubicaci¾n en mapa (6.3349, -75.5669)", "gravedad": "leve", "prioridad": "baja", "descripcion": "edwfwfwefwe", "info_adicional": "fewfewfwefwe", "imagen": "0065040b9e554927a7ed9502d0ff28e2_2025_Acer_Consumer_Default_3840x2400.jpg", "imagen2": "979e577cc6a34a759cd5179a0de4c18a_2025_Acer_Consumer_Option_3840x2400.jpg", "imagen3": null, "latitud": "6.33489864", "longitud": "-75.56689134", "estado": "rechazado", "observaciones": "", "fecha_reporte": "2026-06-30T09:06:59Z", "fecha_actualizacion": "2026-08-05T09:57:07Z"}}, {"model": "safezone_app.reportes", "pk": 16, "fields": {"usuario": 77, "id_tipo_anomalia": 1, "barrio": "nazareth", "ubicacion": "Carrera 57, Nazareth, Bello", "gravedad": "severo", "prioridad": "alta", "descripcion": "esos hueco esta afectando mucho las motos", "info_adicional": "", "imagen": "f16ae482c90349b1a0e810a42069132e_2025_Acer_Consumer_Default_3840x2400.jpg", "imagen2": "376ade48bae84bdebce490fdd1ff166c_2025_Acer_Consumer_Option_3840x2400.jpg", "imagen3": null, "latitud": "6.33398585", "longitud": "-75.56415974", "estado": "rechazado", "observaciones": "", "fecha_reporte": "2026-07-01T07:52:45Z", "fecha_actualizacion": "2026-08-05T09:57:07Z"}}, {"model": "safezone_app.reportes", "pk": 17, "fields": {"usuario": null, "id_tipo_anomalia": 1, "barrio": "nazareth", "ubicacion": "Carrera 58, Nazareth, Bello", "gravedad": "moderado", "prioridad": "media", "descripcion": "afmifnwrfwe", "info_adicional": "fewfwfwfwefw", "imagen": "https://res.cloudinary.com/c2mkbxzb/image/upload/v1782944061/safezone/reportes/mwgizoueolknrtwxrypi.jpg", "imagen2": "https://res.cloudinary.com/c2mkbxzb/image/upload/v1782944062/safezone/reportes/pzw08eeknpudmzmexasn.jpg", "imagen3": null, "latitud": "6.33415865", "longitud": "-75.56443338", "estado": "cerrado", "observaciones": "Estado cambiado a cerrado", "fecha_reporte": "2026-07-01T17:14:22Z", "fecha_actualizacion": "2026-07-01T17:16:51Z"}}, {"model": "safezone_app.reportes", "pk": 18, "fields": {"usuario": 82, "id_tipo_anomalia": 1, "barrio": "altos de niquÝa", "ubicacion": "Carrera 44B, Altos de NiquÝa, Bello", "gravedad": "leve", "prioridad": "baja", "descripcion": "ksjl±fkkjf", "info_adicional": "ksjkf", "imagen": "https://res.cloudinary.com/c2mkbxzb/image/upload/v1783089240/safezone/reportes/velrslecsnrirvxlzgsk.jpg", "imagen2": "https://res.cloudinary.com/c2mkbxzb/image/upload/v1783089257/safezone/reportes/mcdwvmuzki2ono4eazcm.jpg", "imagen3": null, "latitud": "6.34405675", "longitud": "-75.55131816", "estado": "cerrado", "observaciones": "Estado cambiado a cerrado", "fecha_reporte": "2026-07-03T09:34:17Z", "fecha_actualizacion": "2026-08-05T09:57:07Z"}}, {"model": "safezone_app.reportes", "pk": 19, "fields": {"usuario": 77, "id_tipo_anomalia": 2, "barrio": "altos de niquÝa", "ubicacion": "Carrera 48, Altos de NiquÝa, Bello", "gravedad": "moderado", "prioridad": "media", "descripcion": "asfalato sulto", "info_adicional": "", "imagen": "https://res.cloudinary.com/c2mkbxzb/image/upload/v1785852403/safezone/reportes/leoui0xiuznykllfczst.jpg", "imagen2": "https://res.cloudinary.com/c2mkbxzb/image/upload/v1785852404/safezone/reportes/bg2fckcurffjanrrc0op.jpg", "imagen3": null, "latitud": "6.34449181", "longitud": "-75.55628373", "estado": "cerrado", "observaciones": "Estado cambiado a cerrado", "fecha_reporte": "2026-08-04T09:06:44Z", "fecha_actualizacion": "2026-08-04T09:09:14Z"}}, {"model": "safezone_app.roles", "pk": 2, "fields": {"nombre_rol": "usuario", "descripcion": "Usuario registrado que puede crear y gestionar sus propios reportes", "fecha_creacion": "2025-12-14T20:29:32Z"}}, {"model": "safezone_app.roles", "pk": 3, "fields": {"nombre_rol": "invitado", "descripcion": "Usuario temporal sin registro que puede crear reportes bßsicos", "fecha_creacion": "2025-12-14T20:29:32Z"}}, {"model": "safezone_app.roles", "pk": 4, "fields": {"nombre_rol": "admin_principal", "descripcion": "Administrador principal - Aprueba/rechaza reportes", "fecha_creacion": "2025-12-14T20:51:55Z"}}, {"model": "safezone_app.roles", "pk": 5, "fields": {"nombre_rol": "admin_tecnico", "descripcion": "Administrador tÚcnico - Gestiona flujo de trabajo de reportes aprobados", "fecha_creacion": "2025-12-14T20:51:55Z"}}, {"model": "safezone_app.roles", "pk": 6, "fields": {"nombre_rol": "moderador", "descripcion": "Moderador - Gestiona cuentas de usuarios", "fecha_creacion": "2026-03-24T22:40:36Z"}}, {"model": "safezone_app.tiposanomalia", "pk": 1, "fields": {"nombre_anomalia": "Bache", "descripcion": "Hoyo o depresi¾n en la superficie del pavimento que afecta el trßnsito vehicular", "activo": 1, "fecha_creacion": "2025-12-14T20:29:32Z"}}, {"model": "safezone_app.tiposanomalia", "pk": 2, "fields": {"nombre_anomalia": "VÝa Da±ada", "descripcion": "Deterioro general del pavimento incluyendo grietas, hundimientos y desgaste del asfalto", "activo": 1, "fecha_creacion": "2025-12-14T23:33:26Z"}}, {"model": "safezone_app.usuarios", "pk": 3, "fields": {"nombre_usuario": "Invitado Sistema", "correo_electronico": "guest@safezone.com", "contrasena_hash": "NO_PASSWORD_NEEDED", "telefono": null, "codigo_verificacion": null, "verificado": 0, "id_rol": 3, "activo": 1, "fecha_registro": "2025-12-14T20:29:33Z", "ultimo_acceso": null, "direccion_residencia": null, "numero_documento": null, "foto_perfil": null, "estado_cuenta": "activo"}}, {"model": "safezone_app.usuarios", "pk": 4, "fields": {"nombre_usuario": "Usuario Demo", "correo_electronico": "usuario@safezone.com", "contrasena_hash": "$2b$12$hDUn4gxbzghBnPdZIBSFk.ACONih0mVzRKhfFZx4bRtqy2uXru7Nq", "telefono": null, "codigo_verificacion": null, "verificado": 0, "id_rol": 2, "activo": 1, "fecha_registro": "2025-12-14T20:31:18Z", "ultimo_acceso": null, "direccion_residencia": null, "numero_documento": null, "foto_perfil": null, "estado_cuenta": "activo"}}, {"model": "safezone_app.usuarios", "pk": 19, "fields": {"nombre_usuario": "Admin Principal", "correo_electronico": "admin@safezone.com", "contrasena_hash": "$2b$12$9JIuZbX3gxaD.R/Fw04G5u4n97jR6WqyWwLkdc5iSRghQxD8wg77u", "telefono": null, "codigo_verificacion": null, "verificado": 1, "id_rol": 4, "activo": 1, "fecha_registro": "2025-12-15T18:10:39Z", "ultimo_acceso": null, "direccion_residencia": null, "numero_documento": null, "foto_perfil": null, "estado_cuenta": "activo"}}, {"model": "safezone_app.usuarios", "pk": 20, "fields": {"nombre_usuario": "Admin TÚcnico", "correo_electronico": "tecnico@safezone.com", "contrasena_hash": "$2b$12$ychycySTxao9uGh4pxJPJuAJq4Zf3S3avQaOF4v.nBrbBidSQAqt2", "telefono": null, "codigo_verificacion": null, "verificado": 1, "id_rol": 5, "activo": 1, "fecha_registro": "2025-12-15T18:10:56Z", "ultimo_acceso": null, "direccion_residencia": null, "numero_documento": null, "foto_perfil": null, "estado_cuenta": "activo"}}, {"model": "safezone_app.usuarios", "pk": 77, "fields": {"nombre_usuario": "Cristian Camilo Garcia Pati±o", "correo_electronico": "criscagarpa@gmail.com", "contrasena_hash": "$2b$12$5O8cIawnATOxUWreHm0v4OKWTXZc8rBT3NSFpGdI8afxUVFvSG29m", "telefono": "3045204947", "codigo_verificacion": null, "verificado": 1, "id_rol": 2, "activo": 1, "fecha_registro": "2026-06-17T09:37:19Z", "ultimo_acceso": null, "direccion_residencia": "Avenida Boyacß #54-24", "numero_documento": "1018232092", "foto_perfil": null, "estado_cuenta": null}}, {"model": "safezone_app.usuarios", "pk": 81, "fields": {"nombre_usuario": "critian perez", "correo_electronico": "criscagarpa2020@gmail.com", "contrasena_hash": "$2b$12$uNbguVmXclYeLC1ozgmscOSOKBbyZj7iAdplJP.oxxspxFnEgB8cq", "telefono": "3765432896", "codigo_verificacion": null, "verificado": 1, "id_rol": 2, "activo": 1, "fecha_registro": "2026-07-03T09:22:47Z", "ultimo_acceso": null, "direccion_residencia": "Avenida Boyacß #54-24", "numero_documento": "1033191806", "foto_perfil": null, "estado_cuenta": null}}, {"model": "safezone_app.usuarios", "pk": 82, "fields": {"nombre_usuario": "maria perez", "correo_electronico": "jhosnceballos13@gmail.com", "contrasena_hash": "$2b$12$MWLGmG.EIsG7DxwbvYMe0.3O0IgSm5KFdNn94xlJnK8I4XNvQpBgC", "telefono": "3785439754", "codigo_verificacion": "ac4915c4-f0b7-4585-865c-1d2327ef9cc1", "verificado": 1, "id_rol": 2, "activo": 1, "fecha_registro": "2026-07-03T09:29:12Z", "ultimo_acceso": null, "direccion_residencia": "Avenida Boyacß #54-24", "numero_documento": "1033181906", "foto_perfil": null, "estado_cuenta": null}}, {"model": "safezone_app.zonas", "pk": 1, "fields": {"nombre_zona": "niquÝa bifamiliares", "zona_geografica": "norte", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 2, "fields": {"nombre_zona": "altos de niquÝa", "zona_geografica": "norte", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 3, "fields": {"nombre_zona": "ciudad niquÝa", "zona_geografica": "norte", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 4, "fields": {"nombre_zona": "panamericano", "zona_geografica": "norte", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 5, "fields": {"nombre_zona": "ciudadela del norte", "zona_geografica": "norte", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 6, "fields": {"nombre_zona": "alpes del norte", "zona_geografica": "norte", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 7, "fields": {"nombre_zona": "norteamÚrica", "zona_geografica": "norte", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 8, "fields": {"nombre_zona": "r¾terdam", "zona_geografica": "norte", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 9, "fields": {"nombre_zona": "altos de quitasol", "zona_geografica": "norte", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 10, "fields": {"nombre_zona": "la navarra", "zona_geografica": "norte", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 11, "fields": {"nombre_zona": "el trÚbol", "zona_geografica": "norte", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 12, "fields": {"nombre_zona": "guasimalito", "zona_geografica": "norte", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 13, "fields": {"nombre_zona": "los sauces", "zona_geografica": "nororiente", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 14, "fields": {"nombre_zona": "campo alegre", "zona_geografica": "nororiente", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 15, "fields": {"nombre_zona": "las granjas", "zona_geografica": "nororiente", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 16, "fields": {"nombre_zona": "la florida", "zona_geografica": "nororiente", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 17, "fields": {"nombre_zona": "gran avenida", "zona_geografica": "nororiente", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 18, "fields": {"nombre_zona": "aralias", "zona_geografica": "nororiente", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 19, "fields": {"nombre_zona": "urapanes", "zona_geografica": "nororiente", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 20, "fields": {"nombre_zona": "la primavera", "zona_geografica": "nororiente", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 21, "fields": {"nombre_zona": "villa marÝa", "zona_geografica": "nororiente", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 22, "fields": {"nombre_zona": "fontidue±o", "zona_geografica": "nororiente", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 23, "fields": {"nombre_zona": "la mina", "zona_geografica": "nororiente", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 24, "fields": {"nombre_zona": "alcalß", "zona_geografica": "nororiente", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 25, "fields": {"nombre_zona": "los ciruelos", "zona_geografica": "nororiente", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 26, "fields": {"nombre_zona": "parÝs", "zona_geografica": "centro-norte", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 27, "fields": {"nombre_zona": "la cumbre", "zona_geografica": "centro-norte", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 28, "fields": {"nombre_zona": "altavista", "zona_geografica": "centro-norte", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 29, "fields": {"nombre_zona": "el carmelo", "zona_geografica": "centro-norte", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 30, "fields": {"nombre_zona": "pÚrez", "zona_geografica": "centro-norte", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 31, "fields": {"nombre_zona": "serramonte", "zona_geografica": "centro-norte", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 32, "fields": {"nombre_zona": "salento", "zona_geografica": "centro-norte", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 33, "fields": {"nombre_zona": "rinc¾n santos", "zona_geografica": "centro-norte", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 34, "fields": {"nombre_zona": "estaci¾n primera", "zona_geografica": "centro-norte", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 35, "fields": {"nombre_zona": "las vegas", "zona_geografica": "centro-norte", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 36, "fields": {"nombre_zona": "la camila", "zona_geografica": "centro-norte", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 37, "fields": {"nombre_zona": "el rosario", "zona_geografica": "centro", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 38, "fields": {"nombre_zona": "centro", "zona_geografica": "centro", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 39, "fields": {"nombre_zona": "prado", "zona_geografica": "centro", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 40, "fields": {"nombre_zona": "nazareth", "zona_geografica": "centro", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 41, "fields": {"nombre_zona": "la meseta", "zona_geografica": "centro", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 42, "fields": {"nombre_zona": "central", "zona_geografica": "centro", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 43, "fields": {"nombre_zona": "espÝritu santo", "zona_geografica": "centro", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 44, "fields": {"nombre_zona": "manchester", "zona_geografica": "centro", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 45, "fields": {"nombre_zona": "la estaci¾n", "zona_geografica": "centro", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 46, "fields": {"nombre_zona": "cinco estrellas", "zona_geografica": "centro", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 47, "fields": {"nombre_zona": "marco fidel sußrez", "zona_geografica": "centro", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 48, "fields": {"nombre_zona": "la gabriela", "zona_geografica": "centro", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 49, "fields": {"nombre_zona": "belvedere", "zona_geografica": "centro", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 50, "fields": {"nombre_zona": "acevedo", "zona_geografica": "centro", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 51, "fields": {"nombre_zona": "zamora", "zona_geografica": "centro", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 52, "fields": {"nombre_zona": "bellavista", "zona_geografica": "centro-sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 53, "fields": {"nombre_zona": "sußrez", "zona_geografica": "centro-sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 54, "fields": {"nombre_zona": "andaluz", "zona_geografica": "centro-sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 55, "fields": {"nombre_zona": "el cafetal", "zona_geografica": "centro-sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 56, "fields": {"nombre_zona": "la pradera", "zona_geografica": "centro-sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 57, "fields": {"nombre_zona": "la esmeralda", "zona_geografica": "centro-sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 58, "fields": {"nombre_zona": "la maruchenga", "zona_geografica": "centro-sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 59, "fields": {"nombre_zona": "santa ana", "zona_geografica": "centro-sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 60, "fields": {"nombre_zona": "los b·caros", "zona_geografica": "centro-sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 61, "fields": {"nombre_zona": "l¾pez de mesa", "zona_geografica": "centro-sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 62, "fields": {"nombre_zona": "el cairo", "zona_geografica": "centro-sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 63, "fields": {"nombre_zona": "fßtima", "zona_geografica": "sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 64, "fields": {"nombre_zona": "san martÝn", "zona_geografica": "sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 65, "fields": {"nombre_zona": "playa rica", "zona_geografica": "sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 66, "fields": {"nombre_zona": "tierradentro", "zona_geografica": "sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 67, "fields": {"nombre_zona": "villa linda", "zona_geografica": "sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 68, "fields": {"nombre_zona": "girasoles", "zona_geografica": "sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 69, "fields": {"nombre_zona": "la milagrosa", "zona_geografica": "sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 70, "fields": {"nombre_zona": "el congolo", "zona_geografica": "sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 71, "fields": {"nombre_zona": "el porvenir", "zona_geografica": "sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 72, "fields": {"nombre_zona": "el rosalpi", "zona_geografica": "sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 73, "fields": {"nombre_zona": "brice±o", "zona_geografica": "sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 74, "fields": {"nombre_zona": "buenos aires", "zona_geografica": "sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 75, "fields": {"nombre_zona": "el paraÝso", "zona_geografica": "sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 76, "fields": {"nombre_zona": "riachuelos", "zona_geografica": "sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 77, "fields": {"nombre_zona": "valadares", "zona_geografica": "sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 78, "fields": {"nombre_zona": "el trapiche", "zona_geografica": "sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 79, "fields": {"nombre_zona": "san gabriel", "zona_geografica": "sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 80, "fields": {"nombre_zona": "pachelly", "zona_geografica": "sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 81, "fields": {"nombre_zona": "los alpes", "zona_geografica": "sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 82, "fields": {"nombre_zona": "el ducado", "zona_geografica": "sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 83, "fields": {"nombre_zona": "la aldea", "zona_geografica": "sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 84, "fields": {"nombre_zona": "la selva", "zona_geografica": "sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 85, "fields": {"nombre_zona": "el mirador", "zona_geografica": "sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 86, "fields": {"nombre_zona": "santa rita", "zona_geografica": "sur", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 87, "fields": {"nombre_zona": "villas de occidente", "zona_geografica": "occidente", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 88, "fields": {"nombre_zona": "villas del sol", "zona_geografica": "occidente", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 89, "fields": {"nombre_zona": "molinares", "zona_geografica": "occidente", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 90, "fields": {"nombre_zona": "san sim¾n", "zona_geografica": "occidente", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 91, "fields": {"nombre_zona": "amazonÝa", "zona_geografica": "occidente", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 92, "fields": {"nombre_zona": "villas de comfenalco", "zona_geografica": "urbanizacion", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 93, "fields": {"nombre_zona": "puerto bello", "zona_geografica": "urbanizacion", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 94, "fields": {"nombre_zona": "terranova", "zona_geografica": "urbanizacion", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 95, "fields": {"nombre_zona": "hermosa provincia", "zona_geografica": "urbanizacion", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 96, "fields": {"nombre_zona": "valle verde", "zona_geografica": "urbanizacion", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 97, "fields": {"nombre_zona": "la virginia", "zona_geografica": "urbanizacion", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 98, "fields": {"nombre_zona": "josÚ antonio galßn", "zona_geografica": "popular", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 99, "fields": {"nombre_zona": "salvador allende", "zona_geografica": "popular", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 100, "fields": {"nombre_zona": "barrio nuevo", "zona_geografica": "popular", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 101, "fields": {"nombre_zona": "la caba±ita", "zona_geografica": "popular", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 102, "fields": {"nombre_zona": "la caba±a", "zona_geografica": "popular", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 103, "fields": {"nombre_zona": "san josÚ obrero", "zona_geografica": "popular", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 104, "fields": {"nombre_zona": "zona industrial #1", "zona_geografica": "industrial", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 105, "fields": {"nombre_zona": "zona industrial #3", "zona_geografica": "industrial", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 106, "fields": {"nombre_zona": "zona industrial #4", "zona_geografica": "industrial", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 107, "fields": {"nombre_zona": "zona industrial #5", "zona_geografica": "industrial", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 108, "fields": {"nombre_zona": "zona industrial #6", "zona_geografica": "industrial", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 109, "fields": {"nombre_zona": "zona industrial #7", "zona_geografica": "industrial", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 110, "fields": {"nombre_zona": "san fÚlix", "zona_geografica": "corregimiento", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 111, "fields": {"nombre_zona": "potrerito", "zona_geografica": "corregimiento", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 112, "fields": {"nombre_zona": "granizal", "zona_geografica": "corregimiento", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 113, "fields": {"nombre_zona": "el tambo", "zona_geografica": "corregimiento", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}, {"model": "safezone_app.zonas", "pk": 114, "fields": {"nombre_zona": "hato viejo", "zona_geografica": "corregimiento", "activo": 1, "fecha_creacion": "2025-12-14T20:29:33Z"}}]
+[
+  {
+    "model": "sessions.session",
+    "pk": "2b3kcwsu45s0mj6w0g98pz3lf7dibldv",
+    "fields": {
+      "session_data": ".eJyrViotTi2Kz0xRsjI31wFz8hJzU5WslJyLMotLMhPzFJwTczNz8hXcE4uSMxMVAhJLMmNKDQzSDPOVdJTS8kvy4wtSi9Iyc5Ss8kpzciBGxBfl54DMALGVagHBXCKX:1wZrXJ:02RUtkI3OaDZUuhDJhrVYw7Nrwxy3DnRHn8yCJLB7mA",
+      "expire_date": "2026-07-01T14:46:37.096Z"
+    }
+  },
+  {
+    "model": "sessions.session",
+    "pk": "331tg090c3xdr06c879id30vhnggi5b9",
+    "fields": {
+      "session_data": ".eJyrViotTi2Kz0xRsjIy0AFz8hJzU5WslBxTcjPzFEJiSg0MUi2T8zKT85V0lNLyS_LjC1KL0jJzlKzySnNyIFrii_JzQHoSQXriS1IhymsBxdggUw:1wff17:aCYhUnhIz2KU1FF2WPWX2s_2iAfh2xI6692zWzY2yWE",
+      "expire_date": "2026-07-17T14:37:21.005Z"
+    }
+  },
+  {
+    "model": "sessions.session",
+    "pk": "eraw68ch9sxivfebwm766d3pizy121g3",
+    "fields": {
+      "session_data": ".eJyrViotTi2Kz0xRsjIz0wFz8hJzU5WslJyLMotLMhPzFJwTczNz8hXcE4uSMxMVAhJLMmNKDQzSDPOVIOrji_JzQBpAbKBQWn5JfnxBalFaZo6SVV5pTk4tALcYIpU:1wXL99:s58k7lEGGnzVXaKpO5N7S_MoDa9mOU-kdbc1Eu-pX_M",
+      "expire_date": "2026-06-24T15:47:15.042Z"
+    }
+  },
+  {
+    "model": "sessions.session",
+    "pk": "f37wc103mkw9b0x86o9xmarx36vqphaz",
+    "fields": {
+      "session_data": ".eJyrViotTi2Kz0xRsjI31wFz8hJzU5WslJyLMotLMhPzFJwTczNz8hXcE4uSMxMVAhJLMmNKDQzSDPOVdJTS8kvy4wtSi9Iyc5Ss8kpzciBGxBfl54DMALGVagHBXCKX:1wfcwk:yA5Erj0NNiRyC9F6uy-8QqrJ_9pUoNZXdz-nEA096uk",
+      "expire_date": "2026-07-17T12:24:42.572Z"
+    }
+  },
+  {
+    "model": "sessions.session",
+    "pk": "i6ortq3dzcn375ua5h0il5j2p9dz8dpd",
+    "fields": {
+      "session_data": ".eJyrViotTi2Kz0xRsjI31wFz8hJzU5WslJyLMotLMhPzFJwTczNz8hXcE4uSMxMVAhJLMmNKDQzSDPOVdJTS8kvy4wtSi9Iyc5Ss8kpzciBGxBfl54DMALGVagHBXCKX:1wfd9v:V1l4m5wtK4OmYfuZUNUpMnzJoGafdyTnHx9ElhMGlh4",
+      "expire_date": "2026-07-17T12:38:19.862Z"
+    }
+  },
+  {
+    "model": "sessions.session",
+    "pk": "iqi873kiezw0x8nurlqk7c4nfcu68z1d",
+    "fields": {
+      "session_data": ".eJyrViotTi2Kz0xRsjK01AFz8hJzU5WslBxTcjPzFAKKMvOSMwsSc5R0lNLyS_LjC1KL0jJzlKzySnNyIOrji_JzQBoSQRriC-AaagHHlSCr:1wrdBJ:MXOIJACS0cduRet5ZD4WfWJ1ZZEWINxrXpuv8S3mrO0",
+      "expire_date": "2026-08-19T15:05:21.848Z"
+    }
+  },
+  {
+    "model": "sessions.session",
+    "pk": "mifnndc4q8g7eynn5i9j2sncbm20s2ry",
+    "fields": {
+      "session_data": ".eJyrViotTi2Kz0xRsjK01AFz8hJzU5WslBxTcjPzFAKKMvOSMwsSc5R0lNLyS_LjC1KL0jJzlKzySnNyIOrji_JzQBoSQRriC-AaagHHlSCr:1wuAVo:wuaZZkVroA2T4idl5VUI_Juy_lklGdhwg83IRoYyAL4",
+      "expire_date": "2026-08-26T15:05:00.241Z"
+    }
+  },
+  {
+    "model": "sessions.session",
+    "pk": "q74m51uxihwiyt0v20dmu6skhyi5076g",
+    "fields": {
+      "session_data": ".eJyrViotTi2Kz0xRsjI31wFz8hJzU5WslJyLMotLMhPzFJwTczNz8hXcE4uSMxMVAhJLMmNKDQzSDPOVdJTS8kvy4wtSi9Iyc5Ss8kpzciBGxBfl54DMALGVagHBXCKX:1x1013:X2PVWZg2mLArbVOmcVjUr1Tup87JhzCRyXoIQsdjyLo",
+      "expire_date": "2026-09-14T11:17:29.658Z"
+    }
+  },
+  {
+    "model": "safezone_app.configuracionsistema",
+    "pk": 1,
+    "fields": {
+      "clave": "sistema_nombre",
+      "valor": "SafeZone",
+      "descripcion": "Nombre del sistema",
+      "tipo": "string",
+      "fecha_actualizacion": "2025-12-14T23:41:39Z"
+    }
+  },
+  {
+    "model": "safezone_app.configuracionsistema",
+    "pk": 2,
+    "fields": {
+      "clave": "sistema_version",
+      "valor": "2.0.0",
+      "descripcion": "Versión actual del sistema",
+      "tipo": "string",
+      "fecha_actualizacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.configuracionsistema",
+    "pk": 3,
+    "fields": {
+      "clave": "reportes_por_pagina",
+      "valor": "10",
+      "descripcion": "Número de reportes por página",
+      "tipo": "number",
+      "fecha_actualizacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.configuracionsistema",
+    "pk": 4,
+    "fields": {
+      "clave": "max_imagenes_reporte",
+      "valor": "3",
+      "descripcion": "Máximo número de imágenes por reporte",
+      "tipo": "number",
+      "fecha_actualizacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.configuracionsistema",
+    "pk": 5,
+    "fields": {
+      "clave": "auto_aprobar_reportes",
+      "valor": "false",
+      "descripcion": "Aprobar reportes automáticamente",
+      "tipo": "boolean",
+      "fecha_actualizacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.configuracionsistema",
+    "pk": 6,
+    "fields": {
+      "clave": "coordenadas_centro",
+      "valor": "{\"lat\": 6.3372, \"lng\": -75.5625}",
+      "descripcion": "Coordenadas del centro del mapa (Bello, Antioquia)",
+      "tipo": "json",
+      "fecha_actualizacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.configuracionsistema",
+    "pk": 7,
+    "fields": {
+      "clave": "colores_gravedad",
+      "valor": "{\"leve\": \"#22c55e\", \"moderado\": \"#eab308\", \"severo\": \"#f97316\", \"critico\": \"#ef4444\"}",
+      "descripcion": "Colores para niveles de gravedad",
+      "tipo": "json",
+      "fecha_actualizacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.configuracionsistema",
+    "pk": 8,
+    "fields": {
+      "clave": "estados_permitidos",
+      "valor": "[\"pendiente\", \"aprobado\", \"en_proceso\", \"resuelto\", \"rechazado\"]",
+      "descripcion": "Estados permitidos para reportes",
+      "tipo": "json",
+      "fecha_actualizacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.reportes",
+    "pk": 1,
+    "fields": {
+      "usuario": null,
+      "id_tipo_anomalia": 1,
+      "barrio": "el rosario",
+      "ubicacion": "Carrera 58 #50-24",
+      "gravedad": "critico",
+      "prioridad": "critica",
+      "descripcion": "fefwfwefwe",
+      "info_adicional": "fwefwefwefwe",
+      "imagen": "be924c8a9173d91a_2025_Acer_Consumer_Default_3840x2400.jpg",
+      "imagen2": "0f6cfe262417a94c_2025_Acer_Consumer_Option_3840x2400.jpg",
+      "imagen3": null,
+      "latitud": "6.32980000",
+      "longitud": "-75.55730000",
+      "estado": "cerrado",
+      "observaciones": "Estado cambiado a cerrado",
+      "fecha_reporte": "2026-03-04T07:13:55Z",
+      "fecha_actualizacion": "2026-08-05T09:55:02Z"
+    }
+  },
+  {
+    "model": "safezone_app.reportes",
+    "pk": 2,
+    "fields": {
+      "usuario": null,
+      "id_tipo_anomalia": 1,
+      "barrio": "el rosario",
+      "ubicacion": "Carrera 58 #50-24",
+      "gravedad": "moderado",
+      "prioridad": "media",
+      "descripcion": "fedgfwfwe",
+      "info_adicional": "fwefwe",
+      "imagen": "bce2dd194ceed0a6_2025_Acer_Consumer_Default_3840x2400.jpg",
+      "imagen2": "427b8331dc225b70_2025_Acer_Consumer_Option_3840x2400.jpg",
+      "imagen3": null,
+      "latitud": "6.32980000",
+      "longitud": "-75.55730000",
+      "estado": "cerrado",
+      "observaciones": "Estado cambiado a cerrado",
+      "fecha_reporte": "2026-03-04T07:37:40Z",
+      "fecha_actualizacion": "2026-03-11T09:25:51Z"
+    }
+  },
+  {
+    "model": "safezone_app.reportes",
+    "pk": 3,
+    "fields": {
+      "usuario": null,
+      "id_tipo_anomalia": 1,
+      "barrio": "la florida",
+      "ubicacion": "Carrera 58 #50-22",
+      "gravedad": "moderado",
+      "prioridad": "media",
+      "descripcion": "fdasdfsdff",
+      "info_adicional": "dasdfasda",
+      "imagen": "e541ed372da96397_2025_Acer_Consumer_Default_3840x2400.jpg",
+      "imagen2": "e7f1de9a939fd2e6_2025_Acer_Consumer_Option_3840x2400.jpg",
+      "imagen3": null,
+      "latitud": "6.33700000",
+      "longitud": "-75.55200000",
+      "estado": "rechazado",
+      "observaciones": "",
+      "fecha_reporte": "2026-03-04T07:38:46Z",
+      "fecha_actualizacion": "2026-03-04T07:43:30Z"
+    }
+  },
+  {
+    "model": "safezone_app.reportes",
+    "pk": 4,
+    "fields": {
+      "usuario": null,
+      "id_tipo_anomalia": 1,
+      "barrio": "niquía bifamiliares",
+      "ubicacion": "Av. 43 #57-07",
+      "gravedad": "critico",
+      "prioridad": "critica",
+      "descripcion": "fsdfsdf",
+      "info_adicional": "fsdfsdfsdf",
+      "imagen": "b5b7e5aa24db1445_2025_Acer_Consumer_Default_3840x2400.jpg",
+      "imagen2": "b7d63d279200a96c_2025_Acer_Consumer_Option_3840x2400.jpg",
+      "imagen3": null,
+      "latitud": "6.34300000",
+      "longitud": "-75.54500000",
+      "estado": "cerrado",
+      "observaciones": "Estado cambiado a cerrado",
+      "fecha_reporte": "2026-03-04T07:41:13Z",
+      "fecha_actualizacion": "2026-08-05T09:55:10Z"
+    }
+  },
+  {
+    "model": "safezone_app.reportes",
+    "pk": 5,
+    "fields": {
+      "usuario": null,
+      "id_tipo_anomalia": 1,
+      "barrio": "altos de niquía",
+      "ubicacion": "Carrera 58 #50-22",
+      "gravedad": "critico",
+      "prioridad": "critica",
+      "descripcion": "dwfwrf",
+      "info_adicional": "efwfe",
+      "imagen": "76a9c0e286be3396_2025_Acer_Consumer_Default_3840x2400.jpg",
+      "imagen2": "f03c949f77a3f8b1_2025_Acer_Consumer_Option_3840x2400.jpg",
+      "imagen3": null,
+      "latitud": "6.34500000",
+      "longitud": "-75.54300000",
+      "estado": "cerrado",
+      "observaciones": "Estado cambiado a cerrado",
+      "fecha_reporte": "2026-03-18T18:21:08Z",
+      "fecha_actualizacion": "2026-08-05T09:55:16Z"
+    }
+  },
+  {
+    "model": "safezone_app.reportes",
+    "pk": 6,
+    "fields": {
+      "usuario": null,
+      "id_tipo_anomalia": 2,
+      "barrio": "róterdam",
+      "ubicacion": "Carrera 58 #50-22",
+      "gravedad": "critico",
+      "prioridad": "critica",
+      "descripcion": "fqwfewfwe",
+      "info_adicional": "",
+      "imagen": null,
+      "imagen2": null,
+      "imagen3": null,
+      "latitud": "6.33720000",
+      "longitud": "-75.56250000",
+      "estado": "nuevo",
+      "observaciones": null,
+      "fecha_reporte": "2026-03-24T22:26:29Z",
+      "fecha_actualizacion": "2026-08-05T09:55:21Z"
+    }
+  },
+  {
+    "model": "safezone_app.reportes",
+    "pk": 7,
+    "fields": {
+      "usuario": null,
+      "id_tipo_anomalia": 2,
+      "barrio": "alcalá",
+      "ubicacion": "tg5gt5",
+      "gravedad": "severo",
+      "prioridad": "alta",
+      "descripcion": "vtgvt",
+      "info_adicional": "vtgvtg",
+      "imagen": null,
+      "imagen2": null,
+      "imagen3": null,
+      "latitud": "6.33550000",
+      "longitud": "-75.55150000",
+      "estado": "nuevo",
+      "observaciones": null,
+      "fecha_reporte": "2026-04-08T07:20:42Z",
+      "fecha_actualizacion": "2026-08-05T09:57:07Z"
+    }
+  },
+  {
+    "model": "safezone_app.reportes",
+    "pk": 8,
+    "fields": {
+      "usuario": null,
+      "id_tipo_anomalia": 1,
+      "barrio": "panamericano",
+      "ubicacion": "Carrera 58 #50-24",
+      "gravedad": "severo",
+      "prioridad": "alta",
+      "descripcion": "5hg6hr\r\n",
+      "info_adicional": "g6gy6gy6",
+      "imagen": null,
+      "imagen2": null,
+      "imagen3": null,
+      "latitud": "6.33900000",
+      "longitud": "-75.54900000",
+      "estado": "nuevo",
+      "observaciones": null,
+      "fecha_reporte": "2026-04-08T07:21:24Z",
+      "fecha_actualizacion": "2026-08-05T09:57:07Z"
+    }
+  },
+  {
+    "model": "safezone_app.reportes",
+    "pk": 9,
+    "fields": {
+      "usuario": null,
+      "id_tipo_anomalia": 1,
+      "barrio": "aralias",
+      "ubicacion": "Av. 43 #57-07",
+      "gravedad": "leve",
+      "prioridad": "baja",
+      "descripcion": "dfwerwef",
+      "info_adicional": "wefwefwef",
+      "imagen": "d2c4b597334b88b3_WhatsApp Image 2026-04-27 at 5.18.37 PM (2).jpeg",
+      "imagen2": "3a999d5e4e99c9b3_WhatsApp Image 2026-04-27 at 5.18.37 PM (1).jpeg",
+      "imagen3": "3c98d89a5a7b3677_WhatsApp Image 2026-04-27 at 5.18.37 PM.jpeg",
+      "latitud": "6.33720000",
+      "longitud": "-75.56250000",
+      "estado": "cerrado",
+      "observaciones": "Estado cambiado a cerrado",
+      "fecha_reporte": "2026-05-12T18:42:54Z",
+      "fecha_actualizacion": "2026-08-05T09:55:37Z"
+    }
+  },
+  {
+    "model": "safezone_app.reportes",
+    "pk": 10,
+    "fields": {
+      "usuario": null,
+      "id_tipo_anomalia": 1,
+      "barrio": "guasimalito",
+      "ubicacion": "Crerra 58 #50-33",
+      "gravedad": "leve",
+      "prioridad": "baja",
+      "descripcion": "sfefwefew",
+      "info_adicional": "dvfwevwe",
+      "imagen": "86bb9a24dec06e9c_WhatsApp Image 2026-04-27 at 5.18.38 PM.jpeg",
+      "imagen2": "46ef1f8ca9965c26_WhatsApp Image 2026-04-27 at 5.18.37 PM (2).jpeg",
+      "imagen3": "57cf940973d7a152_WhatsApp Image 2026-04-27 at 5.18.37 PM (1).jpeg",
+      "latitud": "6.34350000",
+      "longitud": "-75.54550000",
+      "estado": "cerrado",
+      "observaciones": "Estado cambiado a cerrado",
+      "fecha_reporte": "2026-05-12T18:43:30Z",
+      "fecha_actualizacion": "2026-08-05T09:55:43Z"
+    }
+  },
+  {
+    "model": "safezone_app.reportes",
+    "pk": 11,
+    "fields": {
+      "usuario": 77,
+      "id_tipo_anomalia": 2,
+      "barrio": "la navarra",
+      "ubicacion": "Carrera 58 #50-22",
+      "gravedad": "moderado",
+      "prioridad": "media",
+      "descripcion": "rfergeg",
+      "info_adicional": "rgegre",
+      "imagen": "da49da474c9a4f1f9da415f244dcd2d4_Captura de pantalla 2026-06-23 152550.png",
+      "imagen2": "cb9826542e8f4a6b895c996db6794c1c_Captura de pantalla 2026-06-23 151440.png",
+      "imagen3": "e37d5f5a33874be5a7d8181551ee12ef_Captura de pantalla 2026-06-23 134652.png",
+      "latitud": "6.34550000",
+      "longitud": "-75.54350000",
+      "estado": "nuevo",
+      "observaciones": null,
+      "fecha_reporte": "2026-06-24T12:22:55Z",
+      "fecha_actualizacion": "2026-06-24T12:22:55Z"
+    }
+  },
+  {
+    "model": "safezone_app.reportes",
+    "pk": 12,
+    "fields": {
+      "usuario": 77,
+      "id_tipo_anomalia": 1,
+      "barrio": "el trébol",
+      "ubicacion": "Ubicación en mapa (6.3341, -75.5646)",
+      "gravedad": "critico",
+      "prioridad": "critica",
+      "descripcion": "cv vc vcvc",
+      "info_adicional": "v vc vc vcvfvefd",
+      "imagen": "f5cc2e17414440bda685886b2a6345aa_Captura de pantalla 2025-06-17 063619.png",
+      "imagen2": "c50871c433f14911856be512d10d9d65_Captura de pantalla 2025-06-17 063628.png",
+      "imagen3": "b6d9d17a98ca4338853a360b1954ef9f_Captura de pantalla 2025-06-17 065039.png",
+      "latitud": "6.33413514",
+      "longitud": "-75.56463857",
+      "estado": "nuevo",
+      "observaciones": null,
+      "fecha_reporte": "2026-06-24T13:01:10Z",
+      "fecha_actualizacion": "2026-08-05T09:55:50Z"
+    }
+  },
+  {
+    "model": "safezone_app.reportes",
+    "pk": 13,
+    "fields": {
+      "usuario": 77,
+      "id_tipo_anomalia": 2,
+      "barrio": "altos de niquía",
+      "ubicacion": "Ubicación en mapa (6.3454, -75.5546)",
+      "gravedad": "leve",
+      "prioridad": "baja",
+      "descripcion": "cvcbgbgf",
+      "info_adicional": "vdfvdfvfd",
+      "imagen": "c5768f22392c4938928afe64643163cf_Captura de pantalla 2025-06-17 063628.png",
+      "imagen2": "016e323245d341c8b4d82781e5c64604_Captura de pantalla 2025-06-17 065039.png",
+      "imagen3": "ba8519aeb71649dd9166fe81b4a3b96f_Captura de pantalla 2025-06-24 114730.png",
+      "latitud": "6.34537898",
+      "longitud": "-75.55460954",
+      "estado": "nuevo",
+      "observaciones": null,
+      "fecha_reporte": "2026-06-24T13:03:59Z",
+      "fecha_actualizacion": "2026-08-05T09:57:07Z"
+    }
+  },
+  {
+    "model": "safezone_app.reportes",
+    "pk": 14,
+    "fields": {
+      "usuario": 77,
+      "id_tipo_anomalia": 1,
+      "barrio": "el rosario",
+      "ubicacion": "Ubicación en mapa (6.3341, -75.5641)",
+      "gravedad": "leve",
+      "prioridad": "baja",
+      "descripcion": "vfdbdbb",
+      "info_adicional": "dfbdbdfbfd",
+      "imagen": "66b764f37c2d4025a0a9a20fc529cd67_Captura de pantalla 2025-06-17 063619.png",
+      "imagen2": "f658bc4b0e834501937a2515b64d7969_Captura de pantalla 2025-06-17 063628.png",
+      "imagen3": "b8d7797eb9264ae98b78d3dca274ee97_Captura de pantalla 2025-06-17 065039.png",
+      "latitud": "6.33412234",
+      "longitud": "-75.56410472",
+      "estado": "nuevo",
+      "observaciones": null,
+      "fecha_reporte": "2026-06-24T13:09:50Z",
+      "fecha_actualizacion": "2026-08-05T09:57:07Z"
+    }
+  },
+  {
+    "model": "safezone_app.reportes",
+    "pk": 15,
+    "fields": {
+      "usuario": 77,
+      "id_tipo_anomalia": 1,
+      "barrio": "el rosario",
+      "ubicacion": "Ubicación en mapa (6.3349, -75.5669)",
+      "gravedad": "leve",
+      "prioridad": "baja",
+      "descripcion": "edwfwfwefwe",
+      "info_adicional": "fewfewfwefwe",
+      "imagen": "0065040b9e554927a7ed9502d0ff28e2_2025_Acer_Consumer_Default_3840x2400.jpg",
+      "imagen2": "979e577cc6a34a759cd5179a0de4c18a_2025_Acer_Consumer_Option_3840x2400.jpg",
+      "imagen3": null,
+      "latitud": "6.33489864",
+      "longitud": "-75.56689134",
+      "estado": "rechazado",
+      "observaciones": "",
+      "fecha_reporte": "2026-06-30T09:06:59Z",
+      "fecha_actualizacion": "2026-08-05T09:57:07Z"
+    }
+  },
+  {
+    "model": "safezone_app.reportes",
+    "pk": 16,
+    "fields": {
+      "usuario": 77,
+      "id_tipo_anomalia": 1,
+      "barrio": "nazareth",
+      "ubicacion": "Carrera 57, Nazareth, Bello",
+      "gravedad": "severo",
+      "prioridad": "alta",
+      "descripcion": "esos hueco esta afectando mucho las motos",
+      "info_adicional": "",
+      "imagen": "f16ae482c90349b1a0e810a42069132e_2025_Acer_Consumer_Default_3840x2400.jpg",
+      "imagen2": "376ade48bae84bdebce490fdd1ff166c_2025_Acer_Consumer_Option_3840x2400.jpg",
+      "imagen3": null,
+      "latitud": "6.33398585",
+      "longitud": "-75.56415974",
+      "estado": "rechazado",
+      "observaciones": "",
+      "fecha_reporte": "2026-07-01T07:52:45Z",
+      "fecha_actualizacion": "2026-08-05T09:57:07Z"
+    }
+  },
+  {
+    "model": "safezone_app.reportes",
+    "pk": 17,
+    "fields": {
+      "usuario": null,
+      "id_tipo_anomalia": 1,
+      "barrio": "nazareth",
+      "ubicacion": "Carrera 58, Nazareth, Bello",
+      "gravedad": "moderado",
+      "prioridad": "media",
+      "descripcion": "afmifnwrfwe",
+      "info_adicional": "fewfwfwfwefw",
+      "imagen": "https://res.cloudinary.com/c2mkbxzb/image/upload/v1782944061/safezone/reportes/mwgizoueolknrtwxrypi.jpg",
+      "imagen2": "https://res.cloudinary.com/c2mkbxzb/image/upload/v1782944062/safezone/reportes/pzw08eeknpudmzmexasn.jpg",
+      "imagen3": null,
+      "latitud": "6.33415865",
+      "longitud": "-75.56443338",
+      "estado": "cerrado",
+      "observaciones": "Estado cambiado a cerrado",
+      "fecha_reporte": "2026-07-01T17:14:22Z",
+      "fecha_actualizacion": "2026-07-01T17:16:51Z"
+    }
+  },
+  {
+    "model": "safezone_app.reportes",
+    "pk": 18,
+    "fields": {
+      "usuario": 82,
+      "id_tipo_anomalia": 1,
+      "barrio": "altos de niquía",
+      "ubicacion": "Carrera 44B, Altos de Niquía, Bello",
+      "gravedad": "leve",
+      "prioridad": "baja",
+      "descripcion": "ksjlñfkkjf",
+      "info_adicional": "ksjkf",
+      "imagen": "https://res.cloudinary.com/c2mkbxzb/image/upload/v1783089240/safezone/reportes/velrslecsnrirvxlzgsk.jpg",
+      "imagen2": "https://res.cloudinary.com/c2mkbxzb/image/upload/v1783089257/safezone/reportes/mcdwvmuzki2ono4eazcm.jpg",
+      "imagen3": null,
+      "latitud": "6.34405675",
+      "longitud": "-75.55131816",
+      "estado": "cerrado",
+      "observaciones": "Estado cambiado a cerrado",
+      "fecha_reporte": "2026-07-03T09:34:17Z",
+      "fecha_actualizacion": "2026-08-05T09:57:07Z"
+    }
+  },
+  {
+    "model": "safezone_app.reportes",
+    "pk": 19,
+    "fields": {
+      "usuario": 77,
+      "id_tipo_anomalia": 2,
+      "barrio": "altos de niquía",
+      "ubicacion": "Carrera 48, Altos de Niquía, Bello",
+      "gravedad": "moderado",
+      "prioridad": "media",
+      "descripcion": "asfalato sulto",
+      "info_adicional": "",
+      "imagen": "https://res.cloudinary.com/c2mkbxzb/image/upload/v1785852403/safezone/reportes/leoui0xiuznykllfczst.jpg",
+      "imagen2": "https://res.cloudinary.com/c2mkbxzb/image/upload/v1785852404/safezone/reportes/bg2fckcurffjanrrc0op.jpg",
+      "imagen3": null,
+      "latitud": "6.34449181",
+      "longitud": "-75.55628373",
+      "estado": "cerrado",
+      "observaciones": "Estado cambiado a cerrado",
+      "fecha_reporte": "2026-08-04T09:06:44Z",
+      "fecha_actualizacion": "2026-08-04T09:09:14Z"
+    }
+  },
+  {
+    "model": "safezone_app.roles",
+    "pk": 2,
+    "fields": {
+      "nombre_rol": "usuario",
+      "descripcion": "Usuario registrado que puede crear y gestionar sus propios reportes",
+      "fecha_creacion": "2025-12-14T20:29:32Z"
+    }
+  },
+  {
+    "model": "safezone_app.roles",
+    "pk": 3,
+    "fields": {
+      "nombre_rol": "invitado",
+      "descripcion": "Usuario temporal sin registro que puede crear reportes básicos",
+      "fecha_creacion": "2025-12-14T20:29:32Z"
+    }
+  },
+  {
+    "model": "safezone_app.roles",
+    "pk": 4,
+    "fields": {
+      "nombre_rol": "admin_principal",
+      "descripcion": "Administrador principal - Aprueba/rechaza reportes",
+      "fecha_creacion": "2025-12-14T20:51:55Z"
+    }
+  },
+  {
+    "model": "safezone_app.roles",
+    "pk": 5,
+    "fields": {
+      "nombre_rol": "admin_tecnico",
+      "descripcion": "Administrador técnico - Gestiona flujo de trabajo de reportes aprobados",
+      "fecha_creacion": "2025-12-14T20:51:55Z"
+    }
+  },
+  {
+    "model": "safezone_app.roles",
+    "pk": 6,
+    "fields": {
+      "nombre_rol": "moderador",
+      "descripcion": "Moderador - Gestiona cuentas de usuarios",
+      "fecha_creacion": "2026-03-24T22:40:36Z"
+    }
+  },
+  {
+    "model": "safezone_app.tiposanomalia",
+    "pk": 1,
+    "fields": {
+      "nombre_anomalia": "Bache",
+      "descripcion": "Hoyo o depresión en la superficie del pavimento que afecta el tránsito vehicular",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:32Z"
+    }
+  },
+  {
+    "model": "safezone_app.tiposanomalia",
+    "pk": 2,
+    "fields": {
+      "nombre_anomalia": "Vía Dañada",
+      "descripcion": "Deterioro general del pavimento incluyendo grietas, hundimientos y desgaste del asfalto",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T23:33:26Z"
+    }
+  },
+  {
+    "model": "safezone_app.usuarios",
+    "pk": 3,
+    "fields": {
+      "nombre_usuario": "Invitado Sistema",
+      "correo_electronico": "guest@safezone.com",
+      "contrasena_hash": "NO_PASSWORD_NEEDED",
+      "telefono": null,
+      "codigo_verificacion": null,
+      "verificado": 0,
+      "id_rol": 3,
+      "activo": 1,
+      "fecha_registro": "2025-12-14T20:29:33Z",
+      "ultimo_acceso": null,
+      "direccion_residencia": null,
+      "numero_documento": null,
+      "foto_perfil": null,
+      "estado_cuenta": "activo"
+    }
+  },
+  {
+    "model": "safezone_app.usuarios",
+    "pk": 4,
+    "fields": {
+      "nombre_usuario": "Usuario Demo",
+      "correo_electronico": "usuario@safezone.com",
+      "contrasena_hash": "$2b$12$hDUn4gxbzghBnPdZIBSFk.ACONih0mVzRKhfFZx4bRtqy2uXru7Nq",
+      "telefono": null,
+      "codigo_verificacion": null,
+      "verificado": 0,
+      "id_rol": 2,
+      "activo": 1,
+      "fecha_registro": "2025-12-14T20:31:18Z",
+      "ultimo_acceso": null,
+      "direccion_residencia": null,
+      "numero_documento": null,
+      "foto_perfil": null,
+      "estado_cuenta": "activo"
+    }
+  },
+  {
+    "model": "safezone_app.usuarios",
+    "pk": 19,
+    "fields": {
+      "nombre_usuario": "Admin Principal",
+      "correo_electronico": "admin@safezone.com",
+      "contrasena_hash": "$2b$12$9JIuZbX3gxaD.R/Fw04G5u4n97jR6WqyWwLkdc5iSRghQxD8wg77u",
+      "telefono": null,
+      "codigo_verificacion": null,
+      "verificado": 1,
+      "id_rol": 4,
+      "activo": 1,
+      "fecha_registro": "2025-12-15T18:10:39Z",
+      "ultimo_acceso": null,
+      "direccion_residencia": null,
+      "numero_documento": null,
+      "foto_perfil": null,
+      "estado_cuenta": "activo"
+    }
+  },
+  {
+    "model": "safezone_app.usuarios",
+    "pk": 20,
+    "fields": {
+      "nombre_usuario": "Admin Técnico",
+      "correo_electronico": "tecnico@safezone.com",
+      "contrasena_hash": "$2b$12$ychycySTxao9uGh4pxJPJuAJq4Zf3S3avQaOF4v.nBrbBidSQAqt2",
+      "telefono": null,
+      "codigo_verificacion": null,
+      "verificado": 1,
+      "id_rol": 5,
+      "activo": 1,
+      "fecha_registro": "2025-12-15T18:10:56Z",
+      "ultimo_acceso": null,
+      "direccion_residencia": null,
+      "numero_documento": null,
+      "foto_perfil": null,
+      "estado_cuenta": "activo"
+    }
+  },
+  {
+    "model": "safezone_app.usuarios",
+    "pk": 77,
+    "fields": {
+      "nombre_usuario": "Cristian Camilo Garcia Patiño",
+      "correo_electronico": "criscagarpa@gmail.com",
+      "contrasena_hash": "$2b$12$5O8cIawnATOxUWreHm0v4OKWTXZc8rBT3NSFpGdI8afxUVFvSG29m",
+      "telefono": "3045204947",
+      "codigo_verificacion": null,
+      "verificado": 1,
+      "id_rol": 2,
+      "activo": 1,
+      "fecha_registro": "2026-06-17T09:37:19Z",
+      "ultimo_acceso": null,
+      "direccion_residencia": "Avenida Boyacá #54-24",
+      "numero_documento": "1018232092",
+      "foto_perfil": null,
+      "estado_cuenta": null
+    }
+  },
+  {
+    "model": "safezone_app.usuarios",
+    "pk": 81,
+    "fields": {
+      "nombre_usuario": "critian perez",
+      "correo_electronico": "criscagarpa2020@gmail.com",
+      "contrasena_hash": "$2b$12$uNbguVmXclYeLC1ozgmscOSOKBbyZj7iAdplJP.oxxspxFnEgB8cq",
+      "telefono": "3765432896",
+      "codigo_verificacion": null,
+      "verificado": 1,
+      "id_rol": 2,
+      "activo": 1,
+      "fecha_registro": "2026-07-03T09:22:47Z",
+      "ultimo_acceso": null,
+      "direccion_residencia": "Avenida Boyacá #54-24",
+      "numero_documento": "1033191806",
+      "foto_perfil": null,
+      "estado_cuenta": null
+    }
+  },
+  {
+    "model": "safezone_app.usuarios",
+    "pk": 82,
+    "fields": {
+      "nombre_usuario": "maria perez",
+      "correo_electronico": "jhosnceballos13@gmail.com",
+      "contrasena_hash": "$2b$12$MWLGmG.EIsG7DxwbvYMe0.3O0IgSm5KFdNn94xlJnK8I4XNvQpBgC",
+      "telefono": "3785439754",
+      "codigo_verificacion": "ac4915c4-f0b7-4585-865c-1d2327ef9cc1",
+      "verificado": 1,
+      "id_rol": 2,
+      "activo": 1,
+      "fecha_registro": "2026-07-03T09:29:12Z",
+      "ultimo_acceso": null,
+      "direccion_residencia": "Avenida Boyacá #54-24",
+      "numero_documento": "1033181906",
+      "foto_perfil": null,
+      "estado_cuenta": null
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 1,
+    "fields": {
+      "nombre_zona": "niquía bifamiliares",
+      "zona_geografica": "norte",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 2,
+    "fields": {
+      "nombre_zona": "altos de niquía",
+      "zona_geografica": "norte",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 3,
+    "fields": {
+      "nombre_zona": "ciudad niquía",
+      "zona_geografica": "norte",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 4,
+    "fields": {
+      "nombre_zona": "panamericano",
+      "zona_geografica": "norte",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 5,
+    "fields": {
+      "nombre_zona": "ciudadela del norte",
+      "zona_geografica": "norte",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 6,
+    "fields": {
+      "nombre_zona": "alpes del norte",
+      "zona_geografica": "norte",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 7,
+    "fields": {
+      "nombre_zona": "norteamérica",
+      "zona_geografica": "norte",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 8,
+    "fields": {
+      "nombre_zona": "róterdam",
+      "zona_geografica": "norte",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 9,
+    "fields": {
+      "nombre_zona": "altos de quitasol",
+      "zona_geografica": "norte",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 10,
+    "fields": {
+      "nombre_zona": "la navarra",
+      "zona_geografica": "norte",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 11,
+    "fields": {
+      "nombre_zona": "el trébol",
+      "zona_geografica": "norte",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 12,
+    "fields": {
+      "nombre_zona": "guasimalito",
+      "zona_geografica": "norte",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 13,
+    "fields": {
+      "nombre_zona": "los sauces",
+      "zona_geografica": "nororiente",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 14,
+    "fields": {
+      "nombre_zona": "campo alegre",
+      "zona_geografica": "nororiente",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 15,
+    "fields": {
+      "nombre_zona": "las granjas",
+      "zona_geografica": "nororiente",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 16,
+    "fields": {
+      "nombre_zona": "la florida",
+      "zona_geografica": "nororiente",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 17,
+    "fields": {
+      "nombre_zona": "gran avenida",
+      "zona_geografica": "nororiente",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 18,
+    "fields": {
+      "nombre_zona": "aralias",
+      "zona_geografica": "nororiente",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 19,
+    "fields": {
+      "nombre_zona": "urapanes",
+      "zona_geografica": "nororiente",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 20,
+    "fields": {
+      "nombre_zona": "la primavera",
+      "zona_geografica": "nororiente",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 21,
+    "fields": {
+      "nombre_zona": "villa maría",
+      "zona_geografica": "nororiente",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 22,
+    "fields": {
+      "nombre_zona": "fontidueño",
+      "zona_geografica": "nororiente",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 23,
+    "fields": {
+      "nombre_zona": "la mina",
+      "zona_geografica": "nororiente",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 24,
+    "fields": {
+      "nombre_zona": "alcalá",
+      "zona_geografica": "nororiente",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 25,
+    "fields": {
+      "nombre_zona": "los ciruelos",
+      "zona_geografica": "nororiente",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 26,
+    "fields": {
+      "nombre_zona": "parís",
+      "zona_geografica": "centro-norte",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 27,
+    "fields": {
+      "nombre_zona": "la cumbre",
+      "zona_geografica": "centro-norte",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 28,
+    "fields": {
+      "nombre_zona": "altavista",
+      "zona_geografica": "centro-norte",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 29,
+    "fields": {
+      "nombre_zona": "el carmelo",
+      "zona_geografica": "centro-norte",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 30,
+    "fields": {
+      "nombre_zona": "pérez",
+      "zona_geografica": "centro-norte",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 31,
+    "fields": {
+      "nombre_zona": "serramonte",
+      "zona_geografica": "centro-norte",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 32,
+    "fields": {
+      "nombre_zona": "salento",
+      "zona_geografica": "centro-norte",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 33,
+    "fields": {
+      "nombre_zona": "rincón santos",
+      "zona_geografica": "centro-norte",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 34,
+    "fields": {
+      "nombre_zona": "estación primera",
+      "zona_geografica": "centro-norte",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 35,
+    "fields": {
+      "nombre_zona": "las vegas",
+      "zona_geografica": "centro-norte",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 36,
+    "fields": {
+      "nombre_zona": "la camila",
+      "zona_geografica": "centro-norte",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 37,
+    "fields": {
+      "nombre_zona": "el rosario",
+      "zona_geografica": "centro",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 38,
+    "fields": {
+      "nombre_zona": "centro",
+      "zona_geografica": "centro",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 39,
+    "fields": {
+      "nombre_zona": "prado",
+      "zona_geografica": "centro",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 40,
+    "fields": {
+      "nombre_zona": "nazareth",
+      "zona_geografica": "centro",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 41,
+    "fields": {
+      "nombre_zona": "la meseta",
+      "zona_geografica": "centro",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 42,
+    "fields": {
+      "nombre_zona": "central",
+      "zona_geografica": "centro",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 43,
+    "fields": {
+      "nombre_zona": "espíritu santo",
+      "zona_geografica": "centro",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 44,
+    "fields": {
+      "nombre_zona": "manchester",
+      "zona_geografica": "centro",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 45,
+    "fields": {
+      "nombre_zona": "la estación",
+      "zona_geografica": "centro",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 46,
+    "fields": {
+      "nombre_zona": "cinco estrellas",
+      "zona_geografica": "centro",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 47,
+    "fields": {
+      "nombre_zona": "marco fidel suárez",
+      "zona_geografica": "centro",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 48,
+    "fields": {
+      "nombre_zona": "la gabriela",
+      "zona_geografica": "centro",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 49,
+    "fields": {
+      "nombre_zona": "belvedere",
+      "zona_geografica": "centro",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 50,
+    "fields": {
+      "nombre_zona": "acevedo",
+      "zona_geografica": "centro",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 51,
+    "fields": {
+      "nombre_zona": "zamora",
+      "zona_geografica": "centro",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 52,
+    "fields": {
+      "nombre_zona": "bellavista",
+      "zona_geografica": "centro-sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 53,
+    "fields": {
+      "nombre_zona": "suárez",
+      "zona_geografica": "centro-sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 54,
+    "fields": {
+      "nombre_zona": "andaluz",
+      "zona_geografica": "centro-sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 55,
+    "fields": {
+      "nombre_zona": "el cafetal",
+      "zona_geografica": "centro-sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 56,
+    "fields": {
+      "nombre_zona": "la pradera",
+      "zona_geografica": "centro-sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 57,
+    "fields": {
+      "nombre_zona": "la esmeralda",
+      "zona_geografica": "centro-sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 58,
+    "fields": {
+      "nombre_zona": "la maruchenga",
+      "zona_geografica": "centro-sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 59,
+    "fields": {
+      "nombre_zona": "santa ana",
+      "zona_geografica": "centro-sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 60,
+    "fields": {
+      "nombre_zona": "los búcaros",
+      "zona_geografica": "centro-sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 61,
+    "fields": {
+      "nombre_zona": "lópez de mesa",
+      "zona_geografica": "centro-sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 62,
+    "fields": {
+      "nombre_zona": "el cairo",
+      "zona_geografica": "centro-sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 63,
+    "fields": {
+      "nombre_zona": "fátima",
+      "zona_geografica": "sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 64,
+    "fields": {
+      "nombre_zona": "san martín",
+      "zona_geografica": "sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 65,
+    "fields": {
+      "nombre_zona": "playa rica",
+      "zona_geografica": "sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 66,
+    "fields": {
+      "nombre_zona": "tierradentro",
+      "zona_geografica": "sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 67,
+    "fields": {
+      "nombre_zona": "villa linda",
+      "zona_geografica": "sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 68,
+    "fields": {
+      "nombre_zona": "girasoles",
+      "zona_geografica": "sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 69,
+    "fields": {
+      "nombre_zona": "la milagrosa",
+      "zona_geografica": "sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 70,
+    "fields": {
+      "nombre_zona": "el congolo",
+      "zona_geografica": "sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 71,
+    "fields": {
+      "nombre_zona": "el porvenir",
+      "zona_geografica": "sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 72,
+    "fields": {
+      "nombre_zona": "el rosalpi",
+      "zona_geografica": "sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 73,
+    "fields": {
+      "nombre_zona": "briceño",
+      "zona_geografica": "sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 74,
+    "fields": {
+      "nombre_zona": "buenos aires",
+      "zona_geografica": "sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 75,
+    "fields": {
+      "nombre_zona": "el paraíso",
+      "zona_geografica": "sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 76,
+    "fields": {
+      "nombre_zona": "riachuelos",
+      "zona_geografica": "sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 77,
+    "fields": {
+      "nombre_zona": "valadares",
+      "zona_geografica": "sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 78,
+    "fields": {
+      "nombre_zona": "el trapiche",
+      "zona_geografica": "sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 79,
+    "fields": {
+      "nombre_zona": "san gabriel",
+      "zona_geografica": "sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 80,
+    "fields": {
+      "nombre_zona": "pachelly",
+      "zona_geografica": "sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 81,
+    "fields": {
+      "nombre_zona": "los alpes",
+      "zona_geografica": "sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 82,
+    "fields": {
+      "nombre_zona": "el ducado",
+      "zona_geografica": "sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 83,
+    "fields": {
+      "nombre_zona": "la aldea",
+      "zona_geografica": "sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 84,
+    "fields": {
+      "nombre_zona": "la selva",
+      "zona_geografica": "sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 85,
+    "fields": {
+      "nombre_zona": "el mirador",
+      "zona_geografica": "sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 86,
+    "fields": {
+      "nombre_zona": "santa rita",
+      "zona_geografica": "sur",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 87,
+    "fields": {
+      "nombre_zona": "villas de occidente",
+      "zona_geografica": "occidente",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 88,
+    "fields": {
+      "nombre_zona": "villas del sol",
+      "zona_geografica": "occidente",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 89,
+    "fields": {
+      "nombre_zona": "molinares",
+      "zona_geografica": "occidente",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 90,
+    "fields": {
+      "nombre_zona": "san simón",
+      "zona_geografica": "occidente",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 91,
+    "fields": {
+      "nombre_zona": "amazonía",
+      "zona_geografica": "occidente",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 92,
+    "fields": {
+      "nombre_zona": "villas de comfenalco",
+      "zona_geografica": "urbanizacion",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 93,
+    "fields": {
+      "nombre_zona": "puerto bello",
+      "zona_geografica": "urbanizacion",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 94,
+    "fields": {
+      "nombre_zona": "terranova",
+      "zona_geografica": "urbanizacion",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 95,
+    "fields": {
+      "nombre_zona": "hermosa provincia",
+      "zona_geografica": "urbanizacion",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 96,
+    "fields": {
+      "nombre_zona": "valle verde",
+      "zona_geografica": "urbanizacion",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 97,
+    "fields": {
+      "nombre_zona": "la virginia",
+      "zona_geografica": "urbanizacion",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 98,
+    "fields": {
+      "nombre_zona": "josé antonio galán",
+      "zona_geografica": "popular",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 99,
+    "fields": {
+      "nombre_zona": "salvador allende",
+      "zona_geografica": "popular",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 100,
+    "fields": {
+      "nombre_zona": "barrio nuevo",
+      "zona_geografica": "popular",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 101,
+    "fields": {
+      "nombre_zona": "la cabañita",
+      "zona_geografica": "popular",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 102,
+    "fields": {
+      "nombre_zona": "la cabaña",
+      "zona_geografica": "popular",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 103,
+    "fields": {
+      "nombre_zona": "san josé obrero",
+      "zona_geografica": "popular",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 104,
+    "fields": {
+      "nombre_zona": "zona industrial #1",
+      "zona_geografica": "industrial",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 105,
+    "fields": {
+      "nombre_zona": "zona industrial #3",
+      "zona_geografica": "industrial",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 106,
+    "fields": {
+      "nombre_zona": "zona industrial #4",
+      "zona_geografica": "industrial",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 107,
+    "fields": {
+      "nombre_zona": "zona industrial #5",
+      "zona_geografica": "industrial",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 108,
+    "fields": {
+      "nombre_zona": "zona industrial #6",
+      "zona_geografica": "industrial",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 109,
+    "fields": {
+      "nombre_zona": "zona industrial #7",
+      "zona_geografica": "industrial",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 110,
+    "fields": {
+      "nombre_zona": "san félix",
+      "zona_geografica": "corregimiento",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 111,
+    "fields": {
+      "nombre_zona": "potrerito",
+      "zona_geografica": "corregimiento",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 112,
+    "fields": {
+      "nombre_zona": "granizal",
+      "zona_geografica": "corregimiento",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 113,
+    "fields": {
+      "nombre_zona": "el tambo",
+      "zona_geografica": "corregimiento",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  },
+  {
+    "model": "safezone_app.zonas",
+    "pk": 114,
+    "fields": {
+      "nombre_zona": "hato viejo",
+      "zona_geografica": "corregimiento",
+      "activo": 1,
+      "fecha_creacion": "2025-12-14T20:29:33Z"
+    }
+  }
+]
