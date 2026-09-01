@@ -485,18 +485,27 @@ def get_dashboard_stats():
     if zona_critica:
         stats['zona_critica'] = zona_critica['barrio']
 
-    # Reportes por mes (últimos 6 meses) — requiere SQL por DATE_FORMAT de MySQL
-    with connection.cursor() as cursor:
-        cursor.execute("""
-            SELECT DATE_FORMAT(fecha_reporte, '%Y-%m') as mes, COUNT(*) as total
-            FROM Reportes
-            WHERE fecha_reporte >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
-            GROUP BY DATE_FORMAT(fecha_reporte, '%Y-%m')
-            ORDER BY mes DESC
-            LIMIT 6
-        """)
-        columns = [col[0] for col in cursor.description]
-        meses = [dict(zip(columns, row)) for row in cursor.fetchall()]
+    # Reportes por mes (últimos 6 meses) — usando ORM para ser compatible con PostgreSQL y MySQL
+    from django.db.models.functions import TruncMonth
+    from django.utils import timezone
+    from datetime import timedelta
+
+    now = timezone.now()
+    six_months_ago = now - timedelta(days=6*30)
+
+    qs_mes = (
+        Reportes.objects.filter(fecha_reporte__gte=six_months_ago)
+        .annotate(mes_trunc=TruncMonth('fecha_reporte'))
+        .values('mes_trunc')
+        .annotate(total=Count('id'))
+        .order_by('-mes_trunc')[:6]
+    )
+
+    meses = []
+    for row in qs_mes:
+        if row['mes_trunc']:
+            mes_str = f"{row['mes_trunc'].year}-{row['mes_trunc'].month:02d}"
+            meses.append({'mes': mes_str, 'total': row['total']})
 
     if meses:
         max_r = max(r['total'] for r in meses)
