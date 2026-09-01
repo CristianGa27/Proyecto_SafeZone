@@ -184,8 +184,7 @@
                                         <small>{{ u.telefono|default:"N/A" }}</small>
                                     </td>
                                     <td>
-                                        <span class="status-badge status-{{ u.estado_cuenta }}">{{ u.estado_cuenta |
-                                            upper }}</span>
+                                        <span class="status-badge status-{{ u.estado_cuenta }}">{{ u.estado_cuenta|upper }}</span>
                                     </td>
                                     <td>
                                         <div>
@@ -200,9 +199,9 @@
                                             <div class="progress-bar {% if u.completitud < 100 %}incomplete{% endif %}"
                                                 style="width: {{ u.completitud }}%;"></div>
                                         </div>
-                                        {% if u.completitud < 100 %} <small style="color: #6b7280;">Falta: {{
-                                            u.faltantes }}</small>
-                                            {% endif %}
+                                        {% if u.completitud < 100 %}
+                                            <small style="color: #6b7280;">Falta: {{ u.faltantes }}</small>
+                                        {% endif %}
                                     </td>
                                     <td>{{ u.fecha_registro|date:"Y-m-d"|default:"N/A" }}</td>
                                 </tr>
