@@ -530,7 +530,10 @@ def get_dashboard_stats():
 def get_chart_statistics():
     """
     Obtiene estadísticas para los gráficos usando ORM de Django
-    (Compatible con PostgreSQL y MySQL)
+    (Compatible con PostgreSQL y MySQL).
+
+    Returns:
+        dict con reportes_mes, severidad, evolucion, por_tipo y resumen.
     """
     from django.db.models.functions import TruncMonth, ExtractWeek
     from django.utils import timezone
@@ -539,19 +542,22 @@ def get_chart_statistics():
         'reportes_mes': [],
         'severidad': [],
         'evolucion': [],
+        'por_tipo': [],
+        'resumen': {},
     }
 
     now = timezone.now()
-    six_months_ago = now - timedelta(days=6*30)
+    six_months_ago = now - timedelta(days=6 * 30)
 
     # Reportes por mes
-    qs_mes = Reportes.objects.filter(fecha_reporte__gte=six_months_ago) \
-                             .annotate(mes_trunc=TruncMonth('fecha_reporte')) \
-                             .values('mes_trunc') \
-                             .annotate(total=Count('id')) \
-                             .order_by('mes_trunc')
-    
     meses_esp = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+    qs_mes = (
+        Reportes.objects.filter(fecha_reporte__gte=six_months_ago)
+        .annotate(mes_trunc=TruncMonth('fecha_reporte'))
+        .values('mes_trunc')
+        .annotate(total=Count('id'))
+        .order_by('mes_trunc')
+    )
     rmes = []
     for row in qs_mes:
         if row['mes_trunc']:
@@ -568,23 +574,61 @@ def get_chart_statistics():
         default=5,
         output_field=IntegerField(),
     )
-    qs_sev = Reportes.objects.values('gravedad') \
-                             .annotate(total=Count('id')) \
-                             .alias(orden=severidad_order) \
-                             .order_by('orden')
-    
+    qs_sev = (
+        Reportes.objects.values('gravedad')
+        .annotate(total=Count('id'))
+        .alias(orden=severidad_order)
+        .order_by('orden')
+    )
     stats['severidad'] = [{'gravedad': row['gravedad'], 'total': row['total']} for row in qs_sev]
 
-    # Evolución semanal (last 8 weeks)
+    # Evolución semanal (últimas 8 semanas)
     eight_weeks_ago = now - timedelta(weeks=8)
-    qs_evo = Reportes.objects.filter(fecha_reporte__gte=eight_weeks_ago) \
-                             .annotate(semana=ExtractWeek('fecha_reporte')) \
-                             .values('semana') \
-                             .annotate(total=Count('id')) \
-                             .order_by('semana')
-    
-    stats['evolucion'] = []
-    for i, row in enumerate(qs_evo):
-        stats['evolucion'].append({'semana': i + 1, 'total': row['total']})
+    qs_evo = (
+        Reportes.objects.filter(fecha_reporte__gte=eight_weeks_ago)
+        .annotate(semana=ExtractWeek('fecha_reporte'))
+        .values('semana')
+        .annotate(total=Count('id'))
+        .order_by('semana')
+    )
+    stats['evolucion'] = [{'semana': i + 1, 'total': row['total']} for i, row in enumerate(qs_evo)]
+
+    # Por tipo de anomalía (top 8)
+    qs_tipo = (
+        Reportes.objects
+        .values('id_tipo_anomalia__nombre_anomalia')
+        .annotate(total=Count('id'))
+        .order_by('-total')[:8]
+    )
+    stats['por_tipo'] = [
+        {
+            'tipo': row['id_tipo_anomalia__nombre_anomalia'] or 'Sin clasificar',
+            'total': row['total'],
+        }
+        for row in qs_tipo
+    ]
+
+    # Resumen general (para KPI cards)
+    totals = Reportes.objects.aggregate(
+        total=Count('id'),
+        resueltos=Count(
+            Case(When(estado__in=['resuelto', 'cerrado'], then=1),
+                 output_field=IntegerField())
+        ),
+        pendientes=Count(
+            Case(When(estado__in=['pendiente', 'nuevo'], then=1),
+                 output_field=IntegerField())
+        ),
+        en_proceso=Count(
+            Case(When(estado='en_progreso', then=1),
+                 output_field=IntegerField())
+        ),
+    )
+    stats['resumen'] = {
+        'total':      totals['total'] or 0,
+        'resueltos':  totals['resueltos'] or 0,
+        'pendientes': totals['pendientes'] or 0,
+        'en_proceso': totals['en_proceso'] or 0,
+    }
 
     return stats

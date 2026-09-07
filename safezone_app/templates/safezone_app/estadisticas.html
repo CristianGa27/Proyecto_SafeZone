@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SafeZone - Estadísticas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/CSS/estadisticas.css">
   <link rel="stylesheet" href="/static/CSS/menu.css">
 </head>
@@ -31,24 +33,18 @@
         <div class="nav-section">
             <div class="nav-title">Navegación</div>
             <div class="nav-item">
-                <a href="{% url 'inicio_html' %}" class="nav-link">
-                    Inicio
-                </a>
+                <a href="{% url 'inicio_html' %}" class="nav-link">Inicio</a>
             </div>
         </div>
 
         <div class="nav-section">
             <div class="nav-title">Reportes</div>
             <div class="nav-item">
-                <a href="{% url 'registro_html' %}" class="nav-link">
-                    Crear Nuevo Reporte
-                </a>
+                <a href="{% url 'registro_html' %}" class="nav-link">Crear Nuevo Reporte</a>
             </div>
             {% if request.session.user_role == 'admin' %}
             <div class="nav-item">
-                <a href="{% url 'panel_admin' %}" class="nav-link">
-                    Validación de Reportes
-                </a>
+                <a href="{% url 'panel_admin' %}" class="nav-link">Validación de Reportes</a>
             </div>
             {% endif %}
         </div>
@@ -56,14 +52,10 @@
         <div class="nav-section">
             <div class="nav-title">Visualizaciones</div>
             <div class="nav-item">
-                <a href="{% url 'mapa_html' %}" class="nav-link">
-                    Mapa Interactivo
-                </a>
+                <a href="{% url 'mapa_html' %}" class="nav-link">Mapa Interactivo</a>
             </div>
             <div class="nav-item">
-                <a href="{% url 'estadisticas_html' %}" class="nav-link active">
-                    Estadísticas
-                </a>
+                <a href="{% url 'estadisticas_html' %}" class="nav-link active">Estadísticas</a>
             </div>
         </div>
 
@@ -71,42 +63,37 @@
             <div class="nav-title">Mi Cuenta</div>
             {% if request.session.user_role != 'guest' %}
             <div class="nav-item">
-                <a href="{% url 'perfil' %}" class="nav-link">
-                    Mi Perfil
-                </a>
+                <a href="{% url 'perfil' %}" class="nav-link">Mi Perfil</a>
             </div>
             <div class="nav-item">
-                <a href="{% url 'mis_reportes_html' %}" class="nav-link">
-                    Mis Reportes
-                </a>
+                <a href="{% url 'mis_reportes_html' %}" class="nav-link">Mis Reportes</a>
             </div>
             {% endif %}
             <div class="nav-item">
-                <a href="{% url 'logout' %}" class="nav-link logout-link">
-                    Cerrar Sesión
-                </a>
+                <a href="{% url 'logout' %}" class="nav-link logout-link">Cerrar Sesión</a>
             </div>
         </div>
     </nav>
 
     <main class="main-content" id="mainContent">
-      
+
         <header class="header">
             <div class="header-content">
                 <div class="page-breadcrumb">
-                    <span>Estadísticas</span>
+                    <span>📊 Estadísticas</span>
                 </div>
                 <div class="user-info">
                     <span>Bienvenido, {{ request.session.username|default:"Invitado" }}</span>
                     <div class="user-avatar">
                         {% if request.session.foto_perfil %}
-                            <img src="{{ request.session.foto_perfil  }}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                            <img src="{{ request.session.foto_perfil }}" alt="Avatar"
+                                 style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
                         {% endif %}
                     </div>
                 </div>
             </div>
         </header>
-        
+
         <div class="content-area">
             {% if messages %}
             <div class="flash-messages">
@@ -115,70 +102,133 @@
                 {% endfor %}
             </div>
             {% endif %}
+
             <div class="page-header">
                 <h1 class="page-title">Estadísticas del Sistema</h1>
-                <p class="page-subtitle">
-                    Dashboard con métricas y análisis de reportes del sistema.
-                </p>
+                <p class="page-subtitle">Dashboard con métricas y análisis de reportes en tiempo real.</p>
             </div>
 
-    <section class="dashboard-content">
-      <div class="dashboard-grid">
-        <!-- Tarjeta 1 -->
-        <div class="dashboard-card">
-          <div class="card-header">
-            <h3 class="card-title">Reportes por mes</h3>
-          </div>
-          <div class="chart-container">
-            <canvas id="chartReportesMes"></canvas>
-          </div>
-        </div>
 
-        <!-- Tarjeta 2 -->
-        <div class="dashboard-card">
-          <div class="card-header">
-            <h3 class="card-title">Severidad de daños</h3>
-          </div>
-          <div class="chart-container">
-            <canvas id="chartSeveridad"></canvas>
-          </div>
-        </div>
 
-        <!-- Tarjeta 3 -->
-        <div class="dashboard-card">
-          <div class="card-header">
-            <h3 class="card-title">Evolución semanal</h3>
-          </div>
-          <div class="chart-container">
-            <canvas id="chartEvolucion"></canvas>
-          </div>
-        </div>
-      </div>
-    </section>
+            <!-- Gráficos -->
+            <section class="dashboard-content">
+                <div class="dashboard-grid">
+
+                    <!-- Gráfico 1: Reportes por mes -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3 class="card-title">📅 Reportes por mes</h3>
+                            <span class="card-badge">Últimos 6 meses</span>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="chartReportesMes"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Gráfico 2: Severidad -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3 class="card-title">🎯 Severidad de daños</h3>
+                            <span class="card-badge">Distribución</span>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="chartSeveridad"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Gráfico 3: Por tipo de anomalía -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3 class="card-title">🏷️ Por tipo de anomalía</h3>
+                            <span class="card-badge">Top categorías</span>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="chartTipo"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Gráfico 4: Evolución semanal -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3 class="card-title">📈 Evolución semanal</h3>
+                            <span class="card-badge">Últimas 8 semanas</span>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="chartEvolucion"></canvas>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
         </div>
     </main>
- 
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
+// Configuración global Chart.js
+Chart.defaults.font.family = "'Inter', sans-serif";
+
+// Escalas comunes (eje vertical con enteros)
+const scaleOptionsXY = {
+    y: {
+        beginAtZero: true,
+        ticks: {
+            color: 'rgba(255,255,255,0.65)',
+            stepSize: 1,
+            callback: v => Number.isInteger(v) ? v : null
+        },
+        grid: { color: 'rgba(255,255,255,0.06)' },
+        border: { dash: [4, 4] }
+    },
+    x: {
+        ticks: { color: 'rgba(255,255,255,0.65)' },
+        grid: { color: 'rgba(255,255,255,0.06)' },
+        border: { dash: [4, 4] }
+    }
+};
+
+const tooltipDefaults = {
+    backgroundColor: 'rgba(10,14,35,0.95)',
+    padding: 14,
+    cornerRadius: 10,
+    titleColor: 'rgba(255,255,255,0.9)',
+    bodyColor: 'rgba(255,255,255,0.7)',
+    borderColor: 'rgba(255,255,255,0.1)',
+    borderWidth: 1,
+};
+
+// Animación de conteo para KPI
+function animateCounter(el, target, duration = 1200) {
+    if (!el || target === undefined) return;
+    const step = target / (duration / 16);
+    let current = 0;
+    const timer = setInterval(() => {
+        current += step;
+        if (current >= target) { current = target; clearInterval(timer); }
+        el.textContent = Math.floor(current).toLocaleString('es');
+    }, 16);
+}
+
 async function cargarEstadisticas() {
     try {
         console.log('🔄 Cargando estadísticas...');
-        
-        const res = await fetch("/api/estadisticas");
-        
-        if (!res.ok) {
-            throw new Error(`HTTP error! status: ${res.status}`);
-        }
-        
+        const res = await fetch("/api/estadisticas/");
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
-        console.log('📊 Datos recibidos:', data);
+        console.log('📊 Datos:', data);
 
-        // -----------------------------
-        // 1. Reportes por mes
-        // -----------------------------
-        const meses = data.reportes_mes?.map(item => item.mes) || [];
-        const totalMes = data.reportes_mes?.map(item => item.total) || [];
+        // ── KPI Cards ─────────────────────────────────────────
+        if (data.resumen) {
+            animateCounter(document.getElementById('kpiTotal'),     data.resumen.total);
+            animateCounter(document.getElementById('kpiResueltos'), data.resumen.resueltos);
+            animateCounter(document.getElementById('kpiProceso'),   data.resumen.en_proceso);
+            animateCounter(document.getElementById('kpiPendientes'),data.resumen.pendientes);
+        }
+
+        // ── 1. Reportes por mes ───────────────────────────────
+        const meses = data.reportes_mes?.map(i => i.mes) || [];
+        const totalMes = data.reportes_mes?.map(i => i.total) || [];
 
         new Chart(document.getElementById("chartReportesMes"), {
             type: "bar",
@@ -187,119 +237,124 @@ async function cargarEstadisticas() {
                 datasets: [{
                     label: "Reportes",
                     data: totalMes,
-                    backgroundColor: "rgba(99, 102, 241, 0.8)",
-                    borderColor: "rgba(99, 102, 241, 1)",
+                    backgroundColor: meses.map((_, i) => `hsla(${230 + i * 18}, 75%, 65%, 0.85)`),
+                    borderColor:     meses.map((_, i) => `hsla(${230 + i * 18}, 75%, 65%, 1)`),
                     borderWidth: 2,
-                    borderRadius: 8
+                    borderRadius: 10,
+                    borderSkipped: false,
                 }]
             },
             options: {
-                responsive: true,
-                maintainAspectRatio: false,
+                responsive: true, maintainAspectRatio: false,
                 plugins: {
-                    legend: {
-                        labels: {
-                            color: 'white'
-                        }
-                    }
+                    legend: { display: false },
+                    tooltip: { ...tooltipDefaults, callbacks: { label: ctx => ` ${ctx.raw} reportes` } }
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            color: 'white'
-                        },
-                        grid: {
-                            color: 'rgba(255, 255, 255, 0.1)'
-                        }
-                    },
-                    x: {
-                        ticks: {
-                            color: 'white'
-                        },
-                        grid: {
-                            color: 'rgba(255, 255, 255, 0.1)'
-                        }
-                    }
-                }
+                scales: scaleOptionsXY,
+                animation: { duration: 1000, easing: 'easeOutQuart' }
             }
         });
 
-        // -----------------------------
-        // 2. Severidad de daños (con colores y porcentajes)
-        // -----------------------------
-        const gravedad = data.severidad?.map(item => item.gravedad) || [];
-        const totalGravedad = data.severidad?.map(item => item.total) || [];
-
-        // Colores según severidad
-        const colores = {
-            "leve": "#22c55e",      // 🟢 Verde
-            "moderado": "#eab308",  // 🟡 Amarillo
-            "severo": "#f97316",    // 🟠 Naranja
-            "critico": "#ef4444"    // 🔴 Rojo
+        // ── 2. Severidad ──────────────────────────────────────
+        const gravedad = data.severidad?.map(i => i.gravedad) || [];
+        const totalGravedad = data.severidad?.map(i => i.total) || [];
+        const coloresSev = {
+            leve:     "#22c55e",
+            moderado: "#eab308",
+            severo:   "#f97316",
+            critico:  "#ef4444",
         };
-
-        // Capitalizar primera letra para mostrar
-        const gravedadCapitalizada = gravedad.map(g => 
-            g.charAt(0).toUpperCase() + g.slice(1)
-        );
 
         new Chart(document.getElementById("chartSeveridad"), {
             type: "doughnut",
             data: {
-                labels: gravedadCapitalizada,
+                labels: gravedad.map(g => g.charAt(0).toUpperCase() + g.slice(1)),
                 datasets: [{
                     data: totalGravedad,
-                    backgroundColor: gravedad.map(g => colores[g]),
-                    borderWidth: 3,
-                    borderColor: 'rgba(255, 255, 255, 0.2)',
-                    cutout: '60%'
+                    backgroundColor: gravedad.map(g => coloresSev[g] || '#6366f1'),
+                    borderWidth: 4,
+                    borderColor: '#1f2937',
+                    hoverOffset: 14,
+                    cutout: '65%'
                 }]
             },
             options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                layout: {
-                    padding: {
-                        top: 20,
-                        bottom: 60,
-                        left: 20,
-                        right: 20
-                    }
-                },
+                responsive: true, maintainAspectRatio: false,
+                layout: { padding: { top: 10, bottom: 50, left: 10, right: 10 } },
                 plugins: {
                     legend: {
                         position: 'bottom',
                         labels: {
-                            color: 'white',
-                            padding: 15,
+                            color: 'rgba(255,255,255,0.8)',
+                            padding: 16,
                             usePointStyle: true,
-                            font: {
-                                size: 12
-                            },
-                            boxWidth: 12,
-                            boxHeight: 12
+                            pointStyleWidth: 10,
+                            font: { size: 12, weight: '500' },
                         }
                     },
                     tooltip: {
+                        ...tooltipDefaults,
                         callbacks: {
-                            label: function(context) {
-                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                const valor = context.raw;
-                                const porcentaje = ((valor / total) * 100).toFixed(1);
-                                return `${context.label}: ${valor} (${porcentaje}%)`;
+                            label: ctx => {
+                                const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                                const pct = ((ctx.raw / total) * 100).toFixed(1);
+                                return ` ${ctx.label}: ${ctx.raw} (${pct}%)`;
                             }
                         }
                     }
-                }
+                },
+                animation: { animateRotate: true, duration: 1200 }
             }
         });
 
-        // -----------------------------
-        // 3. Evolución semanal
-        // -----------------------------
-        const semanas = data.evolucion?.map(item => "Semana " + item.semana) || [];
-        const totalSemanal = data.evolucion?.map(item => item.total) || [];
+        // ── 3. Por tipo de anomalía ───────────────────────────
+        const tipos = data.por_tipo?.map(i => i.tipo) || [];
+        const totalTipo = data.por_tipo?.map(i => i.total) || [];
+
+        new Chart(document.getElementById("chartTipo"), {
+            type: "bar",
+            data: {
+                labels: tipos,
+                datasets: [{
+                    label: "Reportes",
+                    data: totalTipo,
+                    backgroundColor: tipos.map((_, i) => `hsla(${155 + i * 22}, 65%, 55%, 0.85)`),
+                    borderColor:     tipos.map((_, i) => `hsla(${155 + i * 22}, 65%, 55%, 1)`),
+                    borderWidth: 2,
+                    borderRadius: 8,
+                    borderSkipped: false,
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { ...tooltipDefaults, callbacks: { label: ctx => ` ${ctx.raw} reportes` } }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        ticks: {
+                            color: 'rgba(255,255,255,0.65)',
+                            stepSize: 1,
+                            callback: v => Number.isInteger(v) ? v : null
+                        },
+                        grid: { color: 'rgba(255,255,255,0.06)' },
+                        border: { dash: [4, 4] }
+                    },
+                    y: {
+                        ticks: { color: 'rgba(255,255,255,0.65)', font: { size: 11 } },
+                        grid: { display: false }
+                    }
+                },
+                animation: { duration: 1000, easing: 'easeOutQuart' }
+            }
+        });
+
+        // ── 4. Evolución semanal ──────────────────────────────
+        const semanas = data.evolucion?.map(i => "Sem " + i.semana) || [];
+        const totalSemanal = data.evolucion?.map(i => i.total) || [];
 
         new Chart(document.getElementById("chartEvolucion"), {
             type: "line",
@@ -308,87 +363,59 @@ async function cargarEstadisticas() {
                 datasets: [{
                     label: "Reportes",
                     data: totalSemanal,
-                    borderColor: "rgba(245, 158, 11, 1)",
-                    backgroundColor: "rgba(245, 158, 11, 0.1)",
+                    borderColor: "rgba(245,158,11,1)",
+                    backgroundColor: ctx => {
+                        const g = ctx.chart.ctx.createLinearGradient(0, 0, 0, 280);
+                        g.addColorStop(0, "rgba(245,158,11,0.45)");
+                        g.addColorStop(1, "rgba(245,158,11,0)");
+                        return g;
+                    },
                     borderWidth: 3,
                     fill: true,
                     tension: 0.4,
-                    pointBackgroundColor: "rgba(245, 158, 11, 1)",
-                    pointBorderColor: "white",
-                    pointBorderWidth: 2,
-                    pointRadius: 6
+                    pointBackgroundColor: "rgba(245,158,11,1)",
+                    pointBorderColor: "#1f2937",
+                    pointBorderWidth: 3,
+                    pointRadius: 7,
+                    pointHoverRadius: 10,
                 }]
             },
             options: {
-                responsive: true,
-                maintainAspectRatio: false,
+                responsive: true, maintainAspectRatio: false,
                 plugins: {
-                    legend: {
-                        labels: {
-                            color: 'white'
-                        }
-                    }
+                    legend: { display: false },
+                    tooltip: { ...tooltipDefaults, callbacks: { label: ctx => ` ${ctx.raw} reportes` } }
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            color: 'white'
-                        },
-                        grid: {
-                            color: 'rgba(255, 255, 255, 0.1)'
-                        }
-                    },
-                    x: {
-                        ticks: {
-                            color: 'white'
-                        },
-                        grid: {
-                            color: 'rgba(255, 255, 255, 0.1)'
-                        }
-                    }
-                }
+                scales: scaleOptionsXY,
+                animation: { duration: 1200, easing: 'easeOutQuart' }
             }
         });
-        
-        console.log('✅ Estadísticas cargadas exitosamente');
-        
+
+        console.log('✅ Estadísticas cargadas');
+
     } catch (error) {
-        console.error('❌ Error cargando estadísticas:', error);
-        
-        // Mostrar mensaje de error en las tarjetas
-        const cards = document.querySelectorAll('.chart-container');
-        cards.forEach(card => {
-            card.innerHTML = `
-                <div style="text-align: center; color: #ef4444; padding: 2rem;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">📊</div>
-                    <div style="font-size: 1.2rem; margin-bottom: 0.5rem;">Error cargando datos</div>
-                    <div style="font-size: 0.9rem; opacity: 0.7;">Verifica que la aplicación esté funcionando</div>
-                </div>
-            `;
+        console.error('❌ Error:', error);
+        document.querySelectorAll('.chart-container').forEach(c => {
+            c.innerHTML = `
+                <div style="text-align:center;color:#ef4444;padding:2rem;">
+                    <div style="font-size:3rem;margin-bottom:1rem;">📊</div>
+                    <div style="font-size:1.1rem;margin-bottom:.5rem;">Error cargando datos</div>
+                    <div style="font-size:.85rem;opacity:.7;">Verifica que la aplicación esté funcionando</div>
+                </div>`;
         });
     }
 }
 
-// Cargar estadísticas cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', function() {
-    cargarEstadisticas();
-});
+document.addEventListener('DOMContentLoaded', cargarEstadisticas);
 </script>
+
 <script>
-    // 1. Evita que el navegador guarde un estado de página activo en su historial de navegación
     window.onload = function () {
-        if (window.history.replaceState) {
+        if (window.history.replaceState)
             window.history.replaceState(null, null, window.location.href);
-        }
-    }
-    
-    // 2. Detecta si el usuario intentó usar el botón "Atrás" y lo obliga a recargar la página.
-    // Al recargar, Django detectará que la sesión no existe y exigirá el correo y contraseña.
+    };
     window.onpageshow = function (event) {
-        if (event.persisted) {
-            window.location.reload();
-        }
+        if (event.persisted) window.location.reload();
     };
 </script>
 <!-- Sistema de alertas global -->
@@ -398,6 +425,3 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </body>
 </html>
-
-
-
