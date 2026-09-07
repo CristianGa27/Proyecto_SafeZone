@@ -263,10 +263,14 @@
                                 <td>{{ reporte.descripcion|truncatechars:50|default:"Sin descripción" }}</td>
                                 <td>
                                     <div class="action-buttons">
+                                        {% if reporte.estado == 'nuevo' %}
                                         <a href="{% url 'editar_reporte_html' reporte.id %}" class="btn-edit"
                                             title="Editar reporte">
                                             Editar
                                         </a>
+                                        {% else %}
+                                        <span style="color: #9ca3af; font-size: 0.85rem; font-style: italic;">Procesado</span>
+                                        {% endif %}
                                     </div>
                                 </td>
                             </tr>

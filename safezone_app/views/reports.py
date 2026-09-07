@@ -110,6 +110,12 @@ def editar_reporte_html(request, reporte_id):
     """
     try:
         reporte = Reportes.objects.get(id=reporte_id, usuario_id=request.session[SESSION_USER_ID])
+        
+        # Validar que el reporte esté en estado 'nuevo'
+        if reporte.estado != 'nuevo':
+            messages.error(request, "No puedes editar un reporte que ya ha sido procesado por un administrador.")
+            return redirect('mis_reportes_html')
+            
     except Reportes.DoesNotExist:
         return redirect('mis_reportes_html')
     return render(request, "safezone_app/editar_reporte.html", {
@@ -127,6 +133,12 @@ def actualizar_reporte(request, reporte_id):
     if request.method == "POST":
         try:
             r = Reportes.objects.get(id=reporte_id, usuario_id=request.session[SESSION_USER_ID])
+            
+            # Solo permitir actualizar si está 'nuevo'
+            if r.estado != 'nuevo':
+                messages.error(request, "El reporte ya fue procesado y no puede modificarse.")
+                return redirect('mis_reportes_html')
+                
             r.ubicacion = request.POST.get("location")
             r.barrio = request.POST.get("zone_id")
             r.id_tipo_anomalia = Tiposanomalia.objects.get(id=request.POST.get("tipo_anomalia_id"))
@@ -134,7 +146,7 @@ def actualizar_reporte(request, reporte_id):
             r.descripcion = request.POST.get("description")
             r.info_adicional = request.POST.get("additionalInfo")
             r.save()
-            messages.success(request, "Actualizado.")
+            messages.success(request, "Actualizado exitosamente.")
         except Exception:
-            messages.error(request, "Error.")
+            messages.error(request, "Error al actualizar.")
     return redirect('mis_reportes_html')
