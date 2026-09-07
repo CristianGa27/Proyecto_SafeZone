@@ -33,11 +33,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']  # Permite conexiones desde cualquier dispositivo en la red local
 
-# URL base para enlaces en correos (usa la URL de Render si existe, sino usa localhost)
-SITE_URL = os.getenv('RENDER_EXTERNAL_URL', 'http://127.0.0.1:8000')
-
-# Confianza CSRF para evitar errores de envío de formularios en producción (HTTPS)
-CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com']
+# URL base para enlaces en correos (usa la IP real de tu PC en la red local)
+SITE_URL = 'http://127.0.0.1:8000'
 
 
 # Application definition
