@@ -168,6 +168,14 @@
                 <div class="form-container">
                     <h2 class="page-title">Reportes en Flujo de Trabajo</h2>
 
+                    <div style="margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+                        <a href="?gravedad=" style="padding: 8px 16px; border-radius: 6px; text-decoration: none; color: white; font-weight: 500; background: {% if not filtros.gravedad %}rgba(99,102,241,0.8){% else %}rgba(255,255,255,0.1){% endif %};">Todos</a>
+                        <a href="?gravedad=critico" style="padding: 8px 16px; border-radius: 6px; text-decoration: none; color: white; font-weight: 500; background: {% if filtros.gravedad == 'critico' %}#ef4444{% else %}rgba(255,255,255,0.1){% endif %};">Crítico</a>
+                        <a href="?gravedad=severo" style="padding: 8px 16px; border-radius: 6px; text-decoration: none; color: white; font-weight: 500; background: {% if filtros.gravedad == 'severo' %}#f97316{% else %}rgba(255,255,255,0.1){% endif %};">Severo</a>
+                        <a href="?gravedad=moderado" style="padding: 8px 16px; border-radius: 6px; text-decoration: none; color: white; font-weight: 500; background: {% if filtros.gravedad == 'moderado' %}#eab308{% else %}rgba(255,255,255,0.1){% endif %};">Moderado</a>
+                        <a href="?gravedad=leve" style="padding: 8px 16px; border-radius: 6px; text-decoration: none; color: white; font-weight: 500; background: {% if filtros.gravedad == 'leve' %}#22c55e{% else %}rgba(255,255,255,0.1){% endif %};">Leve</a>
+                    </div>
+
                     {% if reportes %}
                     <div class="table-responsive">
                         <table class="form-table">
