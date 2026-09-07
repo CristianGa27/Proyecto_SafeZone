@@ -5,6 +5,8 @@ Centraliza la validación de datos que antes estaba dispersa
 en las vistas, proporcionando validación declarativa y reutilizable.
 """
 
+import re
+
 from django import forms
 
 from .constants import ALLOWED_IMAGE_EXTENSIONS
@@ -69,7 +71,6 @@ class RegisterForm(forms.Form):
 
     def clean_nombres(self):
         """Valida que los nombres solo contengan letras y espacios."""
-        import re
         nombres = self.cleaned_data.get('nombres', '').strip()
         if not re.match(r'^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ ]+$', nombres):
             raise forms.ValidationError(
@@ -79,7 +80,6 @@ class RegisterForm(forms.Form):
 
     def clean_apellidos(self):
         """Valida que los apellidos solo contengan letras y espacios."""
-        import re
         apellidos = self.cleaned_data.get('apellidos', '').strip()
         if not re.match(r'^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ ]+$', apellidos):
             raise forms.ValidationError(

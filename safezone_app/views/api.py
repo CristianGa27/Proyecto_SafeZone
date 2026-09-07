@@ -2,6 +2,7 @@
 Vistas API.
 """
 from django.http import JsonResponse
+from django.shortcuts import render
 from ..decorators import session_required
 from ..services import get_chart_statistics
 
@@ -25,9 +26,9 @@ def api_reportes(request):
     for r in reportes:
         if r['fecha_reporte']:
             r['fecha_reporte'] = r['fecha_reporte'].strftime('%Y-%m-%d %H:%M:%S')
-        r['image_url'] = r['imagen'] if r['imagen'] else None
-        r['image_url2'] = r['imagen2'] if r['imagen2'] else None
-        r['image_url3'] = r['imagen3'] if r['imagen3'] else None
+        r['image_url'] = r['imagen'] or None
+        r['image_url2'] = r['imagen2'] or None
+        r['image_url3'] = r['imagen3'] or None
 
     return JsonResponse(reportes, safe=False)
 
@@ -36,9 +37,8 @@ def api_estadisticas(request):
     return JsonResponse(get_chart_statistics())
 
 def mapa_html(request):
-    from django.shortcuts import render
     return render(request, "safezone_app/mapa.html")
 
+
 def estadisticas_html(request):
-    from django.shortcuts import render
     return render(request, "safezone_app/estadisticas.html")

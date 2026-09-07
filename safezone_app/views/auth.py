@@ -12,16 +12,10 @@ from ..services import (
     generate_reset_token, send_password_reset_email, verify_reset_token, update_user_password
 )
 from ..decorators import verificar_url_segura, login_required_safezone, no_cache_required
-@login_required_safezone
-@no_cache_required
-def inicio_sistema(request):
-    """
-    Renderiza la vista principal del sistema (dashboard o mapa)
-    después de que el usuario haya iniciado sesión correctamente.
-    """
-    # Tu vista del mapa o panel principal de SafeZone
-    return render(request, 'safezone_app/inicio.html')
+
 logger = logging.getLogger(__name__)
+
+
 @verificar_url_segura
 def login_view(request):
     """
@@ -75,6 +69,7 @@ def register_page(request):
     """
     return render(request, "safezone_app/registro.html")
 
+
 def guest_login(request):
     """
     Permite iniciar sesión como invitado, configurando variables
@@ -85,6 +80,7 @@ def guest_login(request):
     request.session[SESSION_USERNAME] = 'Invitado'
     messages.warning(request, "Has ingresado como invitado. Funciones limitadas.")
     return redirect('inicio_html')
+
 
 def register(request):
     """
@@ -129,6 +125,7 @@ def register(request):
 
     return redirect('register_page')
 
+
 def esperando_verificacion(request):
     """
     Renderiza la página que avisa al usuario que debe revisar su correo
@@ -161,6 +158,7 @@ def logout_view(request):
     request.session.flush()
     messages.info(request, "Has cerrado sesión.")
     return redirect('login_html')
+
 
 def perfil(request):
     """

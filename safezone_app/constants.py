@@ -33,11 +33,8 @@ class ReportStatus:
     CERRADO = 'cerrado'
     RECHAZADO = 'rechazado'
 
-    # Estados válidos para el flujo técnico
+    # Estados válidos para el flujo técnico (panel y acciones)
     TECHNICAL_FLOW = (PENDIENTE, EN_PROGRESO, RESUELTO, CERRADO)
-
-    # Estados que se muestran en el panel técnico
-    TECHNICAL_PANEL = (PENDIENTE, EN_PROGRESO, RESUELTO, CERRADO)
 
 
 class SeverityLevel:

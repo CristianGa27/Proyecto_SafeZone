@@ -145,4 +145,4 @@ def no_cache_required(view_func):
         response['Pragma'] = 'no-cache'
         response['Expires'] = '0'
         return response
-    return _wrapped_view
+    return _wrapped_view

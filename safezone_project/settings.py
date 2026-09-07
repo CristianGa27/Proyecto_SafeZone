@@ -15,8 +15,6 @@ import os
 from dotenv import load_dotenv
 import dj_database_url
 import cloudinary
-import cloudinary.uploader
-import cloudinary.api
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +26,7 @@ load_dotenv(BASE_DIR / '.env')
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-p7_+ej%v2tl&1q-(3g$hoptnk_h)8vr_akd)e2oy^d93q3ekeq'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-p7_+ej%v2tl&1q-(3g$hoptnk_h)8vr_akd)e2oy^d93q3ekeq')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

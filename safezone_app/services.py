@@ -8,7 +8,7 @@ las vistas delgadas y la lógica reutilizable y testeable.
 import logging
 import os
 import uuid
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import bcrypt
 from django.conf import settings
@@ -97,8 +97,6 @@ def verify_user_token(timed_token):
     Returns:
         Usuarios o None si el token es inválido/expirado.
     """
-    from datetime import timedelta
-
     try:
         token = signer.unsign(timed_token, max_age=timedelta(days=1))
     except (SignatureExpired, BadSignature):
@@ -240,11 +238,11 @@ def generate_reset_token(user_id):
     token = f"{user_id}:{uuid.uuid4().hex}"
     return signer.sign(token)
 
+
 def verify_reset_token(timed_token):
     """
     Verifica un token de recuperación y retorna el usuario si es válido.
     """
-    from datetime import timedelta
     try:
         # Expira en 2 horas
         token = signer.unsign(timed_token, max_age=timedelta(hours=2))
@@ -252,6 +250,7 @@ def verify_reset_token(timed_token):
         return Usuarios.objects.get(id=user_id)
     except (SignatureExpired, BadSignature, Usuarios.DoesNotExist, IndexError):
         return None
+
 
 def update_user_password(user_id, nueva_contrasena):
     """
@@ -267,6 +266,7 @@ def update_user_password(user_id, nueva_contrasena):
         return True
     except Usuarios.DoesNotExist:
         return False
+
 
 def send_password_reset_email(correo, nombre, token, request=None):
     """Envía el correo de recuperación de contraseña con diseño HTML."""
@@ -404,7 +404,7 @@ def save_uploaded_image(file, prefix="upload"):
         res = cloudinary.uploader.upload(file, folder="safezone/avatars")
         return res.get('secure_url')
     except Exception as e:
-        logger.error(f"Error subiendo a cloudinary: {e}")
+        logger.error("Error subiendo a Cloudinary: %s", e)
         return None
 
 
@@ -421,7 +421,7 @@ def save_report_images(files):
                 res = cloudinary.uploader.upload(file, folder="safezone/reportes")
                 images[i] = res.get('secure_url')
             except Exception as e:
-                logger.error(f"Error subiendo a cloudinary: {e}")
+                logger.error("Error subiendo a Cloudinary: %s", e)
 
     return images
 
@@ -532,11 +532,8 @@ def get_chart_statistics():
     Obtiene estadísticas para los gráficos usando ORM de Django
     (Compatible con PostgreSQL y MySQL)
     """
-    from django.db.models import Count, Case, When, IntegerField
     from django.db.models.functions import TruncMonth, ExtractWeek
     from django.utils import timezone
-    from datetime import timedelta
-    from .models import Reportes
 
     stats = {
         'reportes_mes': [],
