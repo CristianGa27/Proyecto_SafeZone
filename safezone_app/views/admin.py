@@ -41,10 +41,7 @@ def panel_admin(request):
     if estado: q += " AND R.estado = %s"; p.append(estado)
     if gravedad: q += " AND R.gravedad = %s"; p.append(gravedad)
     if prioridad: q += " AND R.prioridad = %s"; p.append(prioridad)
-    q += """ ORDER BY CASE R.prioridad
-        WHEN 'critica' THEN 1 WHEN 'alta' THEN 2
-        WHEN 'media' THEN 3 WHEN 'baja' THEN 4 ELSE 5
-    END, R.id DESC"""
+    q += " ORDER BY R.id DESC"
 
     with connection.cursor() as cursor:
         cursor.execute(q, p)
