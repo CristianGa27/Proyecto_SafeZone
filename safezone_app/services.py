@@ -384,6 +384,151 @@ def send_password_reset_email(correo, nombre, token, request=None):
 
 
 
+def send_report_status_email(reporte):
+    """
+    RF31 – Notifica al ciudadano por correo cuando su reporte cambia a
+    un estado relevante: 'aprobado' (recibido/en revisión) o
+    'resuelto'/'cerrado' (finalizado).
+
+    Args:
+        reporte: instancia del modelo Reportes con usuario relacionado.
+    """
+    from django.core.mail import EmailMultiAlternatives
+
+    # Solo notificar en los estados definidos por RF31
+    # 'pendiente' es el estado que el admin asigna al "Aprobar" un reporte (flujo real del sistema)
+    ESTADOS_NOTIFICABLES = {
+        ReportStatus.PENDIENTE: ('aprobado',  '📋 Tu reporte ha sido aprobado'),
+        ReportStatus.APROBADO:  ('aprobado',  '📋 Tu reporte ha sido aprobado'),
+        ReportStatus.RESUELTO:  ('resuelto',  '✅ Tu reporte ha sido resuelto'),
+        ReportStatus.CERRADO:   ('cerrado',   '🔒 Tu reporte ha sido cerrado'),
+    }
+    if reporte.estado not in ESTADOS_NOTIFICABLES:
+        return
+
+    try:
+        usuario = reporte.usuario
+        if not usuario or not usuario.correo_electronico:
+            return
+    except Exception:
+        return
+
+    estado_legible, titulo_estado = ESTADOS_NOTIFICABLES[reporte.estado]
+    nombre = usuario.nombre_usuario
+    correo = usuario.correo_electronico
+    reporte_id = reporte.id
+    observaciones = reporte.observaciones or 'Sin observaciones adicionales.'
+
+    subject = f"{titulo_estado} – SafeZone (Reporte #{reporte_id})"
+
+    text_content = (
+        f"Hola {nombre},\n\n"
+        f"Te informamos que el estado de tu reporte #{reporte_id} ha cambiado a: {estado_legible.upper()}.\n\n"
+        f"Observaciones: {observaciones}\n\n"
+        f"Puedes revisar el detalle de tus reportes iniciando sesión en SafeZone.\n\n"
+        f"— El equipo de SafeZone"
+    )
+
+    # Colores por estado
+    colores = {
+        ReportStatus.PENDIENTE: ('#6c63ff', '#48c9b0', 'rgba(108,99,255,0.1)', 'rgba(108,99,255,0.25)', '#6c63ff'),
+        ReportStatus.APROBADO:  ('#6c63ff', '#48c9b0', 'rgba(108,99,255,0.1)', 'rgba(108,99,255,0.25)', '#6c63ff'),
+        ReportStatus.RESUELTO:  ('#10b981', '#059669', 'rgba(16,185,129,0.1)', 'rgba(16,185,129,0.25)', '#10b981'),
+        ReportStatus.CERRADO:   ('#6b7280', '#4b5563', 'rgba(107,114,128,0.1)', 'rgba(107,114,128,0.25)', '#6b7280'),
+    }
+    c1, c2, bg_box, border_box, link_color = colores.get(reporte.estado, ('#6c63ff', '#48c9b0', 'rgba(108,99,255,0.1)', 'rgba(108,99,255,0.25)', '#6c63ff'))
+
+    html_content = f"""
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{titulo_estado} - SafeZone</title>
+</head>
+<body style="margin:0;padding:0;background-color:#0f1117;font-family:'Segoe UI',Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#0f1117;padding:40px 20px;">
+    <tr>
+      <td align="center">
+        <table width="560" cellpadding="0" cellspacing="0" style="background:linear-gradient(145deg,#1a1d2e,#12151f);border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);">
+
+          <!-- Header -->
+          <tr>
+            <td style="background:linear-gradient(135deg,{c1},{c2});padding:36px 40px;text-align:center;">
+              <div style="font-size:36px;margin-bottom:8px;">🛡️</div>
+              <h1 style="margin:0;color:#ffffff;font-size:26px;font-weight:700;letter-spacing:1px;">SafeZone</h1>
+              <p style="margin:6px 0 0;color:rgba(255,255,255,0.85);font-size:13px;letter-spacing:2px;text-transform:uppercase;">Actualización de Reporte</p>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="padding:40px 40px 20px;">
+              <h2 style="margin:0 0 12px;color:#e8e8f0;font-size:22px;font-weight:600;">Hola, {nombre} 👋</h2>
+              <p style="margin:0 0 16px;color:#9a9ab0;font-size:15px;line-height:1.7;">
+                Te informamos que el estado de tu reporte ha cambiado:
+              </p>
+
+              <!-- Badge de estado -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+                <tr>
+                  <td style="background:{bg_box};border:1px solid {border_box};border-radius:12px;padding:20px 24px;">
+                    <p style="margin:0 0 6px;color:#9a9ab0;font-size:13px;">Reporte ID</p>
+                    <p style="margin:0 0 14px;color:#e8e8f0;font-size:20px;font-weight:700;">#{reporte_id}</p>
+                    <p style="margin:0 0 6px;color:#9a9ab0;font-size:13px;">Estado del reporte</p>
+                    <p style="margin:0;display:inline-block;background:linear-gradient(135deg,{c1},{c2});color:#fff;font-size:14px;font-weight:700;padding:6px 18px;border-radius:50px;letter-spacing:1px;text-transform:uppercase;">{estado_legible}</p>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Observaciones -->
+              <p style="margin:0 0 8px;color:#c8c8e0;font-size:14px;font-weight:600;">Observaciones del equipo técnico:</p>
+              <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:28px;">
+                <tr>
+                  <td style="background:rgba(255,255,255,0.04);border-left:4px solid {c1};border-radius:0 8px 8px 0;padding:14px 18px;">
+                    <p style="margin:0;color:#9a9ab0;font-size:14px;line-height:1.7;">{observaciones}</p>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin:0;color:#9a9ab0;font-size:13px;line-height:1.6;">
+                Puedes revisar el historial completo de tus reportes iniciando sesión en la plataforma SafeZone.
+              </p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding:24px 40px 36px;border-top:1px solid rgba(255,255,255,0.06);">
+              <p style="margin:0;color:#5a5a72;font-size:12px;line-height:1.6;text-align:center;">
+                Este es un mensaje automático, por favor no respondas a este correo.<br>
+                &copy; 2026 SafeZone. Todos los derechos reservados.
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+"""
+
+    try:
+        msg = EmailMultiAlternatives(
+            subject=subject,
+            body=text_content,
+            from_email=settings.EMAIL_HOST_USER,
+            to=[correo],
+        )
+        msg.attach_alternative(html_content, "text/html")
+        msg.send(fail_silently=True)
+        logger.info("Notificación RF31 enviada a %s (reporte #%s, estado: %s)", correo, reporte_id, reporte.estado)
+    except Exception as e:
+        logger.error("Error enviando notificación de estado (RF31): %s", e)
+
+
 # ============================================================
 # Servicios de archivos / imágenes
 # ============================================================

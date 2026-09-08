@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from ..constants import UserRole, ReportStatus, SESSION_USER_ROLE
 from ..decorators import admin_required, tecnico_required, admin_or_tecnico_required
 from ..models import Reportes
-from ..services import get_dashboard_stats
+from ..services import get_dashboard_stats, send_report_status_email
 
 def _dictfetchall(cursor):
     """
@@ -107,6 +107,14 @@ def validar(request, id):
         update_fields["prioridad"] = prioridad
 
     Reportes.objects.filter(id=id).update(**update_fields)
+
+    # RF31 – Notificar al ciudadano si el estado es relevante
+    try:
+        reporte_actualizado = Reportes.objects.select_related('usuario').get(id=id)
+        send_report_status_email(reporte_actualizado)
+    except Exception:
+        pass  # El envío del correo nunca debe bloquear la operación principal
+
     messages.success(request, "Guardado.")
     return redirect('panel_tecnico' if user_role == UserRole.ADMIN_TECNICO else 'panel_admin')
 

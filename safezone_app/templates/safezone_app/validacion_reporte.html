@@ -169,7 +169,7 @@
                                         <div class="action-buttons" onclick="event.stopPropagation();">
                                             {% if request.session.user_role == 'admin_principal' %}
                                                 <!-- Admin Principal: Solo Aprobar/Rechazar -->
-                                                {% if r.estado == 'nuevo' or r.estado == 'pendiente' %}
+                                                {% if r.estado == 'nuevo' %}
                                                 <div class="approval-actions">
                                                     <button type="button" class="btn-accept" onclick="cambiarEstado('{{ r.id }}', 'pendiente')" title="Aprobar y enviar al flujo técnico">
                                                         Aprobar
@@ -178,13 +178,12 @@
                                                         Rechazar
                                                     </button>
                                                 </div>
+                                                {% elif r.estado == 'rechazado' %}
+                                                <span class="status-info">❌ Rechazado</span>
+                                                {% elif r.estado == 'pendiente' or r.estado == 'en_progreso' or r.estado == 'resuelto' or r.estado == 'cerrado' %}
+                                                <span class="status-info">✅ Aprobado</span>
                                                 {% else %}
-                                                <span class="status-info">
-                                                    {% if r.estado == 'pendiente' %}Aprobado - En flujo técnico
-                                                    {% elif r.estado == 'rechazado' %}Rechazado
-                                                    {% else %}En proceso técnico
-                                                    {% endif %}
-                                                </span>
+                                                <span class="status-info">En proceso técnico</span>
                                                 {% endif %}
                                             {% else %}
                                                 <!-- Admin Técnico o Admin Legacy: Controles completos -->
