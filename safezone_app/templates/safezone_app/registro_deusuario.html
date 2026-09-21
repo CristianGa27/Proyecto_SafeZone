@@ -368,8 +368,8 @@
 
         function initMap() {
             miniMap = L.map('miniMap').setView([DEFAULT_LAT, DEFAULT_LNG], 14);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap'
+            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Tiles &copy; Esri'
             }).addTo(miniMap);
 
             mapMarker = L.marker([DEFAULT_LAT, DEFAULT_LNG], {draggable: true}).addTo(miniMap);
