@@ -8,6 +8,9 @@ const map = L.map('map', {
     boxZoom: true,
     keyboard: true,
     dragging: true,
+    touchZoom: true
+});
+
 // Agregar capa de mapa con Esri (sin marca de agua, sin API key, sin bloqueos)
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
     maxZoom: 19,
